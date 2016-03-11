@@ -3,14 +3,15 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 from scipy.ndimage import convolve
 import random
+import math
 
 #   Simulation parameters
-N = 15
+N = 5
 n_iter = 10000
 betaJ = 1
 
 #   System variables
-#lattice = np.ones([N, N])
+lattice_hk = np.ones([N, N])
 
 # #   Checkerboard pattern to flip spins
 # indices = np.full((N, N), True, dtype=bool)
@@ -58,49 +59,66 @@ betaJ = 1
 ##Hoshen Kopelman
 
 
-lattice_hk = np.zeros([N,N])
-for i in range (0,N):
-    for j in range (0, N):
-        lattice_hk[i,j] = random.choice([-1, 1])
-
-largest_label = 0;
+# lattice_hk = np.zeros([N,N])
+# for i in range (0,N):
+#     for j in range (0, N):
+#         lattice_hk[i,j] = random.choice([-1, 1])
+largest_label = 0
 label_hk = np.zeros([N, N])
+links_hk= np.zeros([N, N, 2])
 
-def label(N, lattice_hk, label_hk):
-    largest_label = 0
-    label_hk = np.zeros([N, N])
-    for i in range (0, N-1):
-        for j in range (0, N-1):
+def link(N, lattice_hk, links_hk, betaJ):
+    prob = np.exp(-2*betaJ)
+    for i in range (0, N):
+        for j in range (0, N):
+            if lattice_hk[i,j] == lattice_hk[(i-1)%N, j]:
+                if np.random.uniform(0,1) < prob:
+                    links_hk[i,j,0] = 0
+                else:
+                    links_hk[i,j,0] = 1
+
             if lattice_hk[i,j] == lattice_hk[i, (j-1)%N]:
-                label_hk[i,j] = label_hk[i, (j-1)%N]
-            elif lattice_hk[i,j] == lattice_hk[(i-1)%N, j] and lattice_hk[(i-1)%N, j] != lattice_hk[i, (j-1)%N]:
+                if np.random.uniform(0,1) < prob:
+                    links_hk[i,j,1] = 0
+                else:
+                    links_hk[i,j,1] = 1
+    return links_hk
+
+def label(N, lattice_hk, links_hk, betaJ):
+    largest_label = 0 
+    for i in range (0, N):
+        for j in range (0, N):         
+            if links_hk[i,j,0] == 1:                        #can be done in one if
                 label_hk[i,j] = label_hk[(i-1)%N, j]
-            else:
+            if links_hk[i,j,1] == 1:
+                label_hk[i,j] = label_hk[i, (j-1)%N]
+            elif all(links_hk[i,j,:]) != 1:
                 largest_label = largest_label + 1
                 label_hk[i,j] = largest_label
 
-    for i in range (0, N-1):
-        for j in range (0, N-1):
-            if label_hk[i,j] != label_hk[i%N, (j+1)%N] and lattice_hk[i,j] == lattice_hk[i%N, (j+1)%N]:
-                label_hk[i, j] = min(label_hk[i,j], label_hk[i%N, (j+1)%N])
-            elif label_hk[i,j] != label_hk[(i+1)%N, j%N] and lattice_hk[i,j] == lattice_hk[(i+1)%N, j%N]:
-                label_hk[i, j] = min(label_hk[i,j], label_hk[(i+1)%N, j%N])
+    for i in range (0, N):
+        for j in range (0, N):
+            if links_hk[(i+1)%N,j,0] ==1 and label_hk[i,j] != label_hk[(i+1)%N, j]:
+                label_hk[i, j] = min(label_hk[i,j], label_hk[(i+1)%N, j])
+            if links_hk[i,(j+1)%N,1] ==1 and label_hk[i,j] != label_hk[i, (j+1)%N]:
+                label_hk[i, j] = min(label_hk[i,j], label_hk[i, (j+1)%N])
+
     return label_hk, largest_label
+
+link(N, lattice_hk, links_hk, betaJ)
+label(N, lattice_hk, links_hk, betaJ)
+print(label_hk)
 
 def new_lattice(N, lattice_hk, label_hk, largest_label):
     new_lattice = np.zeros([N, N])
-    new_spin = np.zeros([largest_label, 1])
+    new_spin = np.zeros([largest_label])
     for i in range(0, largest_label):
         new_spin[i] = random.choice([-1, 1])
     for i in range (0, N):
         for j in range(0, N):
-            new_lattice[i, j] = new_spin[label_hk[i,j]]
+            new_lattice[i, j] = new_spin[label_hk[i,j]-1]
     return new_lattice
 
-label_hk, largest_label = label(N, lattice_hk, label_hk)
-new_lattice = new_lattice(N, lattice_hk, label_hk, largest_label)
-print(new_lattice)
-print(label_hk)
 
 
 
