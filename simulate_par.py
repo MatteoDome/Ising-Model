@@ -4,14 +4,18 @@ import matplotlib.animation as anim
 from scipy.ndimage import convolve
 import random
 import math
+from numba import jit
 
 #   Simulation parameters
-N = 5
-n_iter = 10000
-betaJ = 1
-
+N = 50
+T = 1
+n_iter = 100000
+n_iter_init = 1000
+betaJ = 0.01
+E= np.zeros([n_iter - n_iter_init])
 #   System variables
-lattice_hk = np.ones([N, N])
+#lattice = np.ones([N, N])
+
 
 # #   Checkerboard pattern to flip spins
 # indices = np.full((N, N), True, dtype=bool)
@@ -59,14 +63,15 @@ lattice_hk = np.ones([N, N])
 ##Hoshen Kopelman
 
 
-# lattice_hk = np.zeros([N,N])
-# for i in range (0,N):
-#     for j in range (0, N):
-#         lattice_hk[i,j] = random.choice([-1, 1])
+lattice_hk = np.zeros([N,N])
+for i in range (0,N):
+    for j in range (0, N):
+        lattice_hk[i,j] = random.choice([-1, 1])
 largest_label = 0
 label_hk = np.zeros([N, N])
 links_hk= np.zeros([N, N, 2])
 
+@jit
 def link(N, lattice_hk, links_hk, betaJ):
     prob = np.exp(-2*betaJ)
     for i in range (0, N):
@@ -83,9 +88,44 @@ def link(N, lattice_hk, links_hk, betaJ):
                 else:
                     links_hk[i,j,1] = 1
     return links_hk
+# @jit
+# def label(N, lattice_hk, links_hk, betaJ):
+#     largest_label = 0 
+#     label_hk = np.zeros([N, N])
+#     for i in range (0, N):
+#         for j in range (0, N):         
+#             if links_hk[i,j,0] == 1:                        #can be done in one if
+#                 label_hk[i,j] = label_hk[(i-1)%N, j]
+#             if links_hk[i,j,1] == 1:
+#                 label_hk[i,j] = label_hk[i, (j-1)%N]
+#             elif all(links_hk[i,j,:]) != 1:
+#                 largest_label = largest_label + 1
+#                 label_hk[i,j] = largest_label
 
-def label(N, lattice_hk, links_hk, betaJ):
+#     for i in range (0, N):
+#         for j in range (0, N):
+#             if links_hk[(i+1)%N,j,0] ==1 and label_hk[i,j] != label_hk[(i+1)%N, j]:
+#                 label_hk[i, j] = min(label_hk[i,j], label_hk[(i+1)%N, j])
+#             if links_hk[i,(j+1)%N,1] ==1 and label_hk[i,j] != label_hk[i, (j+1)%N]:
+#                 label_hk[i, j] = min(label_hk[i,j], label_hk[i, (j+1)%N])
+
+#     return label_hk, largest_label
+
+# @jit
+# def new_lattice(N, lattice_hk, label_hk, largest_label):
+#     up_lattice = np.zeros([N, N])
+#     new_spin = np.zeros([largest_label])
+#     for i in range(0, largest_label):
+#         new_spin[i] = random.choice([-1, 1])
+#     for i in range (0, N):
+#         for j in range(0, N):
+#             up_lattice[i, j] = new_spin[(label_hk[i,j])]
+#     return up_lattice
+
+
+def latti_upd(N, lattice_hk, links_hk, betaJ):
     largest_label = 0 
+    label_hk = np.zeros([N, N])
     for i in range (0, N):
         for j in range (0, N):         
             if links_hk[i,j,0] == 1:                        #can be done in one if
@@ -93,9 +133,10 @@ def label(N, lattice_hk, links_hk, betaJ):
             if links_hk[i,j,1] == 1:
                 label_hk[i,j] = label_hk[i, (j-1)%N]
             elif all(links_hk[i,j,:]) != 1:
-                largest_label = largest_label + 1
+                largest_label += 1
                 label_hk[i,j] = largest_label
-
+    print("----")
+    print(largest_label)
     for i in range (0, N):
         for j in range (0, N):
             if links_hk[(i+1)%N,j,0] ==1 and label_hk[i,j] != label_hk[(i+1)%N, j]:
@@ -103,43 +144,47 @@ def label(N, lattice_hk, links_hk, betaJ):
             if links_hk[i,(j+1)%N,1] ==1 and label_hk[i,j] != label_hk[i, (j+1)%N]:
                 label_hk[i, j] = min(label_hk[i,j], label_hk[i, (j+1)%N])
 
-    return label_hk, largest_label
-
-link(N, lattice_hk, links_hk, betaJ)
-label(N, lattice_hk, links_hk, betaJ)
-print(label_hk)
-
-def new_lattice(N, lattice_hk, label_hk, largest_label):
-    new_lattice = np.zeros([N, N])
+    largest_label = largest_label +1
+    up_lattice = np.zeros([N, N])
     new_spin = np.zeros([largest_label])
-    for i in range(0, largest_label):
-        new_spin[i] = random.choice([-1, 1])
+    for i in range (0, largest_label):
+            new_spin[i] = random.choice([-1, 1])
     for i in range (0, N):
         for j in range(0, N):
-            new_lattice[i, j] = new_spin[label_hk[i,j]-1]
-    return new_lattice
+            up_lattice[i, j] = new_spin[(label_hk[i,j])]
+    return up_lattice
+
+@jit
+def energy_cal(lattice_hk, betaJ):
+    E = 0
+    k = np.array([[0,1,0],[1,0,1],[0,1,0]])
+    for i in range (0,N):
+        for j in range (0,N):
+            E = E-0.5*betaJ*np.sum(lattice*convolve(lattice_hk, k, mode='wrap'))
+    return E
+
+lattice_sum = np.zeros(1000)
+x = np.zeros(1000)
+magnetization = np.zeros(1000)
+for i in range (0, n_iter):
+    link(N, lattice_hk, links_hk, betaJ)
+    lattice_hk = latti_upd(N, lattice_hk, links_hk, betaJ)
+    lattice_sum[i%1000] = lattice_hk.sum()
+    if i%1000==0:
+        x[int(i/1000)] = betaJ
+        magnetization[int(i/1000)] = abs(np.mean(lattice_sum))
+        betaJ+=0.01
+        lattice_sum = np.zeros(1000)
 
 
+    # print(i)
 
+plt.plot(x,magnetization)
+plt.show()
+    # # if i > n_iter_init:
+    # #     E[i-n_iter_init] = energy_cal(lattice_hk, betaJ)/N
+    # # print("-------")
+    # print(i)
 
-# for x in 0 to n_columns {
-#  for y in 0 to n_rows {
-#    if occupied[x,y] then
-#      left = occupied[x-1,y];
-#      above = occupied[x,y-1];
-#      if (left == 0) and (above == 0) then        /* Neither a label above nor to the left. */
-#        largest_label = largest_label + 1;        /* Make a new, as-yet-unused cluster label. */
-#        label[x,y] = largest_label;
-
-#      else if (left != 0) and (above == 0) then   /* One neighbor, to the left. */
-#        label[x,y] = find(left); 
-
-#      else if (left == 0) and (above != 0) then   /* One neighbor, above. */
-#        label[x,y] = find(above);
-
-#      else                                        /* Neighbors BOTH to the left and above. */
-#        union(left,above);                        /* Link the left and above clusters. */
-#        label[x,y] = find(left);
-#      }
-#    }
-#  }
+# Cv = np.var(E)*betaJ/(N*N)
+# print(Cv)
