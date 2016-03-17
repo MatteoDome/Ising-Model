@@ -54,20 +54,22 @@ def latti_upd(N, lattice, links, betaJ):
     for i, j in itertools.product(range(N), range(N)):
         if links[i,j,0] ==1 and label[i,j] != label[(i-1)%N, j]:
             label[i, j] = min(label[i,j], label[(i-1)%N, j])
-            label[(i-1)%N, j] = min(label[i,j], label[(i-1)%N, j])
+            label[(i-1)%N, j] = label[i,j]
+       
         if links[i,j,1] ==1 and label[i,j] != label[i, (j-1)%N]:
             label[i, j] = min(label[i,j], label[i, (j-1)%N])
-            label[i, (j-1)%N] = min(label[i,j], label[i, (j-1)%N])
+            label[i, (j-1)%N] = label[i,j]
+       
         if links[(i+1)%N,j,0] ==1 and label[i,j] != label[(i+1)%N, j]:
             label[i, j] = min(label[i,j], label[(i+1)%N, j])
-            label[(i+1)%N, j] = min(label[i,j], label[(i+1)%N, j])
+            label[(i+1)%N, j] = label[i,j]
+       
         if links[i,(j+1)%N,1] ==1 and label[i,j] != label[i, (j+1)%N]:
             label[i, j] = min(label[i,j], label[i, (j+1)%N])
-            label[i, (j+1)%N] = min(label[i,j], label[i, (j+1)%N])
+            label[i, (j+1)%N] = label[i,j]
 
-    largest_label = largest_label +1
     up_lattice = np.zeros([N, N])
-    new_spin = np.random.choice([1, -1], size = largest_label)
+    new_spin = np.random.choice([1, -1], size = largest_label + 1)
 
     for i, j in itertools.product(range(N), range(N)):
         up_lattice[i, j] = new_spin[(label[i,j])]
