@@ -91,14 +91,16 @@ def energy_cal(lattice_hk, betaJ):
 
 lattice_sum = np.zeros(100)
 x = np.zeros(100)
+chi = np.zeros(100)
 magnetization = np.zeros(100)
 for i in range (0, n_iter):
     link(N, lattice_hk, links_hk, betaJ)
     lattice_hk = latti_upd(N, lattice_hk, links_hk, betaJ)
-    lattice_sum[i%100] = lattice_hk.sum()
+    lattice_sum[i%100] = abs(lattice_hk.sum())
     if i%100==0:
         x[int(i/100)] = betaJ
-        magnetization[int(i/100)] = abs(np.mean(lattice_sum*lattice_sum))/(N*N*N*N)
+        chi[int(i/100)] = np.mean(lattice_sum*lattice_sum)/(N*N*N*N)
+        magnetization[int(i/100)] = np.mean(lattice_sum)/(N)
         betaJ+=0.01
         lattice_sum = np.zeros(100)
 
