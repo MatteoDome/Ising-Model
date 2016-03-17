@@ -8,22 +8,20 @@ from numba import jit
 import time
 
 #   Simulation parameters
-N = 50
-T = 1
-n_iter = 10000
-n_iter_init = 1000
-betaJ = 0.01
-E= np.zeros([n_iter - n_iter_init])
+N = 100
+betaJ_init = 0.01
+betaJ_end = 1
+betaJ_step = 0.01
+n_idle = 10
 
-##Hoshen Kopelman
-
+#   Simulation variables
 lattice = np.random.choice([1, -1], size = [N, N])
+betaJ = betaJ_init
 largest_label = 0
 label = np.zeros([N, N])
 links= np.zeros([N, N, 2])
 
 def link(N, lattice, betaJ):
-    start=time.time()
     prob = np.exp(-2*betaJ)
     links = np.zeros([N, N, 2])
 
@@ -34,7 +32,7 @@ def link(N, lattice, betaJ):
     #   Keep links with with some probability
     random_matrix = np.random.uniform(0, 1, size = [N, N, 2])
     links[(random_matrix < prob) & (links == 1)] = 0
-    print(time.time()-start)
+
     return links
 
 @jit
@@ -83,24 +81,32 @@ def compute_energy(lattice):
 
     return energy
 
-lattice_sum = np.zeros(100)
-x = np.zeros(100)
-chi = np.zeros(100)
-magnetization = np.zeros(100)
+#   Compute number of iterations
+n_iter = int((betaJ_end-betaJ_init)/betaJ_step*n_idle)
+
+#   Physical quantities to track
+keys = [round(betaJ_init + i*betaJ_step, 2) for i in range(int((betaJ_end-betaJ_init)/betaJ_step)+1)]
+magnetization = dict((betaJ, []) for betaJ in keys)
+energy = dict((betaJ, []) for betaJ in keys)
+susceptibility = dict((betaJ, []) for betaJ in keys)
+binder_cumulant = dict((betaJ, []) for betaJ in keys)
+cv = dict((betaJ, []) for betaJ in keys)
+
 # plt.ion()
 # fig = plt.figure()
 
-for i in range (0, n_iter):
+for i in range(n_iter):
     links = link(N, lattice, betaJ)
     lattice = latti_upd(N, lattice, links, betaJ)
-    lattice_sum[i%100] = abs(lattice.sum())
-    if i%100==0:
-        x[int(i/100)] = betaJ
-        chi[int(i/100)] = np.mean(lattice_sum*lattice_sum)/(N*N*N*N)
-        magnetization[int(i/100)] = np.mean(lattice_sum)/(N)
-        betaJ+=0.01
-        lattice_sum = np.zeros(100)
+
+    magnetization[betaJ].append(abs(np.mean(lattice)))
+    energy[betaJ].append(compute_energy(lattice))
+    susceptibility[betaJ].append(np.mean(lattice)**2)
+
+    if i%n_idle==0:
+        betaJ = round(betaJ + 0.01, 2)
         print(betaJ)
+
     # fig.clf()
     # ax = fig.add_subplot(111)
     # ax.matshow(lattice)
@@ -108,7 +114,8 @@ for i in range (0, n_iter):
 
     # print(i)
 
-plt.plot(x,magnetization)
+magnetization_av =  [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
+plt.scatter(*zip(*magnetization_av))
 plt.show()
     # # if i > n_iter_init:
     # #     E[i-n_iter_init] = compute_energy(lattice)
