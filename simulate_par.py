@@ -9,7 +9,7 @@ from numba import jit
 #   Simulation parameters
 N = 50
 T = 1
-n_iter = 100000
+n_iter = 10000
 n_iter_init = 1000
 betaJ = 0.01
 E= np.zeros([n_iter - n_iter_init])
@@ -113,6 +113,7 @@ def link(N, lattice_hk, links_hk, betaJ):
 
 # @jit
 # def new_lattice(N, lattice_hk, label_hk, largest_label):
+
 #     up_lattice = np.zeros([N, N])
 #     new_spin = np.zeros([largest_label])
 #     for i in range(0, largest_label):
@@ -128,10 +129,12 @@ def latti_upd(N, lattice_hk, links_hk, betaJ):
     label_hk = np.zeros([N, N])
     for i in range (0, N):
         for j in range (0, N):         
-            if links_hk[i,j,0] == 1:                        #can be done in one if
+            if links_hk[i,j,0] == 1 and links_hk[i,j,1] != 1:                        #can be done in one if
                 label_hk[i,j] = label_hk[(i-1)%N, j]
-            if links_hk[i,j,1] == 1:
+            if links_hk[i,j,1] == 1 and links_hk[i,j,0] != 1:
                 label_hk[i,j] = label_hk[i, (j-1)%N]
+            elif links_hk[i,j,1] == 1 and links_hk[i,j,0] == 1:
+                label_hk[i,j] = label_hk[(i-1)%N, j]
             elif all(links_hk[i,j,:]) != 1:
                 largest_label += 1
                 label_hk[i,j] = largest_label
@@ -169,12 +172,12 @@ magnetization = np.zeros(1000)
 for i in range (0, n_iter):
     link(N, lattice_hk, links_hk, betaJ)
     lattice_hk = latti_upd(N, lattice_hk, links_hk, betaJ)
-    lattice_sum[i%1000] = lattice_hk.sum()
-    if i%1000==0:
-        x[int(i/1000)] = betaJ
-        magnetization[int(i/1000)] = abs(np.mean(lattice_sum))
+    lattice_sum[i%100] = lattice_hk.sum()
+    if i%100==0:
+        x[int(i/100)] = betaJ
+        magnetization[int(i/100)] = abs(np.mean(lattice_sum))
         betaJ+=0.01
-        lattice_sum = np.zeros(1000)
+        lattice_sum = np.zeros(100)
 
 
     # print(i)
