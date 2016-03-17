@@ -52,6 +52,7 @@ def latti_upd(N, lattice, links, betaJ):
     # print("----")
     # print(largest_label)
     for i, j in itertools.product(range(N), range(N)):
+        
         if links[i,j,0] ==1 and label[i,j] != label[(i-1)%N, j]:
             label[i, j] = min(label[i,j], label[(i-1)%N, j])
             label[(i-1)%N, j] = label[i,j]
