@@ -16,10 +16,7 @@ E= np.zeros([n_iter - n_iter_init])
 
 ##Hoshen Kopelman
 
-lattice_hk = np.zeros([N,N])
-for i in range (0,N):
-    for j in range (0, N):
-        lattice_hk[i,j] = random.choice([-1, 1])
+lattice_hk = np.random.choice([1, -1], size = [N, N])
 largest_label = 0
 label_hk = np.zeros([N, N])
 links_hk= np.zeros([N, N, 2])
@@ -76,9 +73,8 @@ def latti_upd(N, lattice_hk, links_hk, betaJ):
 
     largest_label = largest_label +1
     up_lattice = np.zeros([N, N])
-    new_spin = np.zeros([largest_label])
-    for i in range (0, largest_label):
-            new_spin[i] = random.choice([-1, 1])
+    new_spin = np.random.choice([1, -1], size = largest_label)
+
     for i in range (0, N):
         for j in range(0, N):
             up_lattice[i, j] = new_spin[(label_hk[i,j])]
