@@ -2,19 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 from scipy.ndimage import convolve, generate_binary_structure, iterate_structure
-import math
-from pprint import pprint
-
-def sum_values_at_distance(a, i, j):
-    sum_of_neighbours =  np.roll(np.roll(a, i, 0), j, 1) + np.roll(np.roll(a, i, 0), -j, 1) + np.roll(np.roll(a, -i, 0), j, 1) + np.roll(np.roll(a, -i, 0),-j, 1)
-    return np.mean(a*sum_of_neighbours/4)
-
-def compute_energy(lattice):
-    k = np.array([[0,1,0],[1,0,1],[0,1,0]])
-    neighbour_sum = convolve(lattice, k, mode='wrap')
-    energy = -0.5*(np.sum(neighbour_sum*lattice))
-
-    return energy
+import physical_quantities as pq
 
 def flipping_probabilities(N, lattice, mask, betaJ):
     k = np.array([[0,1,0],[1,0,1],[0,1,0]])
@@ -25,20 +13,29 @@ def flipping_probabilities(N, lattice, mask, betaJ):
 
     return flipping_probability
 
-def simulate(N, n_iter, betaJ, anim_params):
-    lattice = np.ones([N, N])
+def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
+    #   Compute number of iterations
+    n_iter = int((betaJ_end-betaJ_init)/betaJ_step*n_idle)
+
+    #   Value os betaJ that are going to be tracked
+    values = [round(betaJ_init + i*betaJ_step, 2) for i in range(int((betaJ_end-betaJ_init)/betaJ_step)+1)]
+    
+    #   Physical quantities to track
+    magnetization = dict((betaJ, np.array([])) for betaJ in values)
+    energy = dict((betaJ, np.array([])) for betaJ in values)
+    l_sum = dict((betaJ, np.array([])) for betaJ in values)
+    susceptibility = dict((betaJ, np.array([])) for betaJ in values)
+    cv = dict((betaJ, np.array([])) for betaJ in values)
+
+    #   Main lattice matrix and betaJ
+    lattice = np.random.choice([1, -1], size = [N, N])
+    betaJ = betaJ_init
     
     #   Checkerboard pattern to flip spins
     checkerboard = np.full((N, N), True, dtype=bool)
     checkerboard[1::2,::2] = False
     checkerboard[::2,1::2] = False
-   
-    #   Physical quantities to track
-    susceptibility = {}
-    binder_cumulant = {}
-    magnetization = {}
-    energy = {}
-   
+      
     if anim_params['animate']:
         plt.ion()
         fig = plt.figure()
@@ -53,12 +50,9 @@ def simulate(N, n_iter, betaJ, anim_params):
         lattice[flip_probs>0]=-lattice[flip_probs>0]
 
         #   Save physical quantities
-        if betaJ in magnetization:
-            magnetization[betaJ] = np.append(magnetization[betaJ], np.mean(lattice))
-            energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice))
-        else:
-            magnetization[betaJ] = np.array([np.mean(lattice)])
-            energy[betaJ] = np.array([compute_energy(lattice)])
+        l_sum[betaJ] = np.append(l_sum[betaJ], np.sum(lattice))
+        energy[betaJ] = np.append(energy[betaJ], pq.compute_energy(lattice))
+        susceptibility[betaJ] = np.append(susceptibility[betaJ], np.mean(lattice)**2)
 
         if anim_params['animate'] and i%anim_params['freq'] == 0:
             fig.clf()
@@ -67,24 +61,30 @@ def simulate(N, n_iter, betaJ, anim_params):
             plt.draw()
 
         # if abs(betaJ*J-0.40)<0.005:
-            # corr = np.array( [ [ sum_values_at_distance(lattice, i, j) for j in range(N)] for i in range(N)] )
+            # corr = np.array( [ [pq.correlation(lattice, i, j) for j in range(N)] for i in range(N)] )
 
-        if i%100==0:           
-            betaJ -= 0.01
+        if i%n_idle == 0:           
+            betaJ = round(betaJ + betaJ_step, 2)
             print("beta*J " + str(betaJ))
             
-    return magnetization, energy
+    return energy, l_sum
 
 if __name__ == '__main__':    
-    #   Default simulation parameters
-    N = 128 
-    n_iter = 10000
-    betaJ = 1
+    #   Simulation parameters
+    N = 32
+    betaJ_init = 0.01
+    betaJ_end = 1
+    betaJ_step = 0.01
+    n_idle = 100
 
     anim_params = {'animate': False, 'freq': 100}
 
-    magnetization, energy = simulate(N, n_iter, betaJ, anim_params)
+    energy, l_sum = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params)
 
     cv = [(betaJ, ( betaJ**2*(np.var(energy[betaJ]) - np.std(energy[betaJ])) )/N**2) for betaJ in energy]
-    plt.scatter(*zip(*cv))
+    binder_cumulant = [( betaJ, 1 - np.mean(l_sum[betaJ]**4)/( 3*np.mean(l_sum[betaJ]**2)**2 ) ) for betaJ in l_sum]
+    magnetization = [( betaJ, np.mean(l_sum[betaJ])/N**2) for betaJ in l_sum]
+    
+    plt.scatter(*zip(*magnetization))
+    #plt.scatter(*zip(*cv))
     plt.show()
