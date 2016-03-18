@@ -8,11 +8,11 @@ from numba import jit
 import time
 
 #   Simulation parameters
-N = 100
+N = 128
 betaJ_init = 0.01
 betaJ_end = 1
 betaJ_step = 0.01
-n_idle = 10
+n_idle = 100
 
 #   Simulation variables
 lattice = np.random.choice([1, -1], size = [N, N])
@@ -36,19 +36,21 @@ def link(N, lattice, betaJ):
     return links
 
 @jit
-def latti_upd(N, lattice, links, betaJ):
+def latti_upd(N, lattice, links):
     largest_label = 0 
-    label = np.zeros([N, N])
+    label = -np.ones([N, N])
+    label[0,0] = 1
     for i, j in itertools.product(range(N), range(N)):
-        if links[i,j,0] == 1 and links[i,j,1] != 1:                        #can be done in one if
+        if links[i,j,0] == 1 and links[i,j,1] != 1 and label[(i-1)%N, j] != -1:                        #can be done in one if
             label[i,j] = label[(i-1)%N, j]
-        elif links[i,j,1] == 1 and links[i,j,0] != 1:
+        elif links[i,j,1] == 1 and links[i,j,0] != 1  and label[i, (j-1)%N] != -1:
             label[i,j] = label[i, (j-1)%N]
-        elif links[i,j,1] == 1 and links[i,j,0] == 1:
+        elif all(links[i,j,:]) == 1 and label[(i-1)%N, j] != -1 and label[i, (j-1)%N] != -1:
             label[i,j] = label[(i-1)%N, j]
-        elif all(links[i,j,:]) != 1:
+        else:
             largest_label += 1
             label[i,j] = largest_label
+        #elif all(links[i,j,:]) != 1 or (links[i,j,1] == 1 and links[i,j,0] != 1  and label[i, (j-1)%N] != -1) or (links[i,j,0] == 1 and links[i,j,1] != 1 and label[(i-1)%N, j] != -1)
     # print("----")
     # print(largest_label)
     for i, j in itertools.product(range(N), range(N)):
@@ -56,7 +58,7 @@ def latti_upd(N, lattice, links, betaJ):
         if links[i,j,0] ==1 and label[i,j] != label[(i-1)%N, j]:
             label[i, j] = min(label[i,j], label[(i-1)%N, j])
             label[(i-1)%N, j] = label[i,j]
-       
+
         if links[i,j,1] ==1 and label[i,j] != label[i, (j-1)%N]:
             label[i, j] = min(label[i,j], label[i, (j-1)%N])
             label[i, (j-1)%N] = label[i,j]
@@ -64,17 +66,16 @@ def latti_upd(N, lattice, links, betaJ):
         if links[(i+1)%N,j,0] ==1 and label[i,j] != label[(i+1)%N, j]:
             label[i, j] = min(label[i,j], label[(i+1)%N, j])
             label[(i+1)%N, j] = label[i,j]
-       
+
         if links[i,(j+1)%N,1] ==1 and label[i,j] != label[i, (j+1)%N]:
             label[i, j] = min(label[i,j], label[i, (j+1)%N])
             label[i, (j+1)%N] = label[i,j]
-
+    # return label
     up_lattice = np.zeros([N, N])
     new_spin = np.random.choice([1, -1], size = largest_label + 1)
 
     for i, j in itertools.product(range(N), range(N)):
         up_lattice[i, j] = new_spin[(label[i,j])]
-    
     return up_lattice
 
 def compute_energy(lattice):
@@ -97,33 +98,33 @@ cv = dict((betaJ, []) for betaJ in keys)
 
 # plt.ion()
 # fig = plt.figure()
+if __name__ == '__main__':
+    for i in range(n_iter):
+        links = link(N, lattice, betaJ)
+        lattice = latti_upd(N, lattice, links)
 
-for i in range(n_iter):
-    links = link(N, lattice, betaJ)
-    lattice = latti_upd(N, lattice, links, betaJ)
+        magnetization[betaJ].append(abs(np.mean(lattice)))
+        energy[betaJ].append(compute_energy(lattice))
+        susceptibility[betaJ].append(np.mean(lattice)**2)
 
-    magnetization[betaJ].append(abs(np.mean(lattice)))
-    energy[betaJ].append(compute_energy(lattice))
-    susceptibility[betaJ].append(np.mean(lattice)**2)
+        if i%n_idle==0:
+            betaJ = round(betaJ + 0.01, 2)
+            print(betaJ)
 
-    if i%n_idle==0:
-        betaJ = round(betaJ + 0.01, 2)
-        print(betaJ)
+        # fig.clf()
+        # ax = fig.add_subplot(111)
+        # ax.matshow(lattice)
+        # plt.draw()
 
-    # fig.clf()
-    # ax = fig.add_subplot(111)
-    # ax.matshow(lattice)
-    # plt.draw()
+        # print(i)
 
-    # print(i)
+    magnetization_av =  [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
+    plt.scatter(*zip(*magnetization_av))
+    plt.show()
+        # # if i > n_iter_init:
+        # #     E[i-n_iter_init] = compute_energy(lattice)
+        # # print("-------")
+        # print(i)
 
-magnetization_av =  [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-plt.scatter(*zip(*magnetization_av))
-plt.show()
-    # # if i > n_iter_init:
-    # #     E[i-n_iter_init] = compute_energy(lattice)
-    # # print("-------")
-    # print(i)
-
-# Cv = np.var(E)*betaJ/(N*N)
-# print(Cv)
+    # Cv = np.var(E)*betaJ/(N*N)
+    # print(Cv)
