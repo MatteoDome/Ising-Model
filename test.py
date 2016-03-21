@@ -1,8 +1,19 @@
-from simulate_par import link, latti_upd
+from simulate_par import find_links, find_clusters
 import numpy as np
 
-a = np.matrix([[1,1,0],[1,0,1],[1,1,1]])
+N=4
+a = np.random.choice([1, -1], size = [N, N])
+links = find_links(N, a, 1000)
+clusters, list_of_labels = find_clusters(N, a, links)
+
+#   Correcting to have the same labels
+for i in range(N):
+    for j in range(N):
+        label = clusters[i, j]
+        while(label != list_of_labels[label]):
+            label = list_of_labels[label]
+        clusters[i, j] = label
+
+print("-----------------")
 print(a)
-links = link(3, a, 100)
-a = latti_upd(3, a, links)
-print(a)
+print(clusters)
