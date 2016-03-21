@@ -21,11 +21,8 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
     values = [round(betaJ_init + i*betaJ_step, 2) for i in range(int((betaJ_end-betaJ_init)/betaJ_step)+1)]
     
     #   Physical quantities to track
-    magnetization = dict((betaJ, np.array([])) for betaJ in values)
     energy = dict((betaJ, np.array([])) for betaJ in values)
     l_sum = dict((betaJ, np.array([])) for betaJ in values)
-    susceptibility = dict((betaJ, np.array([])) for betaJ in values)
-    cv = dict((betaJ, np.array([])) for betaJ in values)
 
     #   Main lattice matrix and betaJ
     lattice = np.random.choice([1, -1], size = [N, N])

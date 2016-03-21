@@ -7,21 +7,7 @@ import itertools
 from numba import jit
 import time
 
-#   Simulation parameters
-N = 128
-betaJ_init = 0.01
-betaJ_end = 1
-betaJ_step = 0.01
-n_idle = 100
-
-#   Simulation variables
-lattice = np.random.choice([1, -1], size = [N, N])
-betaJ = betaJ_init
-largest_label = 0
-label = np.zeros([N, N])
-links= np.zeros([N, N, 2])
-
-def link(N, lattice, betaJ):
+def find_links(N, lattice, betaJ):
     prob = np.exp(-2*betaJ)
     links = np.zeros([N, N, 2])
 
@@ -36,7 +22,7 @@ def link(N, lattice, betaJ):
     return links
 
 @jit
-def latti_upd(N, lattice, links):
+def find_clusters(N, lattice, links):
     largest_label = 0 
     label = -np.ones([N, N])
     label[0,0] = 1
@@ -47,10 +33,10 @@ def latti_upd(N, lattice, links):
             label[i,j] = label[i, (j-1)%N]
         elif all(links[i,j,:]) == 1 and label[(i-1)%N, j] != -1 and label[i, (j-1)%N] != -1:
             label[i,j] = label[(i-1)%N, j]
-        else:
+        # else:
+        elif all(links[i,j,:]) != 1 or (links[i,j,1] == 1 and links[i,j,0] != 1  and label[i, (j-1)%N] != -1) or (links[i,j,0] == 1 and links[i,j,1] != 1 and label[(i-1)%N, j] != -1)
             largest_label += 1
             label[i,j] = largest_label
-        #elif all(links[i,j,:]) != 1 or (links[i,j,1] == 1 and links[i,j,0] != 1  and label[i, (j-1)%N] != -1) or (links[i,j,0] == 1 and links[i,j,1] != 1 and label[(i-1)%N, j] != -1)
     # print("----")
     # print(largest_label)
     for i, j in itertools.product(range(N), range(N)):
@@ -70,12 +56,14 @@ def latti_upd(N, lattice, links):
         if links[i,(j+1)%N,1] ==1 and label[i,j] != label[i, (j+1)%N]:
             label[i, j] = min(label[i,j], label[i, (j+1)%N])
             label[i, (j+1)%N] = label[i,j]
-    # return label
-    up_lattice = np.zeros([N, N])
-    new_spin = np.random.choice([1, -1], size = largest_label + 1)
+    
+    return label, largest_label
 
-    for i, j in itertools.product(range(N), range(N)):
-        up_lattice[i, j] = new_spin[(label[i,j])]
+def assign_new_cluster_spins(N, label, largest_label):
+    up_lattice = np.zeros([N, N])
+    new_spins = np.random.choice([1, -1], size = largest_label + 1)
+    up_lattice = numpy.array( [ [ new_spins[i, j] for i in range(N) for j in range(N) ] ] )
+
     return up_lattice
 
 def compute_energy(lattice):
@@ -99,9 +87,25 @@ cv = dict((betaJ, []) for betaJ in keys)
 # plt.ion()
 # fig = plt.figure()
 if __name__ == '__main__':
+    #   Simulation parameters
+    N = 128
+    betaJ_init = 0.01
+    betaJ_end = 1
+    betaJ_step = 0.01
+    n_idle = 100
+
+    #   Simulation variables
+    lattice = np.random.choice([1, -1], size = [N, N])
+    betaJ = betaJ_init
+    largest_label = 0
+    label = np.zeros([N, N])
+    links= np.zeros([N, N, 2])
+
+    
     for i in range(n_iter):
-        links = link(N, lattice, betaJ)
-        lattice = latti_upd(N, lattice, links)
+        links = find_links(N, lattice, betaJ)
+        cluster_labels, largest_label = find_clusters(N, lattice, links)
+        lattice = assign_new_cluster_spins(N, lattice, largest_label)
 
         magnetization[betaJ].append(abs(np.mean(lattice)))
         energy[betaJ].append(compute_energy(lattice))
