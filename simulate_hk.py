@@ -95,6 +95,7 @@ def find_clusters(N, lattice, links):
 
     return label, list_of_labels
 
+@jit
 def assign_new_cluster_spins(N, labels, list_of_labels):
     new_lattice = np.zeros([N, N])
     new_spins = np.random.choice([1, -1], size=list_of_labels.size)

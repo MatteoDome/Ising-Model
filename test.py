@@ -1,7 +1,7 @@
 from simulate_par import find_links, find_clusters
 import numpy as np
 
-N=4
+N=5
 a = np.random.choice([1, -1], size = [N, N])
 links = find_links(N, a, 1000)
 clusters, list_of_labels = find_clusters(N, a, links)
