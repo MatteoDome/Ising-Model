@@ -4,6 +4,13 @@ import matplotlib.animation as anim
 from scipy.ndimage import convolve, generate_binary_structure, iterate_structure
 import physical_quantities as pq
 
+def compute_energy(lattice):
+    k = np.array([[0,1,0],[1,0,1],[0,1,0]])
+    neighbour_sum = convolve(lattice, k, mode='wrap')
+    energy = -0.5*(np.sum(neighbour_sum*lattice))
+
+    return energy
+
 def flipping_probabilities(N, lattice, mask, betaJ):
     k = np.array([[0,1,0],[1,0,1],[0,1,0]])
     neighbour_sum = convolve(lattice, k, mode='wrap')  
@@ -48,7 +55,7 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
 
         #   Save physical quantities
         l_sum[betaJ] = np.append(l_sum[betaJ], np.sum(lattice))
-        energy[betaJ] = np.append(energy[betaJ], pq.compute_energy(lattice))
+        energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice))
         susceptibility[betaJ] = np.append(susceptibility[betaJ], np.mean(lattice)**2)
 
         if anim_params['animate'] and i%anim_params['freq'] == 0:

@@ -6,9 +6,37 @@ import math
 import itertools
 from numba import jit
 
+def compute_energy(lattice, neighbour_list):
+    """
+
+    Compute the energy of the lattice. neighbour_list is a matrix indicating which
+    neighbour spins should be considered when computing the energy (1 contributes, 0
+    does not).
+    
+    """
+
+    #   Wrap mode used for periodic boundary conditions
+    neighbour_sum = convolve(lattice, neighbour_list, mode='wrap')
+    energy = -0.5*(np.sum(neighbour_sum*lattice))
+
+    return energy
+
 def find_links(N, lattice, betaJ):
+    """
+    Marks links to the left and right of each spin in the lattice.
+
+    Args
+        N: size of lattice (assumed to be NxN)
+        lattice: size of lattice (assumed to be NxN)
+
+    Returns 
+        An NxNx2 tensor with boolen entries (1 if there is a link, 0 if not). 
+        Entry [i, j, 0] refers to the neighbour above and [i, j, 1] 
+        to the neighbour on the left.
+    """
+
     prob = np.exp(-2*betaJ)
-    links = np.zeros([N, N, 2])
+    links = np.zeros([N, N, 2], dtype 'int_')
 
     #   Set links to 1 if they match 
     links[lattice == np.roll(lattice, 1, 0), 0] = 1
@@ -20,7 +48,7 @@ def find_links(N, lattice, betaJ):
 
     return links
 
-def find_equivalent_label(label_list, label):
+def canonical_label(label_list, label):
     while label != label_list[label]:
         label = label_list[label]
 
@@ -53,7 +81,7 @@ def find_clusters(N, lattice, links):
                 cluster_labels[i, j] = largest_label
 
             else:
-                cluster_labels[i, j] = find_equivalent_label(label_list, label_left)
+                cluster_labels[i, j] = canonical_label(label_list, label_left)
 
         #   One neighbour above, existing cluster
         elif link_above and not link_left:
@@ -64,18 +92,19 @@ def find_clusters(N, lattice, links):
                 cluster_labels[i, j] = largest_label
             
             else:
-                cluster_labels[i, j] = find_equivalent_label(label_list, label_above)
+                cluster_labels[i, j] = canonical_label(label_list, label_above)
 
         #   Else neighbours both to the left and above, we link the labels
         else:
             if label_left == -1 and label_above != -1:
-                cluster_labels[i, j] = find_equivalent_label(label_list, label_above)
-                cluster_labels[i, (j-1)%N] = find_equivalent_label(label_list, label_above)
+                cluster_labels[i, j] = canonical_label(label_list, label_above)
+                cluster_labels[i, (j-1)%N] = canonical_label(label_list, label_above)
             
             elif label_above == -1 and label_left != -1:
-                cluster_labels[i, j] = find_equivalent_label(label_list, label_left)
-                cluster_labels[(i-1)%N, j] = find_equivalent_label(label_list, label_left)
-            
+                cluster_labels[i, j] = canonical_label(label_list, label_left)
+                cluster_labels[(i-1)%N, j] = canonical_label(label_list, label_left)
+
+            #   kinda dumb because this only happens for (0, 0)            
             elif label_above == -1 and label_left == -1:
                 largest_label += 1 
                 cluster_labels[i, (j-1)%N] = largest_label
@@ -85,12 +114,12 @@ def find_clusters(N, lattice, links):
             else:
                 max_label = max(label_left, label_above)
                 min_label = min(label_left, label_above)
-                label_list[find_equivalent_label(label_list, max_label)] = label_list[find_equivalent_label(label_list, min_label)]
+                label_list[canonical_label(label_list, max_label)] = label_list[canonical_label(label_list, min_label)]
                 cluster_labels[i, j] = min_label
 
         #   If this site has been visited before and changed its label then we also link the previous label with the new one
         if previous_label != cluster_labels[i, j] and previous_label != -1:
-            label_list[find_equivalent_label(label_list, previous_label)] = find_equivalent_label(label_list, cluster_labels[i,j])
+            label_list[canonical_label(label_list, previous_label)] = canonical_label(label_list, cluster_labels[i,j])
 
     #   Keep only labels that were used
     label_list = label_list[0:largest_label+1]
@@ -103,13 +132,6 @@ def assign_new_cluster_spins(N, cluster_labels, label_list):
 
     return new_lattice
 
-def compute_energy(lattice):
-    k = np.array([[0,1,0],[1,0,1],[0,1,0]])
-    neighbour_sum = convolve(lattice, k, mode='wrap')
-    energy = -0.5*(np.sum(neighbour_sum*lattice))
-
-    return energy
-
 # plt.ion()
 # fig = plt.figure()
 if __name__ == '__main__':
@@ -119,6 +141,7 @@ if __name__ == '__main__':
     betaJ_end = 0.8
     betaJ_step = 0.01
     n_idle = 20
+    neighbour_list = np.array([[0,1,0],[1,0,1],[0,1,0]])
 
     #   Simulation variables
     lattice = np.random.choice([1, -1], size = [N, N])
@@ -143,11 +166,12 @@ if __name__ == '__main__':
         cluster_labels, label_list = find_clusters(N, lattice, links)
         
         #   Reprocess label list
-        label_list = np.array([find_equivalent_label(label_list, label) for label in label_list])
+        label_list = np.array([canonical_label(label_list, label) for label in label_list])
         lattice = assign_new_cluster_spins(N, cluster_labels, label_list)
 
+        #   Store physical quantites
         magnetization[betaJ].append(abs(np.mean(lattice)))
-        energy[betaJ].append(compute_energy(lattice))
+        energy[betaJ].append(compute_energy(lattice, neighbour_list))
         susceptibility[betaJ].append(np.mean(lattice)**2)
 
         if i%n_idle==0:
@@ -164,10 +188,6 @@ if __name__ == '__main__':
     magnetization_av =  [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
     plt.scatter(*zip(*magnetization_av))
     plt.show()
-        # # if i > n_iter_init:
-        # #     E[i-n_iter_init] = compute_energy(lattice)
-        # # print("-------")
-        # print(i)
 
     # Cv = np.var(E)*betaJ/(N*N)
     # print(Cv)
