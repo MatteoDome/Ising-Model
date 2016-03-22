@@ -95,6 +95,7 @@ def find_clusters(N, lattice, links):
 
     return label, list_of_labels
 
+#   THIS CAN BE PARALLEL!!!
 @jit
 def assign_new_cluster_spins(N, labels, list_of_labels):
     new_lattice = np.zeros([N, N])
@@ -147,7 +148,7 @@ if __name__ == '__main__':
     for i in range(n_iter):
         links = find_links(N, lattice, betaJ)
         cluster_labels, list_of_labels = find_clusters(N, lattice, links)
-        lattice = assign_new_cluster_spins(N, lattice, list_of_labels)
+        lattice = assign_new_cluster_spins(N, cluster_labels, list_of_labels)
 
         magnetization[betaJ].append(abs(np.mean(lattice)))
         energy[betaJ].append(compute_energy(lattice))
@@ -157,7 +158,6 @@ if __name__ == '__main__':
             betaJ = round(betaJ + 0.01, 2)
             print(betaJ)
 
-        print(lattice)
         # fig.clf()
         # ax = fig.add_subplot(111)
         # ax.matshow(lattice)
