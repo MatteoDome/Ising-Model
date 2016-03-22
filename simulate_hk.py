@@ -5,7 +5,6 @@ from scipy.ndimage import convolve
 import math
 import itertools
 from numba import jit
-import time
 
 def find_links(N, lattice, betaJ):
     prob = np.exp(-2*betaJ)
@@ -21,92 +20,86 @@ def find_links(N, lattice, betaJ):
 
     return links
 
-def find_equivalent_label(list_of_labels, label):
-    while label != list_of_labels[label]:
-        label = list_of_labels[label]
+def find_equivalent_label(label_list, label):
+    while label != label_list[label]:
+        label = label_list[label]
 
     return label
 
 @jit
 def find_clusters(N, lattice, links):
     largest_label = -1 
-    label = -np.ones([N, N])
-    list_of_labels = np.arange(N**2)
+    cluster_labels = -np.ones([N, N], dtype = 'int_')
+    label_list = np.arange(N**2)
     
     for i, j in itertools.product(range(N), range(N)):
-        previous_label = label[i, j]
+        previous_label = cluster_labels[i, j]
         link_above = links[i, j, 0]
-        label_above = label[(i-1)%N, j]
+        label_above = cluster_labels[(i-1)%N, j]
         link_left = links[i, j, 1]
-        label_left = label[i, (j-1)%N]
+        label_left = cluster_labels[i, (j-1)%N]
 
         #   No links so it's a new cluster. Therefore we create a new label
         if not link_above and not link_left:
             largest_label += 1
-            label[i, j] = largest_label
+            cluster_labels[i, j] = largest_label
 
         #   One neighbour to the left, existing cluster
         elif link_left and not link_above:
             #   If the neighbour is on the other side of the lattice we create a new label and label that spin too
             if label_left == -1:
                 largest_label += 1 
-                label[i, (j-1)%N] = largest_label
-                label[i, j] = largest_label
+                cluster_labels[i, (j-1)%N] = largest_label
+                cluster_labels[i, j] = largest_label
 
             else:
-                label[i, j] = find_equivalent_label(list_of_labels, label_left)
+                cluster_labels[i, j] = find_equivalent_label(label_list, label_left)
 
         #   One neighbour above, existing cluster
         elif link_above and not link_left:
             #   If there's a neighbour on the other side of the lattice we create a new label and label that spin too
             if label_above == -1:
                 largest_label += 1 
-                label[(i-1)%N, j] = largest_label
-                label[i, j] = largest_label
+                cluster_labels[(i-1)%N, j] = largest_label
+                cluster_labels[i, j] = largest_label
             
             else:
-                label[i, j] = find_equivalent_label(list_of_labels, label_above)
+                cluster_labels[i, j] = find_equivalent_label(label_list, label_above)
 
         #   Else neighbours both to the left and above, we link the labels
         else:
             if label_left == -1 and label_above != -1:
-                label[i, j] = find_equivalent_label(list_of_labels, label_above)
-                label[i, (j-1)%N] = find_equivalent_label(list_of_labels, label_above)
+                cluster_labels[i, j] = find_equivalent_label(label_list, label_above)
+                cluster_labels[i, (j-1)%N] = find_equivalent_label(label_list, label_above)
             
             elif label_above == -1 and label_left != -1:
-                label[i, j] = find_equivalent_label(list_of_labels, label_left)
-                label[(i-1)%N, j] = find_equivalent_label(list_of_labels, label_left)
+                cluster_labels[i, j] = find_equivalent_label(label_list, label_left)
+                cluster_labels[(i-1)%N, j] = find_equivalent_label(label_list, label_left)
             
             elif label_above == -1 and label_left == -1:
                 largest_label += 1 
-                label[i, (j-1)%N] = largest_label
-                label[(i-1)%N, j] = largest_label
-                label[i, j] = largest_label
+                cluster_labels[i, (j-1)%N] = largest_label
+                cluster_labels[(i-1)%N, j] = largest_label
+                cluster_labels[i, j] = largest_label
             
             else:
                 max_label = max(label_left, label_above)
                 min_label = min(label_left, label_above)
-                list_of_labels[find_equivalent_label(list_of_labels, max_label)] = list_of_labels[find_equivalent_label(list_of_labels, min_label)]
-                label[i, j] = min_label
+                label_list[find_equivalent_label(label_list, max_label)] = label_list[find_equivalent_label(label_list, min_label)]
+                cluster_labels[i, j] = min_label
 
         #   If this site has been visited before and changed its label then we also link the previous label with the new one
-        if previous_label != label[i, j] and previous_label != -1:
-            list_of_labels[find_equivalent_label(list_of_labels, previous_label)] = find_equivalent_label(list_of_labels, label[i,j])
+        if previous_label != cluster_labels[i, j] and previous_label != -1:
+            label_list[find_equivalent_label(label_list, previous_label)] = find_equivalent_label(label_list, cluster_labels[i,j])
 
-    return label, list_of_labels
+    #   Keep only labels that were used
+    label_list = label_list[0:largest_label+1]
 
-#   THIS CAN BE PARALLEL!!!
-@jit
-def assign_new_cluster_spins(N, labels, list_of_labels):
-    new_lattice = np.zeros([N, N])
-    new_spins = np.random.choice([1, -1], size=list_of_labels.size)
+    return cluster_labels, label_list
 
-    for i, j in itertools.product(range(N), range(N)):
-        label = labels[i, j]
-        while(label != list_of_labels[label]):
-            label = list_of_labels[label]
-
-        new_lattice[i, j] = new_spins[label]
+def assign_new_cluster_spins(N, cluster_labels, label_list):
+    new_spins = np.random.choice([1, -1], size=label_list.size)
+    new_lattice = np.array([ [ new_spins[ label_list[ cluster_labels[i, j] ] ] for j in range(N)] for i in range(N)])
 
     return new_lattice
 
@@ -122,10 +115,10 @@ def compute_energy(lattice):
 if __name__ == '__main__':
     #   Simulation parameters
     N = 32
-    betaJ_init = 0.01
-    betaJ_end = 1
+    betaJ_init = 0.35
+    betaJ_end = 0.8
     betaJ_step = 0.01
-    n_idle = 100
+    n_idle = 20
 
     #   Simulation variables
     lattice = np.random.choice([1, -1], size = [N, N])
@@ -147,8 +140,11 @@ if __name__ == '__main__':
 
     for i in range(n_iter):
         links = find_links(N, lattice, betaJ)
-        cluster_labels, list_of_labels = find_clusters(N, lattice, links)
-        lattice = assign_new_cluster_spins(N, cluster_labels, list_of_labels)
+        cluster_labels, label_list = find_clusters(N, lattice, links)
+        
+        #   Reprocess label list
+        label_list = np.array([find_equivalent_label(label_list, label) for label in label_list])
+        lattice = assign_new_cluster_spins(N, cluster_labels, label_list)
 
         magnetization[betaJ].append(abs(np.mean(lattice)))
         energy[betaJ].append(compute_energy(lattice))
