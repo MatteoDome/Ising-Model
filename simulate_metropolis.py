@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
 from scipy.ndimage import convolve, generate_binary_structure, iterate_structure
-import physical_quantities as pq
-
 
 def compute_energy(lattice):
     k = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
@@ -61,8 +59,6 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
         #   Save physical quantities
         l_sum[betaJ] = np.append(l_sum[betaJ], np.sum(lattice))
         energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice))
-        susceptibility[betaJ] = np.append(
-            susceptibility[betaJ], np.mean(lattice)**2)
 
         if anim_params['animate'] and i % anim_params['freq'] == 0:
             fig.clf()
@@ -81,7 +77,7 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
 
 if __name__ == '__main__':
     #   Simulation parameters
-    N = 32
+    N = 100
     betaJ_init = 0.01
     betaJ_end = 1
     betaJ_step = 0.01
