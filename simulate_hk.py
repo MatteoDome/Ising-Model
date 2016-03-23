@@ -62,8 +62,8 @@ def canonical_label(label_list, label):
 def find_clusters(N, lattice, links):
     largest_label = -1
     cluster_labels = -np.ones([N, N], dtype='int_')
-    label_list = np.arange(N**2)
-    ncluster = np.zeros(N*N, dtype = 'int_')
+    label_list = np.arange(N**2, dtype='int_')
+    ncluster = np.zeros(N**2, dtype = 'int_')
     for i, j in itertools.product(range(N), range(N)):
         previous_label = cluster_labels[i, j]
         link_above = links[i, j, 0]
@@ -126,20 +126,23 @@ def find_clusters(N, lattice, links):
         # If this site has been visited before and changed its label then we
         # also link the previous label with the new one
         if previous_label != cluster_labels[i, j] and previous_label != -1:
-            label_list[
-                canonical_label(label_list, previous_label)] = canonical_label(label_list, cluster_labels[i, j])
+            label_list[canonical_label(label_list, previous_label)] = canonical_label(label_list, cluster_labels[i, j])
 
         #if we re-label the boundary sites, we have to modify the cluster numbers accordingly
-        # if cluster_labels[i,j] != previous_label and previous_label != -1:
-            # ncluster[previous_label] -=1
-
         ncluster[cluster_labels[i,j]] +=1
 
     #   Keep only labels that were used
     label_list = label_list[0:largest_label + 1]
 
-    return cluster_labels, label_list
+    return cluster_labels, label_list, ncluster
 
+def n_rearrange(N, ncluster, label_list):
+    for label in label_list:
+        if canonical_label(label_list, label) != label:
+            ncluster[canonical_label(label_list, label)] += ncluster[label]
+            ncluster[label] = 0
+    ncluster = ncluster[ncluster>0]
+    return ncluster
 
 def assign_new_cluster_spins(N, cluster_labels, label_list):
     new_spins = np.random.choice([1, -1], size=label_list.size)
@@ -152,11 +155,11 @@ def assign_new_cluster_spins(N, cluster_labels, label_list):
 # fig = plt.figure()
 if __name__ == '__main__':
     #   Simulation parameters
-    N = 32
+    N = 20
     betaJ_init = 0.35
     betaJ_end = 0.8
     betaJ_step = 0.01
-    n_idle = 20
+    n_idle = 100
     neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
     #   Simulation variables
@@ -175,11 +178,13 @@ if __name__ == '__main__':
     energy = dict((betaJ, []) for betaJ in keys)
     susceptibility = dict((betaJ, []) for betaJ in keys)
     binder_cumulant = dict((betaJ, []) for betaJ in keys)
+    unsubtr = dict((betaJ, []) for betaJ in keys)
     cv = dict((betaJ, []) for betaJ in keys)
 
     for i in range(n_iter):
         links = find_links(N, lattice, betaJ)
-        cluster_labels, label_list = find_clusters(N, lattice, links)
+        cluster_labels, label_list, ncluster = find_clusters(N, lattice, links)
+        ncluster = n_rearrange(N, ncluster, label_list)
 
         #   Reprocess label list
         label_list = np.array([canonical_label(label_list, label)
@@ -190,6 +195,7 @@ if __name__ == '__main__':
         magnetization[betaJ].append(abs(np.mean(lattice)))
         energy[betaJ].append(compute_energy(lattice, neighbour_list))
         susceptibility[betaJ].append(np.mean(lattice)**2)
+        unsubtr[betaJ].append(np.sum(ncluster*ncluster)/(N*N))
 
         if i % n_idle == 0:
             betaJ = round(betaJ + 0.01, 2)
@@ -202,9 +208,12 @@ if __name__ == '__main__':
 
         # print(i)
 
-    magnetization_av = [(betaJ, np.mean(magnetization[betaJ]))
-                        for betaJ in magnetization]
+    magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
     plt.scatter(*zip(*magnetization_av))
+    plt.show()
+
+    unsubtr_av = [(betaJ, np.mean(unsubtr[betaJ])) for betaJ in unsubtr]
+    plt.scatter(*zip(*unsubtr_av))
     plt.show()
     # Cv = np.var(E)*betaJ/(N*N)
     # print(Cv)
