@@ -104,15 +104,11 @@ def find_clusters(N, lattice, links):
         else:
             if label_left == -1 and label_above != -1:
                 cluster_labels[i, j] = canonical_label(label_list, label_above)
-                cluster_labels[
-                    i, (j - 1) %
-                    N] = canonical_label(
-                    label_list, label_above)
+                cluster_labels[i, (j - 1) % N] = canonical_label(label_list, label_above)
 
             elif label_above == -1 and label_left != -1:
                 cluster_labels[i, j] = canonical_label(label_list, label_left)
-                cluster_labels[(i - 1) %
-                               N, j] = canonical_label(label_list, label_left)
+                cluster_labels[(i - 1) % N, j] = canonical_label(label_list, label_left)
 
             #   kinda dumb because this only happens for (0, 0)
             elif label_above == -1 and label_left == -1:
@@ -124,26 +120,14 @@ def find_clusters(N, lattice, links):
             else:
                 max_label = max(label_left, label_above)
                 min_label = min(label_left, label_above)
-                label_list[
-                    canonical_label(
-                        label_list,
-                        max_label)] = label_list[
-                    canonical_label(
-                        label_list,
-                        min_label)]
+                label_list[canonical_label(label_list, max_label)] = label_list[canonical_label(label_list, min_label)]
                 cluster_labels[i, j] = min_label
 
         # If this site has been visited before and changed its label then we
         # also link the previous label with the new one
         if previous_label != cluster_labels[i, j] and previous_label != -1:
             label_list[
-                canonical_label(
-                    label_list,
-                    previous_label)] = canonical_label(
-                label_list,
-                cluster_labels[
-                    i,
-                    j])
+                canonical_label(label_list, previous_label)] = canonical_label(label_list, cluster_labels[i, j])
 
     #   Keep only labels that were used
     label_list = label_list[0:largest_label + 1]
