@@ -155,11 +155,11 @@ def assign_new_cluster_spins(N, cluster_labels, label_list):
 # fig = plt.figure()
 if __name__ == '__main__':
     #   Simulation parameters
-    N = 20
+    N = 100
     betaJ_init = 0.35
     betaJ_end = 0.8
     betaJ_step = 0.01
-    n_idle = 100
+    n_idle = 20
     neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
     #   Simulation variables
@@ -176,7 +176,8 @@ if __name__ == '__main__':
             for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 1)]
     magnetization = dict((betaJ, []) for betaJ in keys)
     energy = dict((betaJ, []) for betaJ in keys)
-    susceptibility = dict((betaJ, []) for betaJ in keys)
+    susceptibility1 = dict((betaJ, []) for betaJ in keys)
+    susceptibility2 = dict((betaJ, []) for betaJ in keys)
     binder_cumulant = dict((betaJ, []) for betaJ in keys)
     unsubtr = dict((betaJ, []) for betaJ in keys)
     cv = dict((betaJ, []) for betaJ in keys)
@@ -194,7 +195,8 @@ if __name__ == '__main__':
         #   Store physical quantites
         magnetization[betaJ].append(abs(np.mean(lattice)))
         energy[betaJ].append(compute_energy(lattice, neighbour_list))
-        susceptibility[betaJ].append(np.mean(lattice)**2)
+        susceptibility1[betaJ].append(np.sum(lattice)**2)
+        susceptibility2[betaJ].append(abs(np.sum(lattice)))
         unsubtr[betaJ].append(np.sum(ncluster*ncluster)/(N*N))
 
         if i % n_idle == 0:
@@ -208,12 +210,12 @@ if __name__ == '__main__':
 
         # print(i)
 
-    magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-    plt.scatter(*zip(*magnetization_av))
-    plt.show()
+    # magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
+    # plt.scatter(*zip(*magnetization_av))
+    # plt.show()
 
-    unsubtr_av = [(betaJ, np.mean(unsubtr[betaJ])) for betaJ in unsubtr]
-    plt.scatter(*zip(*unsubtr_av))
+    susceptibility_av = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in (susceptibility1 and susceptibility2)]
+    plt.scatter(*zip(*susceptibility_av))
     plt.show()
     # Cv = np.var(E)*betaJ/(N*N)
     # print(Cv)
