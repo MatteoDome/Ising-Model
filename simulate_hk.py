@@ -36,7 +36,7 @@ def find_links(N, lattice, betaJ):
     """
 
     prob = np.exp(-2*betaJ)
-    links = np.zeros([N, N, 2], dtype 'int_')
+    links = np.zeros([N, N, 2], 'int_')
 
     #   Set links to 1 if they match 
     links[lattice == np.roll(lattice, 1, 0), 0] = 1
@@ -188,6 +188,5 @@ if __name__ == '__main__':
     magnetization_av =  [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
     plt.scatter(*zip(*magnetization_av))
     plt.show()
-
     # Cv = np.var(E)*betaJ/(N*N)
     # print(Cv)
