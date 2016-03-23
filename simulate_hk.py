@@ -63,7 +63,7 @@ def find_clusters(N, lattice, links):
     largest_label = -1
     cluster_labels = -np.ones([N, N], dtype='int_')
     label_list = np.arange(N**2)
-
+    ncluster = np.zeros(N*N, dtype = 'int_')
     for i, j in itertools.product(range(N), range(N)):
         previous_label = cluster_labels[i, j]
         link_above = links[i, j, 0]
@@ -122,12 +122,18 @@ def find_clusters(N, lattice, links):
                 min_label = min(label_left, label_above)
                 label_list[canonical_label(label_list, max_label)] = label_list[canonical_label(label_list, min_label)]
                 cluster_labels[i, j] = min_label
-
+            
         # If this site has been visited before and changed its label then we
         # also link the previous label with the new one
         if previous_label != cluster_labels[i, j] and previous_label != -1:
             label_list[
                 canonical_label(label_list, previous_label)] = canonical_label(label_list, cluster_labels[i, j])
+
+        #if we re-label the boundary sites, we have to modify the cluster numbers accordingly
+        # if cluster_labels[i,j] != previous_label and previous_label != -1:
+            # ncluster[previous_label] -=1
+
+        ncluster[cluster_labels[i,j]] +=1
 
     #   Keep only labels that were used
     label_list = label_list[0:largest_label + 1]
@@ -159,7 +165,6 @@ if __name__ == '__main__':
     largest_label = 0
     label = np.zeros([N, N])
     links = np.zeros([N, N, 2])
-
     #   Compute number of iterations
     n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)
 
