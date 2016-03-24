@@ -88,12 +88,12 @@ if __name__ == '__main__':
     energy, l_sum = simulate(N, betaJ_init, betaJ_end,
                              betaJ_step, n_idle, anim_params)
 
-    cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]) - np.std(energy[betaJ]))) / N**2)
+    cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2)
           for betaJ in energy]
     binder_cumulant = [(betaJ, 1 - np.mean(l_sum[betaJ]**4) /
                         (3 * np.mean(l_sum[betaJ]**2)**2)) for betaJ in l_sum]
     magnetization = [(betaJ, np.mean(l_sum[betaJ]) / N**2) for betaJ in l_sum]
 
-    plt.scatter(*zip(*magnetization))
+    plt.scatter(*zip(*cv))
     # plt.scatter(*zip(*cv))
     plt.show()

@@ -159,7 +159,7 @@ if __name__ == '__main__':
     betaJ_init = 0.35
     betaJ_end = 0.8
     betaJ_step = 0.01
-    n_idle = 20
+    n_idle = 100
     neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
     #   Simulation variables
@@ -197,7 +197,7 @@ if __name__ == '__main__':
         energy[betaJ].append(compute_energy(lattice, neighbour_list))
         susceptibility1[betaJ].append(np.sum(lattice)**2)
         susceptibility2[betaJ].append(abs(np.sum(lattice)))
-        unsubtr[betaJ].append(np.sum(ncluster*ncluster)/(N*N))
+        # unsubtr[betaJ].append(np.sum(ncluster*ncluster)/(N*N))
 
         if i % n_idle == 0:
             betaJ = round(betaJ + 0.01, 2)
@@ -210,12 +210,18 @@ if __name__ == '__main__':
 
         # print(i)
 
-    # magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-    # plt.scatter(*zip(*magnetization_av))
+    magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
+    plt.scatter(*zip(*magnetization_av))
+    plt.show()
+
+    # susceptibility_av = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in (susceptibility1 and susceptibility2)]
+    # plt.scatter(*zip(*susceptibility_av))
+    # plt.show()
+    # cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2)
+    #       for betaJ in energy]
+    # plt.scatter(*zip(*cv))
     # plt.show()
 
-    susceptibility_av = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in (susceptibility1 and susceptibility2)]
-    plt.scatter(*zip(*susceptibility_av))
-    plt.show()
-    # Cv = np.var(E)*betaJ/(N*N)
+
     # print(Cv)
+
