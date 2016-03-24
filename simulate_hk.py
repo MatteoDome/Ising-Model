@@ -57,84 +57,56 @@ def canonical_label(label_list, label):
 
     return label
 
+def link_labels(label_list, labels_to_link):
+    labels_to_link = [canonical_label(label_list, label) for label in labels_to_link]
+    label_list[max(labels_to_link)] = min(labels_to_link)
+    
+    return min(labels_to_link)
 
-@jit
 def find_clusters(N, lattice, links):
     largest_label = -1
     cluster_labels = -np.ones([N, N], dtype='int_')
     label_list = np.arange(N**2, dtype='int_')
-    ncluster = np.zeros(N**2, dtype = 'int_')
+    cluster_count = np.zeros(N**2, dtype = 'int_')
+
+    #   Throw away links in the boundary, these will be dealt with later
+    links[:, 0, 1] = 0
+    links[0, :, 0] = 0
+
     for i, j in itertools.product(range(N), range(N)):
-        previous_label = cluster_labels[i, j]
-        link_above = links[i, j, 0]
-        label_above = cluster_labels[(i - 1) % N, j]
-        link_left = links[i, j, 1]
-        label_left = cluster_labels[i, (j - 1) % N]
+        link_above, link_left  = links[i, j, 0], links[i, j, 1]
+        label_above, label_left = cluster_labels[(i - 1) % N, j], cluster_labels[i, (j - 1) % N]
 
         #   No links so it's a new cluster. Therefore we create a new label
         if not link_above and not link_left:
             largest_label += 1
             cluster_labels[i, j] = largest_label
 
-        #   One neighbour to the left, existing cluster
+        #   One neighbour to the left
         elif link_left and not link_above:
-            # If the neighbour is on the other side of the lattice we create a
-            # new label and label that spin too
-            if label_left == -1:
-                largest_label += 1
-                cluster_labels[i, (j - 1) % N] = largest_label
-                cluster_labels[i, j] = largest_label
+            cluster_labels[i, j] = canonical_label(label_list, label_left)
 
-            else:
-                cluster_labels[i, j] = canonical_label(label_list, label_left)
-
-        #   One neighbour above, existing cluster
+        #   One neighbour above
         elif link_above and not link_left:
-            # If there's a neighbour on the other side of the lattice we create
-            # a new label and label that spin too
-            if label_above == -1:
-                largest_label += 1
-                cluster_labels[(i - 1) % N, j] = largest_label
-                cluster_labels[i, j] = largest_label
+            cluster_labels[i, j] = canonical_label(label_list, label_above)
 
-            else:
-                cluster_labels[i, j] = canonical_label(label_list, label_above)
-
-        #   Else neighbours both to the left and above, we link the labels
+        #   Else neighbours both to the left and above
         else:
-            if label_left == -1 and label_above != -1:
-                cluster_labels[i, j] = canonical_label(label_list, label_above)
-                cluster_labels[i, (j - 1) % N] = canonical_label(label_list, label_above)
+            cluster_labels[i, j] = link_labels(label_list, [label_left, label_above])
 
-            elif label_above == -1 and label_left != -1:
-                cluster_labels[i, j] = canonical_label(label_list, label_left)
-                cluster_labels[(i - 1) % N, j] = canonical_label(label_list, label_left)
-
-            #   kinda dumb because this only happens for (0, 0)
-            elif label_above == -1 and label_left == -1:
-                largest_label += 1
-                cluster_labels[i, (j - 1) % N] = largest_label
-                cluster_labels[(i - 1) % N, j] = largest_label
-                cluster_labels[i, j] = largest_label
-
-            else:
-                max_label = max(label_left, label_above)
-                min_label = min(label_left, label_above)
-                label_list[canonical_label(label_list, max_label)] = label_list[canonical_label(label_list, min_label)]
-                cluster_labels[i, j] = min_label
+        cluster_count[cluster_labels[i,j]] +=1
             
-        # If this site has been visited before and changed its label then we
-        # also link the previous label with the new one
-        if previous_label != cluster_labels[i, j] and previous_label != -1:
-            label_list[canonical_label(label_list, previous_label)] = canonical_label(label_list, cluster_labels[i, j])
-
-        #if we re-label the boundary sites, we have to modify the cluster numbers accordingly
-        ncluster[cluster_labels[i,j]] +=1
+    # Iterate through boundaries
+    for i in range(N):
+        if lattice[i, 0] == lattice[i, N - 1]:
+            cluster_labels[i, 0] = link_labels(label_list, [cluster_labels[i, 0], cluster_labels[i, N - 1]])
+        if lattice[0, i] == lattice[N - 1, i]:
+            cluster_labels[0, i] = link_labels(label_list, [cluster_labels[0, i], cluster_labels[N - 1, i]])
 
     #   Keep only labels that were used
     label_list = label_list[0:largest_label + 1]
 
-    return cluster_labels, label_list, ncluster
+    return cluster_labels, label_list, cluster_count
 
 def n_rearrange(N, ncluster, label_list):
     for label in label_list:
@@ -219,7 +191,7 @@ if __name__ == '__main__':
     # susceptibility_av = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in (susceptibility1 and susceptibility2)]
     # plt.scatter(*zip(*susceptibility_av))
     # plt.show()
-
+    
     # cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2)
     #       for betaJ in energy]
     # plt.scatter(*zip(*cv))
@@ -230,6 +202,4 @@ if __name__ == '__main__':
     plt.scatter(*zip(*binder_cumulant))
     plt.show()
 
-
-    # print(Cv)
 
