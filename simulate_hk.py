@@ -5,7 +5,7 @@ from scipy.ndimage import convolve
 import math
 import itertools
 from numba import jit
-
+import time
 
 def compute_energy(lattice, neighbour_list):
     """
@@ -13,7 +13,9 @@ def compute_energy(lattice, neighbour_list):
     Compute the energy of the lattice. neighbour_list is a matrix indicating which
     neighbour spins should be considered when computing the energy (1 contributes, 0
     does not).
-
+   
+    Args
+        neighbour_list: 3x3 matrix indicating which neighbour interactions to consider
     """
 
     #   Wrap mode used for periodic boundary conditions
@@ -106,16 +108,16 @@ def find_clusters(N, lattice, links):
 
     #   Keep only labels that were used
     label_list = label_list[0:largest_label + 1]
+    
+    #   Reprocess label and cluster count
+    for index, label in enumerate(label_list):
+        correct_label = canonical_label(label_list, label)
+        if correct_label != label:
+            cluster_count[correct_label] += cluster_count[label]
+            cluster_count[label] = 0
+            label_list[index] = correct_label
 
     return cluster_labels, label_list, cluster_count
-
-def n_rearrange(N, ncluster, label_list):
-    for label in label_list:
-        if canonical_label(label_list, label) != label:
-            ncluster[canonical_label(label_list, label)] += ncluster[label]
-            ncluster[label] = 0
-    ncluster = ncluster[ncluster>0]
-    return ncluster
 
 def assign_new_cluster_spins(N, cluster_labels, label_list):
     new_spins = np.random.choice([1, -1], size=label_list.size)
@@ -134,32 +136,23 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
     n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)
 
     #   Physical quantities to track
-    keys = [round(betaJ_init + i * betaJ_step, 2)
+    betaJ_values = [round(betaJ_init + i * betaJ_step, 2)
             for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 1)]
-    magnetization = dict((betaJ, []) for betaJ in keys)
-    energy = dict((betaJ, []) for betaJ in keys)
-    lattice_sum = dict((betaJ, []) for betaJ in keys)
-    susceptibility1 = dict((betaJ, []) for betaJ in keys)
-    susceptibility2 = dict((betaJ, []) for betaJ in keys)
-    binder_cumulant = dict((betaJ, []) for betaJ in keys)
-    unsubtr = dict((betaJ, []) for betaJ in keys)
 
+    magnetization = { betaJ : np.array([]) for betaJ in betaJ_values}
+    energy = { betaJ : np.array([]) for betaJ in betaJ_values}
+    lat_sum = { betaJ : np.array([]) for betaJ in betaJ_values}
+    #unsubtr = dict((betaJ, np.array([])) for betaJ in betaJ_values)
+
+    #   Main cycle
     for i in range(n_iter):
         links = find_links(N, lattice, betaJ)
-        cluster_labels, label_list, ncluster = find_clusters(N, lattice, links)
-        ncluster = n_rearrange(N, ncluster, label_list)
-
-        #   Reprocess label list
-        label_list = np.array([canonical_label(label_list, label)
-                               for label in label_list])
+        cluster_labels, label_list, cluster_count = find_clusters(N, lattice, links)
         lattice = assign_new_cluster_spins(N, cluster_labels, label_list)
-
         #   Store physical quantites
-        magnetization[betaJ].append(abs(np.mean(lattice)))
-        lattice_sum[betaJ] = np.append(lattice_sum[betaJ], np.sum(lattice))
-        energy[betaJ].append(compute_energy(lattice, neighbour_list))
-        susceptibility1[betaJ].append(np.sum(lattice)**2)
-        susceptibility2[betaJ].append(abs(np.sum(lattice)))
+        magnetization[betaJ] = np.append(magnetization[betaJ], abs(np.mean(lattice)))
+        energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice, neighbour_list))
+        lat_sum[betaJ] = np.append(lat_sum[betaJ], np.sum(lattice))
         # unsubtr[betaJ].append(np.sum(ncluster*ncluster)/(N*N))
 
         if i % n_idle == 0:
@@ -168,9 +161,9 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
 
     #   Process data
     magnetization = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-    susceptibility = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in susceptibility1]
-    binder_cumulant = [(betaJ, 1 - np.mean(lattice_sum[betaJ]**4) /
-                        (3 * np.mean(lattice_sum[betaJ]**2)**2)) for betaJ in lattice_sum]
+    susceptibility = [(betaJ, (np.mean(lat_sum[betaJ]**2)-(np.mean(abs(lat_sum[betaJ]))**2))/N**2) for betaJ in lat_sum]
+    binder_cumulant = [(betaJ, 1 - np.mean(lat_sum[betaJ]**4) /
+                        (3 * np.mean(lat_sum[betaJ]**2)**2)) for betaJ in lat_sum]
     cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2) for betaJ in energy]
 
     return magnetization, susceptibility, binder_cumulant, cv
@@ -178,15 +171,14 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
 if __name__ == '__main__':
     
     #   Default simulation parameters
-    N = 64
+    N = 32
     betaJ_init = 0.1
     betaJ_end = 0.6
     betaJ_step = 0.01
-    n_idle = 100
+    n_idle = 10
     neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
     magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
-    
 
-    plt.scatter(*zip(*binder_cumulant))
+    plt.scatter(*zip(*susceptibility))
     plt.show()
