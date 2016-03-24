@@ -155,11 +155,11 @@ def assign_new_cluster_spins(N, cluster_labels, label_list):
 # fig = plt.figure()
 if __name__ == '__main__':
     #   Simulation parameters
-    N = 100
-    betaJ_init = 0.35
-    betaJ_end = 0.8
+    N = 64
+    betaJ_init = 0.1
+    betaJ_end = 0.6
     betaJ_step = 0.01
-    n_idle = 100
+    n_idle = 300
     neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
     #   Simulation variables
@@ -176,6 +176,7 @@ if __name__ == '__main__':
             for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 1)]
     magnetization = dict((betaJ, []) for betaJ in keys)
     energy = dict((betaJ, []) for betaJ in keys)
+    l_sum = dict((betaJ, []) for betaJ in keys)
     susceptibility1 = dict((betaJ, []) for betaJ in keys)
     susceptibility2 = dict((betaJ, []) for betaJ in keys)
     binder_cumulant = dict((betaJ, []) for betaJ in keys)
@@ -194,6 +195,7 @@ if __name__ == '__main__':
 
         #   Store physical quantites
         magnetization[betaJ].append(abs(np.mean(lattice)))
+        l_sum[betaJ] = np.append(l_sum[betaJ], np.sum(lattice))
         energy[betaJ].append(compute_energy(lattice, neighbour_list))
         susceptibility1[betaJ].append(np.sum(lattice)**2)
         susceptibility2[betaJ].append(abs(np.sum(lattice)))
@@ -210,17 +212,23 @@ if __name__ == '__main__':
 
         # print(i)
 
-    magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-    plt.scatter(*zip(*magnetization_av))
-    plt.show()
+    # magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
+    # plt.scatter(*zip(*magnetization_av))
+    # plt.show()
 
     # susceptibility_av = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in (susceptibility1 and susceptibility2)]
     # plt.scatter(*zip(*susceptibility_av))
     # plt.show()
+
     # cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2)
     #       for betaJ in energy]
     # plt.scatter(*zip(*cv))
     # plt.show()
+
+    binder_cumulant = [(betaJ, 1 - np.mean(l_sum[betaJ]**4) /
+                        (3 * np.mean(l_sum[betaJ]**2)**2)) for betaJ in l_sum]
+    plt.scatter(*zip(*binder_cumulant))
+    plt.show()
 
 
     # print(Cv)

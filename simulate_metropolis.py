@@ -33,7 +33,8 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
     #   Physical quantities to track
     energy = dict((betaJ, np.array([])) for betaJ in values)
     l_sum = dict((betaJ, np.array([])) for betaJ in values)
-
+    susceptibility1 = dict((betaJ, []) for betaJ in values)
+    susceptibility2 = dict((betaJ, []) for betaJ in values)
     #   Main lattice matrix and betaJ
     # lattice = np.random.choice([1, -1], size=[N, N]) 
 
@@ -63,6 +64,8 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
         #   Save physical quantities
         l_sum[betaJ] = np.append(l_sum[betaJ], np.sum(lattice))
         energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice))
+        susceptibility1[betaJ].append(np.sum(lattice)**2)
+        susceptibility2[betaJ].append(abs(np.sum(lattice)))
 
         if anim_params['animate'] and i % anim_params['freq'] == 0:
             fig.clf()
@@ -77,7 +80,7 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
             betaJ = round(betaJ + betaJ_step, 2)
             print("beta*J " + str(betaJ))
 
-    return energy, l_sum
+    return energy, l_sum, susceptibility1, susceptibility2
 
 if __name__ == '__main__':
     #   Simulation parameters
@@ -85,11 +88,11 @@ if __name__ == '__main__':
     betaJ_init = 1
     betaJ_end = 0.01
     betaJ_step = - 0.01
-    n_idle = 100
+    n_idle = 200
 
     anim_params = {'animate': False, 'freq': 100}
 
-    energy, l_sum = simulate(N, betaJ_init, betaJ_end,
+    energy, l_sum, susceptibility1, susceptibility2 = simulate(N, betaJ_init, betaJ_end,
                              betaJ_step, n_idle, anim_params)
 
     cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2)
@@ -97,7 +100,8 @@ if __name__ == '__main__':
     binder_cumulant = [(betaJ, 1 - np.mean(l_sum[betaJ]**4) /
                         (3 * np.mean(l_sum[betaJ]**2)**2)) for betaJ in l_sum]
     magnetization = [(betaJ, np.mean(l_sum[betaJ]) / N**2) for betaJ in l_sum]
+    susceptibility_av = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in (susceptibility1 and susceptibility2)]
 
-    plt.scatter(*zip(*magnetization))
+    plt.scatter(*zip(*susceptibility_av))
     # plt.scatter(*zip(*cv))
     plt.show()
