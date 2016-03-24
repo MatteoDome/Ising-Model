@@ -35,8 +35,12 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
     l_sum = dict((betaJ, np.array([])) for betaJ in values)
 
     #   Main lattice matrix and betaJ
-    lattice = np.random.choice([1, -1], size=[N, N])
+    # lattice = np.random.choice([1, -1], size=[N, N]) 
+
     betaJ = betaJ_init
+
+    # Main lattice when starting at low temperature
+    lattice = np.ones([N, N])
 
     #   Checkerboard pattern to flip spins
     checkerboard = np.full((N, N), True, dtype=bool)
@@ -78,9 +82,9 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, anim_params):
 if __name__ == '__main__':
     #   Simulation parameters
     N = 100
-    betaJ_init = 0.01
-    betaJ_end = 1
-    betaJ_step = 0.01
+    betaJ_init = 1
+    betaJ_end = 0.01
+    betaJ_step = - 0.01
     n_idle = 100
 
     anim_params = {'animate': False, 'freq': 100}
@@ -94,6 +98,6 @@ if __name__ == '__main__':
                         (3 * np.mean(l_sum[betaJ]**2)**2)) for betaJ in l_sum]
     magnetization = [(betaJ, np.mean(l_sum[betaJ]) / N**2) for betaJ in l_sum]
 
-    plt.scatter(*zip(*cv))
+    plt.scatter(*zip(*magnetization))
     # plt.scatter(*zip(*cv))
     plt.show()
