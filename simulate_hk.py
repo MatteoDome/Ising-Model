@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as anim
 from scipy.ndimage import convolve
 import math
 import itertools
@@ -134,26 +133,29 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
     label = np.zeros([N, N])
     links = np.zeros([N, N, 2])
     n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)
+    neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
-    #   Physical quantities to track
+    #   betaJ values that will be sweeped
     betaJ_values = [round(betaJ_init + i * betaJ_step, 2)
             for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 1)]
-
+    
+    #   Physical quantities to track
     magnetization = { betaJ : np.array([]) for betaJ in betaJ_values}
     energy = { betaJ : np.array([]) for betaJ in betaJ_values}
     lat_sum = { betaJ : np.array([]) for betaJ in betaJ_values}
-    #unsubtr = dict((betaJ, np.array([])) for betaJ in betaJ_values)
+    unsubtracted = { betaJ : np.array([]) for betaJ in betaJ_values}
 
     #   Main cycle
     for i in range(n_iter):
         links = find_links(N, lattice, betaJ)
         cluster_labels, label_list, cluster_count = find_clusters(N, lattice, links)
         lattice = assign_new_cluster_spins(N, cluster_labels, label_list)
+
         #   Store physical quantites
         magnetization[betaJ] = np.append(magnetization[betaJ], abs(np.mean(lattice)))
         energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice, neighbour_list))
         lat_sum[betaJ] = np.append(lat_sum[betaJ], np.sum(lattice))
-        # unsubtr[betaJ].append(np.sum(ncluster*ncluster)/(N*N))
+        unsubtracted[betaJ] = np.append(unsubtracted[betaJ], np.sum(cluster_count**2)/(N*N))
 
         if i % n_idle == 0:
             betaJ = round(betaJ + 0.01, 2)
@@ -162,6 +164,7 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
     #   Process data
     magnetization = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
     susceptibility = [(betaJ, (np.mean(lat_sum[betaJ]**2)-(np.mean(abs(lat_sum[betaJ]))**2))/N**2) for betaJ in lat_sum]
+    # susceptibility = [(betaJ, np.mean(unsubtracted[betaJ])) for betaJ in unsubtracted]
     binder_cumulant = [(betaJ, 1 - np.mean(lat_sum[betaJ]**4) /
                         (3 * np.mean(lat_sum[betaJ]**2)**2)) for betaJ in lat_sum]
     cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2) for betaJ in energy]
@@ -169,14 +172,12 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
     return magnetization, susceptibility, binder_cumulant, cv
 
 if __name__ == '__main__':
-    
     #   Default simulation parameters
     N = 32
     betaJ_init = 0.1
     betaJ_end = 0.6
     betaJ_step = 0.01
     n_idle = 10
-    neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
     magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
 
