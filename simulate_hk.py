@@ -63,6 +63,7 @@ def link_labels(label_list, labels_to_link):
     
     return min(labels_to_link)
 
+@jit
 def find_clusters(N, lattice, links):
     largest_label = -1
     cluster_labels = -np.ones([N, N], dtype='int_')
@@ -123,24 +124,13 @@ def assign_new_cluster_spins(N, cluster_labels, label_list):
 
     return new_lattice
 
-# plt.ion()
-# fig = plt.figure()
-if __name__ == '__main__':
-    #   Simulation parameters
-    N = 64
-    betaJ_init = 0.1
-    betaJ_end = 0.6
-    betaJ_step = 0.01
-    n_idle = 300
-    neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
-
+def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
     #   Simulation variables
     lattice = np.random.choice([1, -1], size=[N, N])
     betaJ = betaJ_init
     largest_label = 0
     label = np.zeros([N, N])
     links = np.zeros([N, N, 2])
-    #   Compute number of iterations
     n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)
 
     #   Physical quantities to track
@@ -148,12 +138,11 @@ if __name__ == '__main__':
             for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 1)]
     magnetization = dict((betaJ, []) for betaJ in keys)
     energy = dict((betaJ, []) for betaJ in keys)
-    l_sum = dict((betaJ, []) for betaJ in keys)
+    lattice_sum = dict((betaJ, []) for betaJ in keys)
     susceptibility1 = dict((betaJ, []) for betaJ in keys)
     susceptibility2 = dict((betaJ, []) for betaJ in keys)
     binder_cumulant = dict((betaJ, []) for betaJ in keys)
     unsubtr = dict((betaJ, []) for betaJ in keys)
-    cv = dict((betaJ, []) for betaJ in keys)
 
     for i in range(n_iter):
         links = find_links(N, lattice, betaJ)
@@ -167,7 +156,7 @@ if __name__ == '__main__':
 
         #   Store physical quantites
         magnetization[betaJ].append(abs(np.mean(lattice)))
-        l_sum[betaJ] = np.append(l_sum[betaJ], np.sum(lattice))
+        lattice_sum[betaJ] = np.append(lattice_sum[betaJ], np.sum(lattice))
         energy[betaJ].append(compute_energy(lattice, neighbour_list))
         susceptibility1[betaJ].append(np.sum(lattice)**2)
         susceptibility2[betaJ].append(abs(np.sum(lattice)))
@@ -175,31 +164,29 @@ if __name__ == '__main__':
 
         if i % n_idle == 0:
             betaJ = round(betaJ + 0.01, 2)
-            print(betaJ)
+            print("BetaJ: " + str(betaJ))
 
-        # fig.clf()
-        # ax = fig.add_subplot(111)
-        # ax.matshow(lattice)
-        # plt.draw()
+    #   Process data
+    magnetization = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
+    susceptibility = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in susceptibility1]
+    binder_cumulant = [(betaJ, 1 - np.mean(lattice_sum[betaJ]**4) /
+                        (3 * np.mean(lattice_sum[betaJ]**2)**2)) for betaJ in lattice_sum]
+    cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2) for betaJ in energy]
 
-        # print(i)
+    return magnetization, susceptibility, binder_cumulant, cv
 
-    # magnetization_av = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-    # plt.scatter(*zip(*magnetization_av))
-    # plt.show()
-
-    # susceptibility_av = [(betaJ, np.mean(susceptibility1[betaJ])-(np.mean(susceptibility2[betaJ])**2)) for betaJ in (susceptibility1 and susceptibility2)]
-    # plt.scatter(*zip(*susceptibility_av))
-    # plt.show()
+if __name__ == '__main__':
     
-    # cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2)
-    #       for betaJ in energy]
-    # plt.scatter(*zip(*cv))
-    # plt.show()
+    #   Default simulation parameters
+    N = 64
+    betaJ_init = 0.1
+    betaJ_end = 0.6
+    betaJ_step = 0.01
+    n_idle = 100
+    neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
-    binder_cumulant = [(betaJ, 1 - np.mean(l_sum[betaJ]**4) /
-                        (3 * np.mean(l_sum[betaJ]**2)**2)) for betaJ in l_sum]
+    magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
+    
+
     plt.scatter(*zip(*binder_cumulant))
     plt.show()
-
-
