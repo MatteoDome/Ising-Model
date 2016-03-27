@@ -134,11 +134,12 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
     links = np.zeros([N, N, 2])
     n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)
     neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
+    decimal_precision = len(str(betaJ_step).split('.')[1])
 
     #   betaJ values that will be sweeped
-    betaJ_values = [round(betaJ_init + i * betaJ_step, 2)
-            for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 1)]
-    
+    betaJ_values = [round(betaJ_init + i * betaJ_step, decimal_precision)
+            for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 2)]
+      
     #   Physical quantities to track
     magnetization = { betaJ : np.array([]) for betaJ in betaJ_values}
     energy = { betaJ : np.array([]) for betaJ in betaJ_values}
@@ -158,7 +159,7 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
         unsubtracted[betaJ] = np.append(unsubtracted[betaJ], np.sum(cluster_count**2)/(N*N))
 
         if i % n_idle == 0:
-            betaJ = round(betaJ + 0.01, 2)
+            betaJ = round(betaJ + betaJ_step, decimal_precision)
             print("BetaJ: " + str(betaJ))
 
     #   Process data
