@@ -12,16 +12,7 @@ with PdfPages('batch_results/magnetization.pdf') as pdf:
     	results = open("batch_results/"+str(N), 'rb')
     	object_results = pickle.load(results)
     	magnetization = np.asarray(object_results[0])
-    	magnetization.sort(axis = 0)
-    	c = np.random.rand(3,1)
-    	for betaJ in betaJ_values:
-    		betaJ_ind = int(round(betaJ*100 - 10))
-    		magn_pl = magnetization[betaJ_ind,1]
-    		print("*******")
-    		print("betaJ = " + str(betaJ))
-    		print("magnetization = " +str(magn_pl))
-    		print("N = "+str(N))
-    		plt.scatter(betaJ, magn_pl, c = c)
+    	plt.scatter(magnetization[:,0], magnetization[:,1], c = np.random.rand(3,1))
     	results.close()
     	
     	plt.hold(True)
@@ -29,6 +20,61 @@ with PdfPages('batch_results/magnetization.pdf') as pdf:
     plt.xlim([0,1])
     plt.ylabel("$magnetization$", fontsize = 15)
     plt.ylim([0,1])
+    pdf.savefig()
+    plt.show()
+
+plt.close()
+
+with PdfPages('batch_results/binder_cumulant.pdf') as pdf:
+    plt.figure()
+    for N in N_values:
+        results = open("batch_results/"+str(N), 'rb')
+        object_results = pickle.load(results)
+        binder_cumulant = np.asarray(object_results[2])
+        plt.scatter(binder_cumulant[:,0], binder_cumulant[:, 1], c = np.random.rand(3,1))
+        results.close()
+        
+        plt.hold(True)
+    plt.xlabel('$betaJ$',fontsize=15)
+    plt.xlim([0,1])
+    plt.ylabel("$binder_cumulant$", fontsize = 15)
+    plt.ylim([0,1])
+    pdf.savefig()
+    plt.show()
+
+plt.close()
+
+with PdfPages('batch_results/susceptibility.pdf') as pdf:
+    plt.figure()
+    for N in N_values:
+        results = open("batch_results/"+str(N), 'rb')
+        object_results = pickle.load(results)
+        susceptibility = np.asarray(object_results[1])
+        plt.scatter(susceptibility[:, 0], susceptibility[:, 1], c = np.random.rand(3,1))
+        results.close()
+        
+        plt.hold(True)
+    plt.xlabel('$betaJ$',fontsize=15)
+    plt.xlim([0,1])
+    plt.ylabel("$susceptibility$", fontsize = 15)
+    pdf.savefig()
+    plt.show()
+
+plt.close()
+
+with PdfPages('batch_results/cv.pdf') as pdf:
+    plt.figure()
+    for N in N_values:
+        results = open("batch_results/"+str(N), 'rb')
+        object_results = pickle.load(results)
+        cv = np.asarray(object_results[3])
+        plt.scatter(cv[:,0], cv[:, 1], c = np.random.rand(3,1))
+        results.close()
+        
+        plt.hold(True)
+    plt.xlabel('$betaJ$',fontsize=15)
+    plt.xlim([0,1])
+    plt.ylabel("$cv$", fontsize = 15)
     pdf.savefig()
     plt.show()
 
