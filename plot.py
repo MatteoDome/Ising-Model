@@ -12,6 +12,8 @@ with PdfPages('batch_results/magnetization.pdf') as pdf:
     	results = open("batch_results/"+str(N), 'rb')
     	object_results = pickle.load(results)
     	magnetization = np.asarray(object_results[0])
+    	magnetization.sort(axis = 0)
+    	c = np.random.rand(3,1)
     	for betaJ in betaJ_values:
     		betaJ_ind = int(round(betaJ*100 - 10))
     		magn_pl = magnetization[betaJ_ind,1]
@@ -19,14 +21,15 @@ with PdfPages('batch_results/magnetization.pdf') as pdf:
     		print("betaJ = " + str(betaJ))
     		print("magnetization = " +str(magn_pl))
     		print("N = "+str(N))
-    		plt.plot(betaJ, magn_pl, linewidth=2.0)
+    		plt.scatter(betaJ, magn_pl, c = c)
     	results.close()
-	plt.xlabel('$betaJ$',fontsize=15)
-	plt.xlim([0, 1])
-	plt.ylabel('$magnetization$', fontsize=15)
-	plt.legend(loc=4)
-	plt.ylim([0,1])
-	pdf.savefig()
     	
+    	plt.hold(True)
+    plt.xlabel('$betaJ$',fontsize=15)
+    plt.xlim([0,1])
+    plt.ylabel("$magnetization$", fontsize = 15)
+    plt.ylim([0,1])
+    pdf.savefig()
+    plt.show()
 
 plt.close()
