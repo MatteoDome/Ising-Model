@@ -19,7 +19,6 @@ with PdfPages('batch_results/magnetization.pdf') as pdf:
     plt.xlabel('$betaJ$',fontsize=15)
     plt.xlim([0,1])
     plt.ylabel("$magnetization$", fontsize = 15)
-    plt.ylim([0,1])
     pdf.savefig()
     plt.show()
 
@@ -38,7 +37,6 @@ with PdfPages('batch_results/binder_cumulant.pdf') as pdf:
     plt.xlabel('$betaJ$',fontsize=15)
     plt.xlim([0,1])
     plt.ylabel("$binder_cumulant$", fontsize = 15)
-    plt.ylim([0,1])
     pdf.savefig()
     plt.show()
 
