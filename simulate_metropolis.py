@@ -19,46 +19,58 @@ def compute_energy(lattice, neighbour_list):
 
     return energy
 
-def flipping_probabilities(N, lattice, neighbour_list, mask, betaJ):
+def flipping_probabilities(N, lattice, neighbour_list, spins_to_flip, betaJ):
     neighbour_sum = convolve(lattice, neighbour_list, mode='wrap')
 
     flipping_probability = np.zeros([N, N])
-    flipping_probability[mask] = np.exp(-2 * betaJ * lattice[mask] * neighbour_sum[
-                                        mask]) - np.random.rand(N, N)[mask]
+    flipping_probability[spins_to_flip] = np.exp(-2 * betaJ * lattice[spins_to_flip] * neighbour_sum[
+                                        spins_to_flip]) - np.random.rand(N, N)[spins_to_flip]
 
     return flipping_probability
 
 
-def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
+def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours):
     #   Simulation variables
     lattice = np.random.choice([1, -1], size=[N, N])
     betaJ = betaJ_init
     n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)
-    neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
     
-    #   betaJ values that will be sweeped
-    betaJ_values = [round(betaJ_init + i * betaJ_step, 2)
-              for i in range(int((betaJ_end - betaJ_init) / betaJ_step) + 1)]
-
     #   Physical quantities to track
-    magnetization = { betaJ : np.array([]) for betaJ in betaJ_values}
-    energy = { betaJ : np.array([]) for betaJ in betaJ_values}
-    lat_sum = { betaJ : np.array([]) for betaJ in betaJ_values}
+    magnetization = { betaJ_init : np.array([])}
+    energy = { betaJ_init : np.array([]) }
+    lat_sum = { betaJ_init : np.array([]) }
 
-    #   Checkerboard pattern to flip spins
-    checkerboard = np.full((N, N), True, dtype=bool)
-    checkerboard[1::2, ::2] = False
-    checkerboard[::2, 1::2] = False
+    #   Patterns we use to flip spins
+    if second_neighbours:
+        neighbour_list = np.array([[1, 1, 1], [1, 0, 1], [1, 1, 1]])
+    
+        patterns = [ np.full((N, N), False, dtype=bool), 
+                     np.full((N, N), False, dtype=bool), 
+                     np.full((N, N), False, dtype=bool), 
+                     np.full((N, N), False, dtype=bool)                  
+                   ]
+
+        patterns[0][::2, ::2] = True
+        patterns[1][::2, 1::2] = True
+        patterns[2][1::2, ::2] = True
+        patterns[3][1::2, 1::2] = True
+
+    else:
+        neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
+    
+        patterns = [ np.full((N, N), False, dtype=bool), []]
+
+        patterns[0][1::2, ::2] = True
+        patterns[0][::2, 1::2] = True
+        patterns[1] = ~patterns[0]
+
 
     #   Main cycle
     for i in range(n_iter):
-        #   Compute probabilities and flip for one pattern of checkerboard
-        flip_probs = flipping_probabilities(N, lattice, neighbour_list, checkerboard, betaJ)
-        lattice[flip_probs > 0] = -lattice[flip_probs > 0]
-
-        # Compute probabilities and flip for the other pattern of checkerboard
-        flip_probs = flipping_probabilities(N, lattice, neighbour_list, ~checkerboard, betaJ)
-        lattice[flip_probs > 0] = -lattice[flip_probs > 0]
+        #   Compute probabilities for different patterns of the lattice
+        for pattern in patterns:
+            flip_probs = flipping_probabilities(N, lattice, neighbour_list, pattern, betaJ)
+            lattice[flip_probs > 0] = -lattice[flip_probs > 0]
 
         #   Save physical quantities
         magnetization[betaJ] = np.append(magnetization[betaJ], np.mean(lattice))
@@ -66,7 +78,12 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
         lat_sum[betaJ] = np.append(lat_sum[betaJ], np.sum(lattice))
 
         if i % n_idle == 0:
-            betaJ = round(betaJ + betaJ_step, 2)
+            betaJ = betaJ + betaJ_step
+            
+            magnetization[betaJ] = np.array([])
+            energy[betaJ] = np.array([]) 
+            lat_sum[betaJ] =  np.array([])
+            
             print("beta*J " + str(betaJ))
 
     #   Process data
@@ -80,14 +97,15 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
 
 if __name__ == '__main__':
     #   Simulation parameters
-    N = 100
+    N = 4
     betaJ_init = 0.01
     betaJ_end = 1
     betaJ_step = 0.01
-    n_idle = 200
+    n_idle = 10000
+    second_neighbours = False
 
-    magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
+    magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours)
 
-    plt.scatter(*zip(*magnetization))
-    # plt.scatter(*zip(*cv))
+    #plt.scatter(*zip(*magnetization))
+    plt.scatter(*zip(*cv))
     plt.show()
