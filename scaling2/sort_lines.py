@@ -1,4 +1,4 @@
-filenames = ['32_susceptibility.dat', '32_cv.dat', '32_magnetization.dat']
+filenames = ['64_susceptibility.dat', '64_cv.dat', '64_magnetization.dat']
 
 for filename in filenames:
 	with open(filename, 'r') as unsorted_file:

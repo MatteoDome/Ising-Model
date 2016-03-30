@@ -4,8 +4,8 @@ import simulate_metropolis
 import matplotlib.pyplot as plt
 
 N=64
-betaJ_init = 0
-betaJ_end = 1
+betaJ_init = 0.05
+betaJ_end = 0.3
 betaJ_step = 0.001
 n_idle = 5000
 second_neighbours = True
