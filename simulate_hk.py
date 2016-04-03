@@ -51,7 +51,6 @@ def find_links(N, lattice, betaJ):
 
     return links
 
-
 def canonical_label(label_list, label):
     while label != label_list[label]:
         label = label_list[label]
