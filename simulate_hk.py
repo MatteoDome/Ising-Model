@@ -134,7 +134,6 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
     #   Simulation variables
     lattice = np.random.choice([1, -1], size=[N, N])
     betaJ = betaJ_init
-    largest_label = 0
     label = np.zeros([N, N])
     links = np.zeros([N, N, 2])
     n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)

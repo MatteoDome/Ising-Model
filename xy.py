@@ -5,12 +5,12 @@ import math
 import itertools
 from numba import jit
 
-def find_links(N, spins, parallel_component, betaJ):
+def find_links(N, spins, parallel_component, T):
     #   Compute coupling constants
     coupling = np.zeros([N, N, 2])
     coupling[spins == np.roll(spins, 1, 0), 0]  = (np.abs(parallel_component)*np.abs(np.roll(parallel_component, 1, 0)))[spins == np.roll(spins, 1, 0)]
     coupling[spins == np.roll(spins, 1, 1), 1]  = (np.abs(parallel_component)*np.abs(np.roll(parallel_component, 1, 1)))[spins == np.roll(spins, 1, 1)]
-    prob = np.exp(-betaJ * coupling)
+    prob = np.exp(-coupling/T)
 
     #   Compute links
     links = np.zeros([N, N, 2], 'int_')
@@ -105,31 +105,85 @@ def assign_new_cluster_spins(N, cluster_labels, label_list):
 
     return new_lattice
 
-N=3
+def compute_helicity_modulus(N, angles, T):
+    a = np.cos(angles - np.roll(angles, 1, axis = 2)) + \
+        np.cos(angles - np.roll(angles, -1, axis = 2)) + \
+        np.cos(angles - np.roll(angles, 1, axis = 1)) + \
+        np.cos(angles - np.roll(angles, -1, axis = 1))
 
-#   Create random spins and normalize
-lattice = np.random.uniform(-1, 1, size = [N, N, 3])
-lattice = lattice/np.linalg.norm(lattice, axis=2, keepdims=True)
+    a = np.sum(a, axis = (1, 2))/2
 
-#   Create random vector and normalize
-random_vec = np.random.uniform(-1, 1, size = 3)
-random_vec = random_vec/np.linalg.norm(random_vec)
+    b = np.sin(angles - np.roll(angles, 1, axis=2))
+    b = np.sum(b, axis = (1, 2))/2
+   
+    c = np.sin(angles - np.roll(angles, 1, axis=1))
+    c = np.sum(c, axis = (1, 2))/2
 
-#   Compute parallel and perpendicular components
-parallel_component = np.sum(lattice*random_vec, axis=2)
+    helicity = 1/(2*N**2)*(np.mean(a) - np.mean(b**2)/T - np.mean(c**2)/T)
 
-#   Create lattice of spin components along random vector
-spins = np.zeros(shape=[N, N]) 
-spins[parallel_component < 0] = -1 
-spins[parallel_component > 0] = 1
+    return helicity
 
-parallel_projection = parallel_component[:, :, None] * random_vec
-perpendicular_projection = lattice - parallel_projection
+def simulate(N, T_init, T_end, T_step, n_idle):
+    #   Create random spins and normalize
+    lattice = np.random.uniform(-1, 1, size = [N, N, 2])
+    lattice = lattice/np.linalg.norm(lattice, axis=2, keepdims=True)    
+    T = T_init
+    label = np.zeros([N, N])
+    links = np.zeros([N, N, 2])
+    n_iter = int((T_end - T_init) / T_step * n_idle)
+    neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
 
-links = find_links(N, spins, parallel_component, 1000)
-cluster_labels, label_list, cluster_count = find_clusters(N, links)
-new_spins = assign_new_cluster_spins(N, cluster_labels, label_list)
+    #   Physical quantities to track
+    helicity_modulus = []
+    angles = np.zeros(shape = [n_idle, N, N])
 
-#   Flip parallel part of spins
-parallel_projection[spins != new_spins, :] = - parallel_projection[spins != new_spins, :]
-lattice = parallel_projection + perpendicular_projection
+    #   Main cycle
+    for i in range(n_iter):
+        #   Store angles to calculate helicity modulus
+        angles[int(i%n_idle), :, :] = lattice[:, :, 0]
+
+        #   Create random vector and normalize
+        random_vec = np.random.uniform(-1, 1, size = 2)
+        random_vec = random_vec/np.linalg.norm(random_vec)
+
+        #   Compute parallel and perpendicular components
+        parallel_component = np.sum(lattice*random_vec, axis=2)
+
+        #   Create lattice of spin components along random vector
+        spins = np.zeros(shape=[N, N]) 
+        spins[parallel_component < 0] = -1 
+        spins[parallel_component > 0] = 1
+
+        parallel_projection = parallel_component[:, :, None] * random_vec
+        perpendicular_projection = lattice - parallel_projection
+
+        links = find_links(N, spins, parallel_component, 1000)
+        cluster_labels, label_list, cluster_count = find_clusters(N, links)
+        new_spins = assign_new_cluster_spins(N, cluster_labels, label_list)
+
+        #   Flip parallel part of spins
+        parallel_projection[spins != new_spins, :] = - parallel_projection[spins != new_spins, :]
+        lattice = parallel_projection + perpendicular_projection
+
+        if i % n_idle == 0:
+            helicity_modulus.append((T, compute_helicity_modulus(N, angles, T)))
+
+            angles = np.zeros(shape = [n_idle, N, N])
+            T = T + T_step
+
+            print("T: " + str(T))
+
+    return helicity_modulus
+
+if __name__ == '__main__':
+    #   Default simulation parameters
+    N = 40
+    T_init = 0.6
+    T_end = 1.7
+    T_step = 0.01
+    n_idle = 50
+
+    helicity_modulus = simulate(N, T_init, T_end, T_step, n_idle)
+
+    plt.scatter(*zip(*helicity_modulus))
+    plt.show()
