@@ -1,5 +1,4 @@
 -finite size scaling for second neighbour
 -remove 'spike' at t beginning of graphs
 -determine critical exponent from binder cumulant
--remove betaJ_values from hk
 -unsubtracted

@@ -5,6 +5,7 @@ import math
 import itertools
 from numba import jit
 import time
+import pickle
 
 def compute_energy(lattice, neighbour_list):
     """
@@ -71,12 +72,9 @@ def find_clusters(N, lattice, links):
     label_list = np.arange(N**2, dtype='int_')
     cluster_count = np.zeros(N**2, dtype = 'int_')
 
-    #   Throw away links in the boundary and store them in another array, they will be dealt with later
-    upper_boundary_links = np.copy(links[0, :, 0])
-    links[0, :, 0] = 0
-    
-    left_boundary_links = np.copy(links[:, 0, 1])
+    #   Throw away links in the boundary, these will be dealt with later
     links[:, 0, 1] = 0
+    links[0, :, 0] = 0
 
     for i, j in itertools.product(range(N), range(N)):
         link_above, link_left  = links[i, j, 0], links[i, j, 1]
@@ -101,15 +99,11 @@ def find_clusters(N, lattice, links):
 
         cluster_count[cluster_labels[i,j]] +=1
             
-    # Restore links in the boundary
-    links[0, :, 0] = upper_boundary_links
-    links[:, 0, 1] = left_boundary_links
-
+    # Iterate through boundaries
     for i in range(N):
-        if links[i, 0, 1]:
+        if lattice[i, 0] == lattice[i, N - 1]:
             cluster_labels[i, 0] = link_labels(label_list, [cluster_labels[i, 0], cluster_labels[i, N - 1]])
-            print((i, j))
-        if links[0, i, 0]:
+        if lattice[0, i] == lattice[N - 1, i]:
             cluster_labels[0, i] = link_labels(label_list, [cluster_labels[0, i], cluster_labels[N - 1, i]])
 
     #   Keep only labels that were used
@@ -172,24 +166,23 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
             print("BetaJ: " + str(betaJ))
 
     #   Process data
-    magnetization = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-    susceptibility = [(betaJ, (np.mean(lat_sum[betaJ]**2)-(np.mean(abs(lat_sum[betaJ]))**2))/N**2) for betaJ in lat_sum]
+    #magnetization = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
+    #susceptibility = [(betaJ, (np.mean(lat_sum[betaJ]**2)-(np.mean(abs(lat_sum[betaJ]))**2))/N**2) for betaJ in lat_sum]
     # susceptibility = [(betaJ, np.mean(unsubtracted[betaJ])) for betaJ in unsubtracted]
-    binder_cumulant = [(betaJ, 1 - np.mean(lat_sum[betaJ]**4) /
-                        (3 * np.mean(lat_sum[betaJ]**2)**2)) for betaJ in lat_sum]
-    cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2) for betaJ in energy]
+    #binder_cumulant = [(betaJ, 1 - np.mean(lat_sum[betaJ]**4) /
+           #             (3 * np.mean(lat_sum[betaJ]**2)**2)) for betaJ in lat_sum]
+    #cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2) for betaJ in energy]
 
-    return magnetization, susceptibility, binder_cumulant, cv
+    return magnetization
 
 if __name__ == '__main__':
     #   Default simulation parameters
-    N = 32
-    betaJ_init = 0.1
-    betaJ_end = 0.6
+    N = 128
+    betaJ_init = 0.40
+    betaJ_end = 0.45
     betaJ_step = 0.01
-    n_idle = 10
+    n_idle = 1000
 
-    magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
-
-    plt.scatter(*zip(*susceptibility))
-    plt.show()
+    magnetization = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
+    with open('magnetization_hk.dat', 'wb') as dump:
+        pickle.dump(magnetization, dump)
