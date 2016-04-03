@@ -108,7 +108,6 @@ def find_clusters(N, lattice, links):
     for i in range(N):
         if links[i, 0, 1]:
             cluster_labels[i, 0] = link_labels(label_list, [cluster_labels[i, 0], cluster_labels[i, N - 1]])
-            print((i, j))
         if links[0, i, 0]:
             cluster_labels[0, i] = link_labels(label_list, [cluster_labels[0, i], cluster_labels[N - 1, i]])
 
