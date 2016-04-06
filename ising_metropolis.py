@@ -5,7 +5,7 @@ from scipy.ndimage import convolve, generate_binary_structure, iterate_structure
 def compute_energy(lattice, neighbour_list):
     """
 
-    Compute the energy of the lattice. neighbour_list is a matrix indicating which
+    Compute the energy of the lattice. neighbour_list is a numpy matrix indicating which
     neighbour spins should be considered when computing the energy (1 contributes, 0
     does not).
    
@@ -47,8 +47,7 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours):
         patterns = [ np.full((N, N), False, dtype=bool), 
                      np.full((N, N), False, dtype=bool), 
                      np.full((N, N), False, dtype=bool), 
-                     np.full((N, N), False, dtype=bool)                  
-                   ]
+                     np.full((N, N), False, dtype=bool)]
 
         patterns[0][::2, ::2] = True
         patterns[1][::2, 1::2] = True
@@ -73,8 +72,9 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours):
             lattice[flip_probs > 0] = -lattice[flip_probs > 0]
 
         #   Save physical quantities
+        neighbour_sum = convolve(lattice, neighbour_list, mode='wrap')
+        energy[betaJ] = np.append(energy[betaJ], -0.5 * (np.sum(neighbour_sum * lattice)))
         magnetization[betaJ] = np.append(magnetization[betaJ], np.mean(lattice))
-        energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice, neighbour_list))
         lat_sum[betaJ] = np.append(lat_sum[betaJ], np.sum(lattice))
 
         if i % n_idle == 0:
@@ -96,7 +96,7 @@ def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours):
     return magnetization, susceptibility, binder_cumulant, cv
 
 if __name__ == '__main__':
-    #   Simulation parameters
+    #   Default simulation parameters
     N = 4
     betaJ_init = 0.01
     betaJ_end = 1
@@ -106,6 +106,5 @@ if __name__ == '__main__':
 
     magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours)
 
-    #plt.scatter(*zip(*magnetization))
-    plt.scatter(*zip(*cv))
+    plt.scatter(*zip(*magnetization))
     plt.show()

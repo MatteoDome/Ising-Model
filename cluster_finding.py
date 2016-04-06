@@ -1,30 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.ndimage import convolve
 import math
 import itertools
 from numba import jit
-import time
 
-def compute_energy(lattice, neighbour_list):
-    """
-
-    Compute the energy of the lattice. neighbour_list is a matrix indicating which
-    neighbour spins should be considered when computing the energy (1 contributes, 0
-    does not).
-   
-    Args
-        neighbour_list: 3x3 matrix indicating which neighbour interactions to consider
-    """
-
-    #   Wrap mode used for periodic boundary conditions
-    neighbour_sum = convolve(lattice, neighbour_list, mode='wrap')
-    energy = -0.5 * (np.sum(neighbour_sum * lattice))
-
-    return energy
-
-
-def find_links(N, lattice, betaJ):
+def find_links(N, lattice, betaJ, **kwargs):
     """
     Marks links to the left and right of each spin in the lattice.
 
@@ -37,8 +17,20 @@ def find_links(N, lattice, betaJ):
         Entry [i, j, 0] refers to the neighbour above and [i, j, 1]
         to the neighbour on the left.
     """
+    
+    if 'parallel_component' in kwargs:
+        parallel_component = kwargs['parallel_component']
 
-    prob = np.exp(-2*betaJ)
+        #   Compute coupling constants
+        coupling = np.zeros([N, N, 2])
+        coupling[:, :, 0]  = (np.abs(parallel_component)*np.roll(np.abs(parallel_component), 1, 0))
+        coupling[:, :, 1]  = (np.abs(parallel_component)*np.roll(np.abs(parallel_component), 1, 1))
+
+        prob = np.exp(-2*coupling*betaJ)
+    
+    else:
+        prob = np.exp(-2*betaJ)
+    
     links = np.zeros([N, N, 2], 'int_')
 
     #   Set links to 1 if they match
@@ -64,7 +56,7 @@ def link_labels(label_list, labels_to_link):
     return min(labels_to_link)
 
 @jit
-def find_clusters(N, lattice, links):
+def find_clusters(N, links):
     largest_label = -1
     cluster_labels = -np.ones([N, N], dtype='int_')
     label_list = np.arange(N**2, dtype='int_')
@@ -86,21 +78,18 @@ def find_clusters(N, lattice, links):
             largest_label += 1
             cluster_labels[i, j] = largest_label
 
-        #   One neighbour to the left
         elif link_left and not link_above:
             cluster_labels[i, j] = canonical_label(label_list, label_left)
 
-        #   One neighbour above
         elif link_above and not link_left:
             cluster_labels[i, j] = canonical_label(label_list, label_above)
 
-        #   Else neighbours both to the left and above
         else:
             cluster_labels[i, j] = link_labels(label_list, [label_left, label_above])
 
         cluster_count[cluster_labels[i,j]] +=1
             
-    # Restore links in the boundary
+    # Now we take care of the boundary links
     links[0, :, 0] = upper_boundary_links
     links[:, 0, 1] = left_boundary_links
 
@@ -113,7 +102,7 @@ def find_clusters(N, lattice, links):
     #   Keep only labels that were used
     label_list = label_list[0:largest_label + 1]
     
-    #   Reprocess label and cluster count
+    #   Reprocess label and count the clusters 
     for index, label in enumerate(label_list):
         correct_label = canonical_label(label_list, label)
         if correct_label != label:
@@ -129,64 +118,3 @@ def assign_new_cluster_spins(N, cluster_labels, label_list):
         [[new_spins[label_list[cluster_labels[i, j]]] for j in range(N)] for i in range(N)])
 
     return new_lattice
-
-def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle):
-    #   Simulation variables
-    lattice = np.random.choice([1, -1], size=[N, N])
-    betaJ = betaJ_init
-    label = np.zeros([N, N])
-    links = np.zeros([N, N, 2])
-    n_iter = int((betaJ_end - betaJ_init) / betaJ_step * n_idle)
-    neighbour_list = np.array([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
-
-      
-    #   Physical quantities to track
-    magnetization = { betaJ_init : np.array([])}
-    energy = { betaJ_init : np.array([]) }
-    lat_sum = { betaJ_init : np.array([]) }
-    unsubtracted = { betaJ_init : np.array([]) }
-
-    #   Main cycle
-    for i in range(n_iter):
-        links = find_links(N, lattice, betaJ)
-        cluster_labels, label_list, cluster_count = find_clusters(N, lattice, links)
-        lattice = assign_new_cluster_spins(N, cluster_labels, label_list)
-
-        #   Store physical quantites
-        magnetization[betaJ] = np.append(magnetization[betaJ], abs(np.mean(lattice)))
-        energy[betaJ] = np.append(energy[betaJ], compute_energy(lattice, neighbour_list))
-        lat_sum[betaJ] = np.append(lat_sum[betaJ], np.sum(lattice))
-        unsubtracted[betaJ] = np.append(unsubtracted[betaJ], np.sum(cluster_count**2)/(N*N))
-
-        if i % n_idle == 0:
-            betaJ = betaJ + betaJ_step
-
-            magnetization[betaJ] = np.array([])
-            energy[betaJ] = np.array([]) 
-            lat_sum[betaJ] =  np.array([])
-            unsubtracted[betaJ] =  np.array([])
-
-            print("BetaJ: " + str(betaJ))
-
-    #   Process data
-    magnetization = [(betaJ, np.mean(magnetization[betaJ])) for betaJ in magnetization]
-    susceptibility = [(betaJ, (np.mean(lat_sum[betaJ]**2)-(np.mean(abs(lat_sum[betaJ]))**2))/N**2) for betaJ in lat_sum]
-    # susceptibility = [(betaJ, np.mean(unsubtracted[betaJ])) for betaJ in unsubtracted]
-    binder_cumulant = [(betaJ, 1 - np.mean(lat_sum[betaJ]**4) /
-                        (3 * np.mean(lat_sum[betaJ]**2)**2)) for betaJ in lat_sum]
-    cv = [(betaJ, (betaJ**2 * (np.var(energy[betaJ]))) / N**2) for betaJ in energy]
-
-    return magnetization, susceptibility, binder_cumulant, cv
-
-if __name__ == '__main__':
-    #   Default simulation parameters
-    N = 32
-    betaJ_init = 0.1
-    betaJ_end = 0.6
-    betaJ_step = 0.01
-    n_idle = 10
-
-    magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
-
-    plt.scatter(*zip(*susceptibility))
-    plt.show()
