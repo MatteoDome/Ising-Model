@@ -2,23 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import convolve, generate_binary_structure, iterate_structure
 
-def compute_energy(lattice, neighbour_list):
-    """
-
-    Compute the energy of the lattice. neighbour_list is a numpy matrix indicating which
-    neighbour spins should be considered when computing the energy (1 contributes, 0
-    does not).
-   
-    Args
-        neighbour_list: 3x3 matrix indicating which neighbour interactions to consider
-    """
-
-    #   Wrap mode used for periodic boundary conditions
-    neighbour_sum = convolve(lattice, neighbour_list, mode='wrap')
-    energy = -0.5 * (np.sum(neighbour_sum * lattice))
-
-    return energy
-
 def flipping_probabilities(N, lattice, neighbour_list, spins_to_flip, betaJ):
     neighbour_sum = convolve(lattice, neighbour_list, mode='wrap')
 
@@ -27,7 +10,6 @@ def flipping_probabilities(N, lattice, neighbour_list, spins_to_flip, betaJ):
                                         spins_to_flip]) - np.random.rand(N, N)[spins_to_flip]
 
     return flipping_probability
-
 
 def simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours):
     #   Simulation variables
