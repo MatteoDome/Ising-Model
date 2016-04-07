@@ -148,6 +148,79 @@ The Metropolis Monte Carlo algorithm is an algorithm in which the information re
 
 \subsection{Diffusion Coefficient}
 
+\subsection{Finite size scaling}
+As a system approaches a critical phase transition the behaviour of its physical quantities is described by a set of numbers -- the critical exponents. For the Ising model we have:
+
+\begin{align}
+&\chi \sim |T-T_c|^{-\gamma} \\
+& C_v \sim |T-T_c|^{-\alpha} \\
+& \xi \sim |T-T_c|^{-\nu} \\
+& m \sim |T-T_c|^{\beta}
+\end{align}
+
+In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition function from where the exact critical exponents can be found:
+\begin{align}
+&\gamma = \frac{7}{4} \\
+&\alpha = 0 \\
+&\nu = 1\\
+&\beta = \frac{1}{2} 
+\end{align}
+
+\end{multicols}
+\begin{figure}[!tpb]
+  \begin{subfigure}[b]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{images/plot_height.pdf}
+    \caption{Height}
+    \label{scaling_height}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{images/plot_width.pdf}
+    \caption{Width}
+    \label{scaling_width}
+  \end{subfigure}
+    \begin{subfigure}[b]{0.32\textwidth}
+    \includegraphics[width=\textwidth]{images/plot_pos.pdf}
+    \caption{Positions}
+    \label{scaling_pos}
+  \end{subfigure}
+  \caption{Scaling behaviour .}
+  \label{scaling}
+\end{figure}
+\begin{multicols}{2}
+
+These exponents are said to be universal due to the fact that they remain invariant under certain changes in the Hamiltonian. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same universality class. 
+
+One example of a system in the same university class as the Ising Model we introduced earlier is the Ising Model with second neighbour ferromagnetic interactions. Indeed, even if the coupling with second neighbours is taken to be the as strong as with the first neighbours the critical exponents remain unchanged, as we shall see.
+
+It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. For a finite system then all the thermodynamic quantities will be a smooth function of temperature -- we will not see a divergence at the critical point but a smooth peak. However as we increase the system size we observe that the size, width and position of this peak change according to a set of equations called the scaling laws. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$). Then we have that:
+
+\begin{itemize}
+\item The peak height scales as $L^{\sigma/\nu}$
+\item The peak position scales as $L^{-\nu}$
+\item The peak width also scales as $L^{-\nu}$.
+\end{itemize}
+
+These three quantities (NUMBER OR WORD?) were tracked for the magnetic susceptibility $\xi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. We considered a system only with first neighbour ferromagnetic interactions (governed by the Hamiltonian in EQUATION) and a system with second neighbour ferromagnetic interactions were also considered (the coupling constant was taken to be the same for all interactions). The results are shown in Figure \ref{scaling} and in Figure \ref{scaling_pos}. The critical exponents were found to be very close to the exact results for the 2D Ising model ($\frac{\gamma}{\nu} = 1.75$, $\nu = 1$). Furthermore one also sees that although both systems exhibit different critical temperatures the critical exponents are very similar, indicating that both systems belong to the same universality class.
+
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{images/plot_pos.pdf}
+\caption{Position}
+\label{scaling_pos}
+\end{figure}
+
+Besides the scaling relations outlined the value of the magnetization at $T_c$ is expected to satisfy the following scaling relation (ADD REFERENCE):
+\begin{equation}
+m(T_c) \propto L^{\beta/\nu}
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{images/plot_magnetization.pdf}
+\caption{asdasdasd}
+\end{figure}
+
+
+
 %------------------------------------------------
 \section{Conclusion}
 lalila

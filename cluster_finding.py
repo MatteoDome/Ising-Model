@@ -23,11 +23,11 @@ def find_links(N, lattice, betaJ, **kwargs):
 
         #   Compute coupling constants
         coupling = np.zeros([N, N, 2])
-        coupling[:, :, 0]  = (np.abs(parallel_component)*np.roll(np.abs(parallel_component), 1, 0))
-        coupling[:, :, 1]  = (np.abs(parallel_component)*np.roll(np.abs(parallel_component), 1, 1))
+        coupling[:, :, 0]  = np.abs(parallel_component)*np.roll(np.abs(parallel_component), 1, 0)
+        coupling[:, :, 1]  = np.abs(parallel_component)*np.roll(np.abs(parallel_component), 1, 1)
 
         prob = np.exp(-2*coupling*betaJ)
-    
+   
     else:
         prob = np.exp(-2*betaJ)
     
@@ -39,7 +39,7 @@ def find_links(N, lattice, betaJ, **kwargs):
 
     #   Keep links with with some probability
     random_matrix = np.random.uniform(0, 1, size=[N, N, 2])
-    links[(random_matrix < prob) & (links == 1)] = 0
+    links[random_matrix < prob] = 0
 
     return links
 

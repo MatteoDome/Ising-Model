@@ -29,8 +29,8 @@ with PdfPages('plot_pos.pdf') as pdf:
     axes.set_xlim([0.5, 80])
     axes.set_ylim([0, 0.5])
 
-    plt.errorbar(lattice_sizes, suscept_pos, yerr=suscept_pos_error, fmt='o', label='Nearest neighbour, $\\beta J_c = 0.4385(1)$, $\\nu = 1.07(1)$')
-    plt.errorbar(lattice_sizes, suscept_pos_sec, yerr=suscept_pos_sec_error, fmt='v', label='Second nearest neighbours, $\\beta J_c = 0.1885(2)$, $\\nu = 1.13(1)$')
+    plt.errorbar(lattice_sizes, suscept_pos, yerr=suscept_pos_error, fmt='o', label='Nearest neighbour, $\\beta J_c = 0.4385(1)$ and $\\nu = 1.07(1)$')
+    plt.errorbar(lattice_sizes, suscept_pos_sec, yerr=suscept_pos_sec_error, fmt='v', label='Second nearest neighbours, $\\beta J_c = 0.1885(2)$ and $\\nu = 1.13(1)$')
     plt.plot(x, suscept_pos_expr)
     plt.plot(x, suscept_pos_sec_expr)
 

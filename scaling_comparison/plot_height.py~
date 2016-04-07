@@ -22,7 +22,7 @@ with PdfPages('plot_height.pdf') as pdf:
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.set_xlabel('$\\log(N)$', fontsize=20)
+    ax.set_xlabel('$N$', fontsize=20)
     ax.set_ylabel('$\\log(\\chi_{height})$', fontsize=20)
 
     axes = plt.gca()
