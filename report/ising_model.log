@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.10.27)  7 APR 2016 19:17
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.10.27)  8 APR 2016 12:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -756,19 +756,42 @@ LaTeX Font Warning: Font shape `OMS/pplx/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbullet' on input line 215.
 
-File: images/plot_pos.pdf Graphic file (type pdf)
-<use images/plot_pos.pdf>
-Package pdftex.def Info: images/plot_pos.pdf used on input line 223.
-(pdftex.def)             Requested size: 254.46837pt x 190.84631pt.
- [2]
-<images/plot_magnetization.pdf, id=95, 578.16pt x 433.62pt>
+<images/plot_magnetization.pdf, id=78, 578.16pt x 433.62pt>
 File: images/plot_magnetization.pdf Graphic file (type pdf)
 
 <use images/plot_magnetization.pdf>
-Package pdftex.def Info: images/plot_magnetization.pdf used on input line 235.
+Package pdftex.def Info: images/plot_magnetization.pdf used on input line 229.
 (pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 264.
- [3 <./images/plot_height.pdf> <./images/plot_width.pdf
+ [2]
+Overfull \vbox (33.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (32.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (31.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (30.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (29.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (28.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (27.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (26.7945pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (25.7945pt too high) has occurred while \output is active []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 258.
+
+[3 <./images/plot_height.pdf> <./images/plot_width.pdf
 
 pdfTeX warning: pdflatex (file ./images/plot_width.pdf): PDF inclusion: multipl
 e pdfs with page group included in a single page
@@ -781,10 +804,10 @@ pdfs with page group included in a single page
 pdfTeX warning: pdflatex (file ./images/plot_magnetization.pdf): PDF inclusion:
  multiple pdfs with page group included in a single page
 >]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 264.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 258.
  (./ising_model.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 264.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 264.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 258.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 258.
 Package rerunfilecheck Info: File `ising_model.out' has not changed.
 (rerunfilecheck)             Checksum: 5C898E2C06B4BD15B2FA74034D414E97;712.
 
@@ -796,11 +819,11 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 11665 strings out of 494985
- 174074 string characters out of 6180355
- 386002 words of memory out of 5000000
+ 11660 strings out of 494985
+ 174027 string characters out of 6180355
+ 387002 words of memory out of 5000000
  14434 multiletter control sequences out of 15000+600000
- 73236 words of font info for 254 fonts, out of 8000000 for 9000
+ 73013 words of font info for 251 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  37i,8n,39p,905b,712s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
@@ -813,10 +836,10 @@ hpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/fpl/fplrc8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/
 texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on ising_model.pdf (3 pages, 198378 bytes).
+Output written on ising_model.pdf (3 pages, 202751 bytes).
 PDF statistics:
- 393 PDF objects out of 1000 (max. 8388607)
- 177 compressed objects within 2 object streams
- 35 named destinations out of 1000 (max. 500000)
+ 402 PDF objects out of 1000 (max. 8388607)
+ 176 compressed objects within 2 object streams
+ 34 named destinations out of 1000 (max. 500000)
  51317 words of extra memory for PDF output out of 51595 (max. 10000000)
 

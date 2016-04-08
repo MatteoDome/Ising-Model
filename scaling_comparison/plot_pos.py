@@ -33,7 +33,7 @@ with PdfPages('plot_pos.pdf') as pdf:
 
     axes.set_color_cycle(['red', 'blue', 'green'])
     axes.set_xlim([0.5, 80])
-    axes.set_ylim([0, 0.9])
+    axes.set_ylim([0, 1.1])
 
     plt.errorbar(lattice_sizes, suscept_pos, yerr=suscept_pos_error, fmt='o', label='Nearest neighbour, $\\beta J_c = 0.4385(1)$, $\\nu = 1.07(1)$')
     plt.errorbar(lattice_sizes, suscept_pos_sec, yerr=suscept_pos_sec_error, fmt='v', label='Second nearest neighbours, $\\beta J_c = 0.1885(2)$, $\\nu = 1.13(1)$')
@@ -42,7 +42,7 @@ with PdfPages('plot_pos.pdf') as pdf:
     plt.plot(x, suscept_pos_sec_expr)
     plt.plot(x, suscept_pos_third_expr)
 
-    plt.legend(loc='lower right')
+    plt.legend(loc='upper right')
 
     pdf.savefig()
     plt.close()

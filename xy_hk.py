@@ -40,7 +40,7 @@ def simulate(N, T_init, T_end, T_step, n_idle):
     helicity_modulus = []
     angles = np.zeros(shape = [n_idle, N, N])
     
-    plot_lattice(N, lattice)
+    # plot_lattice(N, lattice)
 
     #   Main cycle
     for i in range(n_iter):
@@ -62,7 +62,7 @@ def simulate(N, T_init, T_end, T_step, n_idle):
         #   Flip parallel part of spins
         #print(random_angle/math.pi)
         #print(spins)
-        lattice[spins != new_spins] = (lattice+2*(random_angle-lattice))[spins != new_spins]
+        lattice[spins != new_spins] = (lattice+2*(random_angle-lattice) + math.pi)[spins != new_spins]
 
         if (i+1) % n_idle == 0:
             helicity_modulus.append((T, compute_helicity_modulus(N, angles, T)))
@@ -72,15 +72,15 @@ def simulate(N, T_init, T_end, T_step, n_idle):
             print("T: " + str(T))
 
         #print(new_spins)
-        plot_lattice(N, lattice)
+        # plot_lattice(N, lattice)
 
     return helicity_modulus
 
 if __name__ == '__main__':
     #   Default simulation parameters
-    N = 20
-    T_init = 0.1
-    T_end = 3.2
+    N = 40
+    T_init = 0.7
+    T_end = 1.5
     T_step = 0.1
     n_idle = 1000
 
