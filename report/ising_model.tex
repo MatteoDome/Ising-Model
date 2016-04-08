@@ -104,7 +104,7 @@
 The Monte Carlo algorithms are a type of algorithms in which "random" numbers play an essential role ~\cite{thijssen}. This method has been widely and successfully implemented in the past decades to simulate the behaviour of physical systems in order to extrapolate information regarding their static properties. \\
 The Hoshen Kopelman algorithm is a cluster finding algorithm that has been implemented as a non-recursive alternative to the Swendsen-Wang algorithm. It is based on the more famous Union-Find algorithm.
 
-In section II the interaction model and the working principles of the two algorithms are outlined. In section III the numerical results obtained for specific heat, magnetization, magnetic susceptibility, Binder cumulant and critical exponent are reported. In section IV, the accuracy and speed of the two algorithms are compared.
+In section II the interaction model and the working principles of the two algorithms are outlined. In section III the numerical results obtained for specific heat, magnetization, magnetic susceptibility, Binder cumulant and finite-size scaling. The results deriving from the application of the Metropolis algorithm while considering second neighbours are also reported in section III.
 
 %------------------------------------------------
 
@@ -130,10 +130,29 @@ which is dependent on the temperature of the system, contained in $\beta$.
 
 \subsection{Metropolis Monte Carlo Algorithm}
 The Metropolis Monte Carlo algorithm is an algorithm in which the information regarding different distributions of a system is stored in a Markov chain. 
+In an uncorrelated chain, the probability of occurrence of a certain event is given by the product of the single probabilities lead up to the event itself. In a Markov chain, the probability of occurrence for a sequence of events is defined based on the transition probability from one event (in this case, configuration) to another.
+The Metropolis Monte Carlo method is based on a Markov chain of configurations based on a given stationary distribution, which in our case is represented by the Boltzmann distribution. In order to ensure a correct representation of the phase space, the Markov chain has to be ergodic, which means that the probability of occurrence of a certain configuration $\rho(X, t)$ has to be independent of t when t is large. \\
+Considering the probability of transition between two generic states leads to the \emph{detailed balance solution}
+
+\begin{equation}
+T(X \rightarrow X') = \omega_{XX'}A_{XX'}
+\end{equation}
+
+where \textbf{$\omega$} is a symmetric matrix and represent the trial step probability, while $A_{XX'}$ represents the acceptance probability. \\
+In the simulation of the Ising model with the Metropolis Algorithm, 
+
+\begin{center}$
+\omega_{XX'} = \frac{1}{L^2} \qquad \text{if X and X' differ by one spin} \\
+\omega_{XX'} = 0 \qquad  \text{otherwise} $
+\end{center}
+
+A spin, or more then one, are then selected at random and flipped. The difference in energy between the two configurations is then calculated. if the results is bigger than zero, the new configuration is accepted with probability $e^{-\beta\DeltaE}$, while if $\DeltaE < 0$, the new state is always adopted.
 
 \subsection{Hoshen-Kopelman Algorithm}
-
-
+Before applying the Hoshen-Kopelman algorithm it is necessary to consider the links between lattice sites. For each links, we consider two possible cases; in the first one, the spins are opposite and the interaction is deleted; if the spins are equal the interaction is deleted with probability $e^{2\beta J}$ and frozen with probability $1-e^{-2\beta J}$.
+In the simulation, determining whether a link is frozen or not implies the generation of a "random" number: this means that the overall simulation still belong to the Monte Carlo family of algorithms. \\
+The Hoshen-Kopelman cluster finding algorithm is can be divided in two steps.
+The first one consists in checking the links to the left and upwards for each site of the lattice. If there is a link between two sites, they are assigned to the same cluster. The second step consists in going over all the sites once more and checking all their links to make sure that the clusters are correctly identified. \\ To generate random configurations, a new random spin value is then assigned to each cluster and the properties of the specific configuration are calculated.
 %------------------------------------------------
 
 \section{Results}
