@@ -34,12 +34,12 @@ def find_links(N, lattice, betaJ, **kwargs):
     links = np.zeros([N, N, 2], 'int_')
 
     #   Set links to 1 if they match
-    links[lattice == np.roll(lattice, 1, 0), 0] = 1
-    links[lattice == np.roll(lattice, 1, 1), 1] = 1
+    links[lattice == np.roll(lattice, 1, 0), 0] = True
+    links[lattice == np.roll(lattice, 1, 1), 1] = True
 
     #   Keep links with with some probability
     random_matrix = np.random.uniform(0, 1, size=[N, N, 2])
-    links[random_matrix < prob] = 0
+    links[(random_matrix < prob) & (links == 1)] = False
 
     return links
 

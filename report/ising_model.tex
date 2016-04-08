@@ -136,38 +136,40 @@ The Metropolis Monte Carlo algorithm is an algorithm in which the information re
 
 %------------------------------------------------
 
-\section{Thermodynamic quantities}
+\section{Results}
 
-\subsection{Pair Correlation Function}
+\subsection{Magnetization}
+In the Ising model one defines the magnetization of the system as:
 
-\subsection{Energy}
+\begin{equation}
+m = \frac{1}{L^2} \mean{\sum_i s_i}
+\label{magnetization_conventional}
+\end{equation}
 
-\subsection{Pressure}
+However the cluster flipping operations of the HK algorithm make the sum in \ref{magnetization_conventional} oscillate considerably, so the magnetization is approximated as:
 
-\subsection{Specific Heat}
+\begin{equation}
+m = \frac{1}{L^2} \mean{\left|\sum_i s_i\right|}
+\end{equation}
 
-\subsection{Diffusion Coefficient}
+\subsection{Heat capacity}
+The heat capacity can be directly related to the system's energy fluctuations:
+
+\begin{equation}
+C_v = \frac{\mean{E^2} - \mean{E}^2}{L^2 T}
+\end{equation}
+
+\subsection{Binder cumulant}
+The Binder cumulant $Q$ is defined as:
+
+\begin{equation}
+Q = 1 - \frac{\mean{\left( \sum_i s_i \right)^4}}{3 \mean{\left( \sum_i s_i \right)^2}^2}
+\end{equation}
+
+In (REFENCE) it is shown that $Q$ has a universal value at the critical point o. Therefore one can estimate $\beta J_c$ by determining the intersection point of $Q$ for different lattice sizes.
 
 \subsection{Finite size scaling}
-As a system approaches a critical phase transition the behaviour of its physical quantities is described by a set of numbers -- the critical exponents. For the Ising model we have:
-
-\begin{align}
-&\chi \sim |T-T_c|^{-\gamma} \\
-& C_v \sim |T-T_c|^{-\alpha} \\
-& \xi \sim |T-T_c|^{-\nu} \\
-& m \sim |T-T_c|^{\beta}
-\end{align}
-
-In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition function from where the exact critical exponents can be found:
-\begin{align}
-&\gamma = \frac{7}{4} \\
-&\alpha = 0 \\
-&\nu = 1\\
-&\beta = \frac{1}{2} 
-\end{align}
-
-\end{multicols}
-\begin{figure}[!tpb]
+\begin{figure*}[!tpb]
   \begin{subfigure}[b]{0.32\textwidth}
     \includegraphics[width=\textwidth]{images/plot_height.pdf}
     \caption{Height}
@@ -185,12 +187,27 @@ In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition fu
   \end{subfigure}
   \caption{Scaling behaviour .}
   \label{scaling}
-\end{figure}
-\begin{multicols}{2}
+\end{figure*}
 
-These exponents are said to be universal due to the fact that they remain invariant under certain changes in the Hamiltonian. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same universality class. 
+As a system approaches a critical phase transition the behaviour of its physical quantities are described by power laws. The exponents corresponding to these power laws are called the \emph{critical exponents}. For the Ising model we have:
 
-One example of a system in the same university class as the Ising Model we introduced earlier is the Ising Model with second neighbour ferromagnetic interactions. Indeed, even if the coupling with second neighbours is taken to be the as strong as with the first neighbours the critical exponents remain unchanged, as we shall see.
+\begin{align}
+&\chi \sim |T-T_c|^{-\gamma} \\
+& C_v \sim |T-T_c|^{-\alpha} \\
+& \xi \sim |T-T_c|^{-\nu} \\
+& m \sim |T-T_c|^{\beta}
+\end{align}
+
+In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition function from where the exact critical exponents can be found:
+\begin{align}
+&\gamma = \frac{7}{4} \\
+&\alpha = 0 \\
+&\nu = 1\\
+&\beta = \frac{1}{2} 
+\end{align}
+
+
+These exponents are said to be \emph{universal} due to the fact that they remain invariant under certain changes in the Hamiltonian. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same \emph{universality class}. 
 
 It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. For a finite system then all the thermodynamic quantities will be a smooth function of temperature -- we will not see a divergence at the critical point but a smooth peak. However as we increase the system size we observe that the size, width and position of this peak change according to a set of equations called the scaling laws. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$). Then we have that:
 

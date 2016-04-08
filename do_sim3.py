@@ -3,11 +3,11 @@ import numpy as np
 import ising_metropolis
 import matplotlib.pyplot as plt
 
-N=4
+N=64
 betaJ_init = 0.3
 betaJ_end = 0.9
 betaJ_step = 0.001
-n_idle = 10000
+n_idle = 8000
 second_neighbours = True
 
 magnetization, susceptibility, _, cv = ising_metropolis.simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle, second_neighbours)

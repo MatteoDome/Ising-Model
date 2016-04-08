@@ -59,9 +59,9 @@ if __name__ == '__main__':
     betaJ_init = 0.1
     betaJ_end = 0.6
     betaJ_step = 0.01
-    n_idle = 10
+    n_idle = 100
 
     magnetization, susceptibility, binder_cumulant, cv = simulate(N, betaJ_init, betaJ_end, betaJ_step, n_idle)
 
-    plt.scatter(*zip(*susceptibility))
+    plt.scatter(*zip(*magnetization))
     plt.show()

@@ -72,14 +72,14 @@ def simulate(N, T_init, T_end, T_step, n_idle):
             print("T: " + str(T))
 
         #print(new_spins)
-        #plot_lattice(N, lattice)
+        plot_lattice(N, lattice)
 
     return helicity_modulus
 
 if __name__ == '__main__':
     #   Default simulation parameters
     N = 20
-    T_init = 3
+    T_init = 0.1
     T_end = 3.2
     T_step = 0.1
     n_idle = 1000

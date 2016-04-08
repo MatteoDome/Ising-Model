@@ -3,12 +3,10 @@
 \BOOKMARK [2][-]{subsection.2.1}{Ising Model}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Metropolis Monte Carlo Algorithm}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Hoshen-Kopelman Algorithm}{section.2}% 5
-\BOOKMARK [1][-]{section.3}{Thermodynamic quantities}{}% 6
-\BOOKMARK [2][-]{subsection.3.1}{Pair Correlation Function}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.2}{Energy}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.3}{Pressure}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.4}{Specific Heat}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.5}{Diffusion Coefficient}{section.3}% 11
-\BOOKMARK [2][-]{subsection.3.6}{Finite size scaling}{section.3}% 12
-\BOOKMARK [1][-]{section.4}{Conclusion}{}% 13
-\BOOKMARK [1][-]{Appendix.1.A}{Appendix - Data blocking}{}% 14
+\BOOKMARK [1][-]{section.3}{Results}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Magnetization}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Heat capacity}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.3}{Binder cumulant}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.4}{Finite size scaling}{section.3}% 10
+\BOOKMARK [1][-]{section.4}{Conclusion}{}% 11
+\BOOKMARK [1][-]{Appendix.1.A}{Appendix - Data blocking}{}% 12

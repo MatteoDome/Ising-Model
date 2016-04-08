@@ -3,13 +3,6 @@ import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
-#######################################################
-#######                 IMPORTANT               #######
-#######                                         #######
-#######     ASK JOS: WORTH INCLUING ERRORS?     #######
-#######     FIX "SPIKE" IN BEGINNING OF PLOTS   #######
-#######################################################
-    
 betaJ_values = np.arange(0.1, 1, 0.01)
 N_values = [4, 8, 16, 32, 64, 128, 256]
 
@@ -20,15 +13,16 @@ with PdfPages('batch_results/magnetization.pdf') as pdf:
         object_results = pickle.load(results)
         magnetization = np.asarray(object_results[0])
         magnetization = magnetization[magnetization[:,0].argsort()]
-        plt.plot(magnetization[:,0], magnetization[:,1])
+        plt.plot(magnetization[:,0], magnetization[:,1], label='N = ' + str(N))
         # plt.scatter(magnetization[:,0], magnetization[:,1], c = np.random.rand(3,1))
         results.close()
         
         plt.hold(True)
     plt.xlabel('$\\beta J$',fontsize=15)
-    plt.xlim([0,1])
+    plt.xlim([0.2,1])
     plt.ylabel("$m$", fontsize = 15)
     pdf.savefig()
+    plt.legend()
     plt.show()
 
 plt.close()
