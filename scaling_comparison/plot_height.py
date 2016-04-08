@@ -27,22 +27,22 @@ with PdfPages('plot_height.pdf') as pdf:
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.set_xlabel('$\\log(N)$', fontsize=20)
+    ax.set_xlabel('$\\log(L)$', fontsize=20)
     ax.set_ylabel('$\\log(\\chi_[height])$', fontsize=20)
 
     axes = plt.gca()
 
     axes.set_color_cycle(['red', 'blue', 'green'])
     axes.set_xlim([0.5, 4.5])
-    axes.set_ylim([-1, 5.5])
+    axes.set_ylim([-2, 5.5])
 
-    plt.errorbar(lattice_sizes, suscept_height, yerr=suscept_height_error, fmt='o', label='Nearest neighbour, $\\frac{\\gamma}{\\nu} = 1.62(2)$')
-    plt.errorbar(lattice_sizes, suscept_height_sec, yerr=suscept_height_sec_error, fmt='v', label='Second nearest neighbours, $\\frac{\\gamma}{\\nu} = 1.64(1)$')
-    plt.errorbar(lattice_sizes, suscept_height_third, yerr=suscept_height_third_error, fmt='v', label='Second nearest neighbours (anti), $\\frac{\\gamma}{\\nu} = 1.699(8)$')
+    plt.errorbar(lattice_sizes, suscept_height, yerr=suscept_height_error, fmt='o', label='$1^{st}$ neighbours, $\\gamma/\\nu = 1.62(2)$')
+    plt.errorbar(lattice_sizes, suscept_height_sec, yerr=suscept_height_sec_error, fmt='v', label='$2^{nd}$ neighbours (ferromagnetic), $\\gamma/\\nu  = 1.64(1)$')
+    plt.errorbar(lattice_sizes, suscept_height_third, yerr=suscept_height_third_error, fmt='v', label='$2^{nd}$ neighbours (antiferromagnetic), $\\gamma/\\nu  = 1.699(8)$')
     plt.plot(x, suscept_height_expr)
     plt.plot(x, suscept_height_sec_expr)
     plt.plot(x, suscept_height_third_expr)
 
-    plt.legend(loc='upper left')
+    plt.legend(loc='lower right', numpoints=1, fontsize = 'medium')
 
     pdf.savefig()

@@ -37,12 +37,12 @@ with PdfPages('plot_width.pdf') as pdf:
     # axes.set_xlim([0.5, 4.5])
     # axes.set_ylim([-1, 5.5])
 
-    plt.errorbar(lattice_sizes, suscept_width, yerr=suscept_width_error, fmt='o', label='Nearest neighbour, $\\nu = 1.07(1)$')
-    plt.errorbar(lattice_sizes, suscept_width_sec, yerr=suscept_width_sec_error, fmt='v', label='Second nearest neighbours, $\\nu = 1.13(1)$')
-    plt.errorbar(lattice_sizes, suscept_width_third, yerr=suscept_width_third_error, fmt='v', label='Second nearest neighbours, $\\nu = 1.15(1)$')
+    plt.errorbar(lattice_sizes, suscept_width, yerr=suscept_width_error, fmt='o', label='$1^{st}$ neighbours, $\\nu = 1.07(1)$')
+    plt.errorbar(lattice_sizes, suscept_width_sec, yerr=suscept_width_sec_error, fmt='v', label='$2^{nd}$ neighbours (ferromagnetic), $\\nu = 1.13(1)$')
+    plt.errorbar(lattice_sizes, suscept_width_third, yerr=suscept_width_third_error, fmt='v', label='$2^{nd}$ neighbours (antiferromagnetic), $\\nu = 1.15(1)$')
     plt.plot(x, suscept_width_expr)
     plt.plot(x, suscept_width_sec_expr)
     plt.plot(x, suscept_width_third_expr)
 
-    plt.legend(loc='lower left')
+    plt.legend(loc='lower left', numpoints=1, fontsize = 'medium')
     pdf.savefig()

@@ -1,23 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Journal Article
-% LaTeX Template
-% Version 1.3 (9/9/13)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% Frits Wenneker (http://www.howtotex.com)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
-
 \documentclass[twoside]{article}
 
 \usepackage{lipsum} % Package to generate dummy text throughout this template
@@ -115,6 +95,7 @@ While implementing the models and algorithm outlined in this section, we have co
 The Ising Model consister in a lattice of size $L \times L$ in which every lattice site is associated with a spin. The Hamiltonian of the system in absence of an external magnetic field is described by
 
 \begin{equation}
+\label{ising_hamiltonian}
 H = - J \sum_{\mean{ij}} \textbf{s}_i \textbf{s}_j
 \end{equation}
 
@@ -127,6 +108,8 @@ The partition function for the system is given by
 \end{equation}
 
 which is dependent on the temperature of the system, contained in $\beta$.
+
+\subsection{XY Model}
 
 \subsection{Metropolis Monte Carlo Algorithm}
 The Metropolis Monte Carlo algorithm is an algorithm in which the information regarding different distributions of a system is stored in a Markov chain. 
@@ -141,12 +124,12 @@ T(X \rightarrow X') = \omega_{XX'}A_{XX'}
 where \textbf{$\omega$} is a symmetric matrix and represent the trial step probability, while $A_{XX'}$ represents the acceptance probability. \\
 In the simulation of the Ising model with the Metropolis Algorithm, 
 
-\begin{center}$
+\begin{align}
 \omega_{XX'} = \frac{1}{L^2} \qquad \text{if X and X' differ by one spin} \\
-\omega_{XX'} = 0 \qquad  \text{otherwise} $
-\end{center}
+\omega_{XX'} = 0 \qquad  \text{otherwise} 
+\end{align}
 
-A spin, or more then one, are then selected at random and flipped. The difference in energy between the two configurations is then calculated. if the results is bigger than zero, the new configuration is accepted with probability $e^{-\beta\DeltaE}$, while if $\DeltaE < 0$, the new state is always adopted.
+A spin, or more then one, are then selected at random and flipped. The difference in energy between the two configurations is then calculated. if the results is bigger than zero, the new configuration is accepted with probability $e^{-\beta\Delta E}$, while if $\Delta E < 0$, the new state is always adopted.
 
 \subsection{Hoshen-Kopelman Algorithm}
 Before applying the Hoshen-Kopelman algorithm it is necessary to consider the links between lattice sites. For each links, we consider two possible cases; in the first one, the spins are opposite and the interaction is deleted; if the spins are equal the interaction is deleted with probability $e^{2\beta J}$ and frozen with probability $1-e^{-2\beta J}$.
@@ -225,7 +208,6 @@ In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition fu
 &\beta = \frac{1}{2} 
 \end{align}
 
-
 These exponents are said to be \emph{universal} due to the fact that they remain invariant under certain changes in the Hamiltonian. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same \emph{universality class}. 
 
 It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. For a finite system then all the thermodynamic quantities will be a smooth function of temperature -- we will not see a divergence at the critical point but a smooth peak. However as we increase the system size we observe that the size, width and position of this peak change according to a set of equations called the scaling laws. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$). Then we have that:
@@ -236,7 +218,19 @@ It is important to note that analytical exponents are actually obtained by takin
 \item The peak width also scales as $L^{-\nu}$.
 \end{itemize}
 
-These three quantities (NUMBER OR WORD?) were tracked for the magnetic susceptibility $\xi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. We considered a system only with first neighbour ferromagnetic interactions (governed by the Hamiltonian in EQUATION) and a system with second neighbour ferromagnetic interactions were also considered (the coupling constant was taken to be the same for all interactions). The results are shown in Figure \ref{scaling} and in Figure \ref{scaling_pos}. The critical exponents were found to be very close to the exact results for the 2D Ising model ($\frac{\gamma}{\nu} = 1.75$, $\nu = 1$). Furthermore one also sees that although both systems exhibit different critical temperatures the critical exponents are very similar, indicating that both systems belong to the same universality class.
+These three quantities (NUMBER OR WORD?) were tracked for the magnetic susceptibility $\xi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. Besides the Hamiltonian in equation \eqref{ising_hamiltonian}
+
+\begin{align}
+\label{second_neigh_hamil}
+H_2 = -J\sum_{\mean{ij}} s_i s_j  -J\sum_{\mean{\mean{ij}}} s_i s_j \\
+\label{anti_hamil}
+H_3 = -J\sum_{\mean{ij}} s_i s_j + 0.3 J \sum_{\mean{\mean{ij}}} s_i s_j 
+\end{align}
+
+Where $\sum_{\mean{ij}}$ and $\sum_{\mean{\mean{ij}}}$ denote sums over first and second neighbours respectively and $J$ is taken to be positive. When comparing to the original Ising Hamiltonian in equation \eqref{ising_hamiltonian} we then conclude that the second Hamiltonian adds a second neighbour ferromagnetic interaction, whereas the third adds a weak second neighbour antiferromagnetic interaction.
+
+
+The results are shown in Figure \ref{scaling}. The critical exponents were found to be very close to the exact results for the 2D Ising model ($\frac{\gamma}{\nu} = 1.75$, $\nu = 1$). Furthermore one also sees that although both systems exhibit different critical temperatures the critical exponents are very similar, indicating that both systems belong to the same universality class.
 
 Besides the scaling relations outlined the value of the magnetization at $T_c$ is expected to satisfy the following scaling relation (ADD REFERENCE):
 \begin{equation}
@@ -249,7 +243,12 @@ m(T_c) \propto L^{\beta/\nu}
 \caption{asdasdasd}
 \end{figure}
 
-
+\subsection{XY Model}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{images/helicity_modulus.pdf}
+\caption{asdasdasd}
+\end{figure}
 
 %------------------------------------------------
 \section{Conclusion}

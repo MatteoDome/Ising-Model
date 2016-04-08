@@ -17,7 +17,7 @@ _, suscept_pos_third = zip(*[[4., 0.52851], [8., 0.642346], [16., 0.69354], [32.
 suscept_pos_third_error = [0.00043, 0.000488, 0.0005567, 0.000657, 0.000701]
 
 
-x = np.arange(0, 80, 0.01);
+x = np.arange(0.1, 80, 0.01);
 suscept_pos_expr = -1.14719*(x)**(-1.07181) + 0.438574 
 suscept_pos_sec_expr = -0.234068*(x)**(-1.13605) + 0.188599
 suscept_pos_third_expr = -0.994618*(x)**(-1.12291) + 0.738271
@@ -26,7 +26,7 @@ with PdfPages('plot_pos.pdf') as pdf:
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.set_xlabel('$N$', fontsize=20)
+    ax.set_xlabel('$L$', fontsize=20)
     ax.set_ylabel('$\\chi_{position}$', fontsize=20)
 
     axes = plt.gca()
@@ -35,14 +35,14 @@ with PdfPages('plot_pos.pdf') as pdf:
     axes.set_xlim([0.5, 80])
     axes.set_ylim([0, 1.1])
 
-    plt.errorbar(lattice_sizes, suscept_pos, yerr=suscept_pos_error, fmt='o', label='Nearest neighbour, $\\beta J_c = 0.4385(1)$, $\\nu = 1.07(1)$')
-    plt.errorbar(lattice_sizes, suscept_pos_sec, yerr=suscept_pos_sec_error, fmt='v', label='Second nearest neighbours, $\\beta J_c = 0.1885(2)$, $\\nu = 1.13(1)$')
-    plt.errorbar(lattice_sizes, suscept_pos_third, yerr=suscept_pos_third_error, fmt='v', label='Second nearest neighbours, $\\beta J_c = 0.7382(8)$, $\\nu = 1.12(1)$')
+    plt.errorbar(lattice_sizes, suscept_pos, yerr=suscept_pos_error, fmt='o', label='$1^{st}$ neighbours, $\\beta J_c = 0.4385(1)$, $\\nu = 1.07(1)$')
+    plt.errorbar(lattice_sizes, suscept_pos_sec, yerr=suscept_pos_sec_error, fmt='v', label='$2^{nd}$ neighbours (ferromagnetic), $\\beta J_c = 0.1885(2)$, $\\nu = 1.13(1)$')
+    plt.errorbar(lattice_sizes, suscept_pos_third, yerr=suscept_pos_third_error, fmt='v', label='$2^{nd}$ neighbours (antiferromagnetic), $\\beta J_c = 0.7382(8)$, $\\nu = 1.12(1)$')
+    plt.legend(numpoints=1, fontsize = 'medium')
     plt.plot(x, suscept_pos_expr)
     plt.plot(x, suscept_pos_sec_expr)
     plt.plot(x, suscept_pos_third_expr)
 
-    plt.legend(loc='upper right')
 
     pdf.savefig()
     plt.close()
