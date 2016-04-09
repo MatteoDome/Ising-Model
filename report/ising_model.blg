@@ -3,9 +3,9 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: ising_model.aux
 I found no \bibdata command---while reading file ising_model.aux
 I found no \bibstyle command---while reading file ising_model.aux
-You've used 1 entry,
+You've used 4 entries,
             0 wiz_defined-function locations,
-            84 strings with 504 characters,
+            87 strings with 529 characters,
 and the built_in function-call counts, 0 in all, are:
 = -- 0
 > -- 0
