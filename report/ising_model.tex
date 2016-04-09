@@ -10,6 +10,7 @@
  \belowdisplayskip=12pt plus 3pt minus 9pt
  \belowdisplayshortskip=7pt plus 3pt minus 4pt
 }{}{}
+\usepackage[utf8]{inputenc}
 
 \usepackage[sc]{mathpazo} % Use the Palatino font
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
@@ -108,8 +109,6 @@ The partition function for the system is given by
 \end{equation}
 
 which is dependent on the temperature of the system, contained in $\beta$.
-
-\subsection{XY Model}
 
 \subsection{Metropolis Monte Carlo Algorithm}
 The Metropolis Monte Carlo algorithm is an algorithm in which the information regarding different distributions of a system is stored in a Markov chain. 
@@ -245,12 +244,29 @@ m(T_c) \propto L^{\beta/\nu}
 \end{figure}
 
 \subsection{XY Model}
+The XY model also undergoes a phase transition (known as the Kosterlitz-Thouless transition) between bound vortex-antivortex pairs at low temperatures to unpaired vortices and anti-vortices. 
+
+One can define a quantity $\Gamma$ (helicity modulus) which quantifies the free energy needed to 'twist' the spins. It is given by:
+
+\begin{align}
+\Gamma &= \frac{J}{2L^2}\left\{ \mean{\sum_{\mean{ij}} \cos(\theta_i - \theta_j)} - \frac{J}{k_B T} \mean{\left[ \sum_i \sin( \theta_i - \theta_{i+ \vec{e_x}}) \right]^2}\right.\nonumber \\
+ &\qquad \left. {}  - \frac{J}{k_B T} \mean{\left[ \sum_i \sin( \theta_i - \theta_{i+ \vec{e_y}}) \right]^2} \right\}
+\end{align}
+
+For infinite systems $\Gamma$ drops to zero at the KT critical temperature $T_{KT}$. It can be shown \cite{thijssen} that  $\Gamma$ has a universal value of $2k_B T_{KT}/\pi$ at the KT transition.
+
+In figure \ref{helicity_modulus_fig} we plot $\Gamma/J$ as a function of temperature. The line $ \Gamma/J = 2k_B T/(J \pi)$ is also shown in order to determine $T_{KT}$.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{images/helicity_modulus.pdf}
-\caption{asdasdasd}
+\caption{The helicity modulus in units of the coupling constant J of the XY model vs. the inverse coupling constant in units of $k_B T$. The intersection with the straight line gives the critical temperature $T_{KT}$.}
+\label{helicity_modulus_fig}
 \end{figure}
+
+The results are quite close to those obtained by Thijssen \cite{thijssen}. We also see that slope of the curves close to the critical temperature becomes steeper as we increase the system size and we get closer to the non-analytic behaviour expected for an infinite system.
+
+By checking the intersection of the line with the results $L=100$ we can obtain a rough estimate for critical temperature. We find $\beta_{KT} \approx 1.121$ which is very close to the value of $\beta_{KT} \approx 1.120(1)$ reported in \cite{dukovski}.
 
 %------------------------------------------------
 \section{Conclusion}
@@ -270,6 +286,12 @@ lalila
 \bibitem{thijssen}
 J.M.Thijssen,
 \newblock {\em Computational Physics}, Cambridge University Press, 2nd Edition, 2007.
+
+\bibitem{dukovski}
+I. Dukovski, J. Machta, and L. V. Chayes, 
+\newblock {\em Invaded cluster simulations of the XY model in two and three dimensions}, Phys. Rev. E 65, 026702, 2002.
+
+
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------
