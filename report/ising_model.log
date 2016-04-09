@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.10.27)  9 APR 2016 21:25
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.10.27)  9 APR 2016 21:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -966,7 +966,7 @@ Package microtype Info: Character `029' is missing
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 72.
 
-<images/magnetization.pdf, id=65, 578.16pt x 433.62pt>
+<images/magnetization.pdf, id=61, 578.16pt x 433.62pt>
 File: images/magnetization.pdf Graphic file (type pdf)
 
 <use images/magnetization.pdf>
@@ -975,7 +975,7 @@ Package pdftex.def Info: images/magnetization.pdf used on input line 95.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 96.
 
-<images/susceptibility.pdf, id=66, 578.16pt x 433.62pt>
+<images/susceptibility.pdf, id=62, 578.16pt x 433.62pt>
 File: images/susceptibility.pdf Graphic file (type pdf)
 
 <use images/susceptibility.pdf>
@@ -995,79 +995,52 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 6.25204pt on input line 109.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] <images/cv.pdf, id=86, 578
-.16pt x 433.62pt>
-File: images/cv.pdf Graphic file (type pdf)
- <use images/cv.pdf>
-Package pdftex.def Info: images/cv.pdf used on input line 171.
-(pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
-
-<images/binder_cumulant.pdf, id=87, 578.16pt x 433.62pt>
-File: images/binder_cumulant.pdf Graphic file (type pdf)
-
-<use images/binder_cumulant.pdf>
-Package pdftex.def Info: images/binder_cumulant.pdf used on input line 176.
-(pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
- [2 <./images/magnetization.pdf> <./images/susceptibility.pdf
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./images/magnetization
+.pdf> <./images/susceptibility.pdf
 
 pdfTeX warning: pdflatex (file ./images/susceptibility.pdf): PDF inclusion: mul
 tiple pdfs with page group included in a single page
->] [3 <./images/cv.pdf> <./images/binder_cumulant.pdf
+>] <images/cv.pdf, id=173, 578.16pt x 433.62pt>
+File: images/cv.pdf Graphic file (type pdf)
+ <use images/cv.pdf>
+Package pdftex.def Info: images/cv.pdf used on input line 175.
+(pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
 
-pdfTeX warning: pdflatex (file ./images/binder_cumulant.pdf): PDF inclusion: mu
-ltiple pdfs with page group included in a single page
->] <images/plot_height.pdf, id=290, 578.16pt x 433.62pt>
+<images/binder_cumulant.pdf, id=174, 578.16pt x 433.62pt>
+File: images/binder_cumulant.pdf Graphic file (type pdf)
+
+<use images/binder_cumulant.pdf>
+Package pdftex.def Info: images/binder_cumulant.pdf used on input line 180.
+(pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
+
+<images/plot_height.pdf, id=182, 578.16pt x 433.62pt>
 File: images/plot_height.pdf Graphic file (type pdf)
 
 <use images/plot_height.pdf>
-Package pdftex.def Info: images/plot_height.pdf used on input line 241.
+Package pdftex.def Info: images/plot_height.pdf used on input line 245.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
 
-<images/plot_width.pdf, id=291, 578.16pt x 433.62pt>
+<images/plot_width.pdf, id=183, 578.16pt x 433.62pt>
 File: images/plot_width.pdf Graphic file (type pdf)
 
 <use images/plot_width.pdf>
-Package pdftex.def Info: images/plot_width.pdf used on input line 246.
+Package pdftex.def Info: images/plot_width.pdf used on input line 250.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
- <images/plot_pos.pdf, id=292, 578.16pt x 433.62pt>
+ <images/plot_pos.pdf, id=184, 578.16pt x 433.62pt>
 File: images/plot_pos.pdf Graphic file (type pdf)
 
 <use images/plot_pos.pdf>
-Package pdftex.def Info: images/plot_pos.pdf used on input line 251.
+Package pdftex.def Info: images/plot_pos.pdf used on input line 255.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 307.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 307.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 307.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 307.
+ [3] [4 <./images/cv.pdf> <./images/binder_cumulant.pdf
 
-<images/plot_magnetization.pdf, id=301, 578.16pt x 433.62pt>
-File: images/plot_magnetization.pdf Graphic file (type pdf)
+pdfTeX warning: pdflatex (file ./images/binder_cumulant.pdf): PDF inclusion: mu
+ltiple pdfs with page group included in a single page
+> <./images/plot_height.pdf
 
-<use images/plot_magnetization.pdf>
-Package pdftex.def Info: images/plot_magnetization.pdf used on input line 311.
-(pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
-
-
-Package multicol Warning: I moved some lines to the next page.
-(multicol)                Footnotes on page 4 might be wrong on input line 314.
-
-
-[4]
-Overfull \hbox (16.03944pt too wide) in paragraph at lines 324--324
-[] 
- []
-
-<images/helicity_modulus.pdf, id=324, 578.16pt x 433.62pt>
-File: images/helicity_modulus.pdf Graphic file (type pdf)
-
-<use images/helicity_modulus.pdf>
-Package pdftex.def Info: images/helicity_modulus.pdf used on input line 332.
-(pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
- [5 <./images/plot_height.pdf> <./images/plot_width.pdf
+pdfTeX warning: pdflatex (file ./images/plot_height.pdf): PDF inclusion: multip
+le pdfs with page group included in a single page
+> <./images/plot_width.pdf
 
 pdfTeX warning: pdflatex (file ./images/plot_width.pdf): PDF inclusion: multipl
 e pdfs with page group included in a single page
@@ -1075,18 +1048,42 @@ e pdfs with page group included in a single page
 
 pdfTeX warning: pdflatex (file ./images/plot_pos.pdf): PDF inclusion: multiple 
 pdfs with page group included in a single page
-> <./images/plot_magnetization.pdf
-
-pdfTeX warning: pdflatex (file ./images/plot_magnetization.pdf): PDF inclusion:
- multiple pdfs with page group included in a single page
-> <./images/helicity_modulus.pdf
-
-pdfTeX warning: pdflatex (file ./images/helicity_modulus.pdf): PDF inclusion: m
-ultiple pdfs with page group included in a single page
 >]
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 8.33606pt on input line 311.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 311.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 8.33606pt on input line 311.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 311.
+ <images/plot_magnetization.pdf, id=514, 578.16pt x 433.62pt>
+File: images/plot_magnetization.pdf Graphic file (type pdf)
+
+<use images/plot_magnetization.pdf>
+Package pdftex.def Info: images/plot_magnetization.pdf used on input line 315.
+(pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
+
+
+Package multicol Warning: I moved some lines to the next page.
+(multicol)                Footnotes on page 5 might be wrong on input line 322.
+
+
+[5]
+Overfull \hbox (16.03944pt too wide) in paragraph at lines 328--328
+[] 
+ []
+
+<images/helicity_modulus.pdf, id=535, 578.16pt x 433.62pt>
+File: images/helicity_modulus.pdf Graphic file (type pdf)
+
+<use images/helicity_modulus.pdf>
+Package pdftex.def Info: images/helicity_modulus.pdf used on input line 336.
+(pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 363.
 
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 Package microtype Info: Loading generic settings for font family
@@ -1105,23 +1102,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 362--364
 otes
  []
 
+[6 <./images/plot_magnetization.pdf> <./images/helicity_modulus.pdf
+
+pdfTeX warning: pdflatex (file ./images/helicity_modulus.pdf): PDF inclusion: m
+ultiple pdfs with page group included in a single page
+>]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 377.
-[6]
+ [7]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 377.
  (./ising_model.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 377.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 377.
-Package rerunfilecheck Info: File `ising_model.out' has not changed.
-(rerunfilecheck)             Checksum: A87CB10EBE092117FB668FF5B37B92EC;892.
+
+
+Package rerunfilecheck Warning: File `ising_model.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `ising_model.out':
+(rerunfilecheck)             Before: 79E9F426D9C622B08493ECC458363219;829
+(rerunfilecheck)             After:  92DAD61230C1B3BF745FDC59114ACA72;926.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 12324 strings out of 494985
- 182295 string characters out of 6180355
- 398381 words of memory out of 5000000
- 14923 multiletter control sequences out of 15000+600000
- 92185 words of font info for 354 fonts, out of 8000000 for 9000
+ 12316 strings out of 494985
+ 182238 string characters out of 6180355
+ 396381 words of memory out of 5000000
+ 14922 multiletter control sequences out of 15000+600000
+ 88084 words of font info for 346 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 37i,13n,39p,798b,687s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,13n,39p,798b,695s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/andre/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk>{/usr/sha
 re/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
@@ -1133,10 +1145,10 @@ i.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on ising_model.pdf (6 pages, 320457 bytes).
+Output written on ising_model.pdf (7 pages, 325485 bytes).
 PDF statistics:
- 714 PDF objects out of 1000 (max. 8388607)
- 291 compressed objects within 3 object streams
- 56 named destinations out of 1000 (max. 500000)
- 62118 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 717 PDF objects out of 1000 (max. 8388607)
+ 293 compressed objects within 3 object streams
+ 57 named destinations out of 1000 (max. 500000)
+ 61086 words of extra memory for PDF output out of 61914 (max. 10000000)
 

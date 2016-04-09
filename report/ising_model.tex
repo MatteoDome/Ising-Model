@@ -83,8 +83,8 @@ The Hoshen-Kopelman algorithm is also successfully implemented for the calculati
 \begin{multicols}{2} % Two-column layout throughout the main article text
 
 \section{Introduction}
-In this report, we aim to investigate the physics of the Ising and XY models through the implementation of Monte Carlo algorithms.
-The Monte Carlo algorithms are a type of algorithms in which "random" numbers play an essential role ~\cite{thijssen}. This method has been widely and successfully implemented in the past decades to simulate the behaviour of physical systems in order to extrapolate information regarding their static properties. \\
+In this report we aim to investigate the physics of the Ising and XY models through the implementation of Monte Carlo algorithms.
+The Monte Carlo algorithms are a class of algorithms in which "random" numbers play an essential role ~\cite{thijssen}. This method has been widely and successfully implemented in the past decades to simulate the behaviour of physical systems in order to extrapolate information regarding their static properties. \\
 The Hoshen Kopelman algorithm is a cluster finding algorithm that has been implemented as a non-recursive alternative to the Swendsen-Wang algorithm. It is based on the more famous Union-Find algorithm.
 
 In section II the interaction model and the working principles of the two algorithms are outlined. In section III the numerical results obtained for specific heat, magnetization, magnetic susceptibility, Binder cumulant, finite-size scaling and XY Model.
@@ -109,25 +109,26 @@ In section II the interaction model and the working principles of the two algori
 While implementing the models and algorithm outlined in this section, we have considered $k_B = 1$, $J = 1$ and a unitary distance between the lattice sites.
 
 \subsection{Ising Model}
-The Ising Model consister in a lattice of size $L \times L$ in which every lattice site is associated with a spin. The Hamiltonian of the system in absence of an external magnetic field is described by
+The Ising Model describes the dynamics of a $L \times L$ lattice of spins which can take values of $\pm 1$. The Hamiltonian of the system in absence of an external magnetic field is described by
 
 \begin{equation}
 \label{ising_hamiltonian}
-H = - J \sum_{\mean{ij}} \textbf{s}_i \textbf{s}_j
+H = - J \sum_{\mean{ij}} s_i s_j
 \end{equation}
 
-where $\textbf{s}_i$ represents the spin associated with the \emph{i}th site.
-We consider $J > 0$, which means that the system favours the parallel alignment of adjacent spins.
+where $s_i$ represents the spin associated with the \emph{i}th site.
+When $J$ is taken to be larger than zero the system favours parallel alignment of adjacent spins (ferromagnetic behaviour). For $J<0$ anti-parallel alignment is preferable (antiferromagnetic behaviour).
+
 The partition function for the system is given by 
 
 \begin{equation}
-\mathcal{Z} = \sum_{\textbf{s}_i} e^{-\beta H\left(\textbf{s}_i\right)}
+\mathcal{Z} = \sum_{s_i} e^{-\beta H\left(s_i\right)}
 \end{equation}
 
-which is dependent on the temperature of the system, contained in $\beta$.
+which is dependent on the temperature of the system, contained in $\beta$. 
 
 \subsection{XY Model}
-The XY Model is a generalization of the Ising model in which the spins can take on any direction in the 2D plane. The Hamiltonian for this model is the absence of a magnetic field can be written as:
+The XY Model is a generalization of the Ising model in which the spins can take on any direction in the 2D plane. The Hamiltonian for this model in the absence of a magnetic field can be written as:
 
 \begin{equation}
 H = -J \sum_{\mean{ij}} \cos(\theta_i - \theta_j)
@@ -138,8 +139,8 @@ The XY model behaviour has been simulated through a Monte Carlo simulation using
 
 \subsection{Metropolis Monte Carlo Algorithm}
 The Metropolis Monte Carlo algorithm is an algorithm in which the information regarding different distributions of a system is stored in a Markov chain. 
-In an uncorrelated chain, the probability of occurrence of a certain event is given by the product of the single probabilities lead up to the event itself. In a Markov chain, the probability of occurrence for a sequence of events is defined based on the transition probability from one event (in this case, configuration) to another.
-The Metropolis Monte Carlo method is based on a Markov chain of configurations based on a given stationary distribution, which in our case is represented by the Boltzmann distribution. In order to ensure a correct representation of the phase space, the Markov chain has to be ergodic, which means that the probability of occurrence of a certain configuration $\rho(X, t)$ has to be independent of t when t is large. \\
+In an uncorrelated chain, the probability of occurrence of a certain event is given by the product of the single probabilities lead up to the event itself. In a Markov chain, (\textbf{there are a bit too many 'based' starting here :b}) the probability of occurrence for a sequence of events is defined based on the transition probability from one event (in this case, configuration) to another.
+The Metropolis Monte Carlo method is based on a Markov chain of configurations based on a given stationary distribution, which in our case is represented by the Boltzmann distribution. In order to ensure a correct representation of the phase space, the Markov chain has to be ergodic, which means that the probability of occurrence of a certain configuration  (\textbf{hmm, $\rho$, $X$ are not defined before, this is a tad confusing}) $\rho(X, t)$ has to be independent of t when t is large. \\
 Considering the probability of transition between two generic states leads to the \emph{detailed balance solution}
 
 \begin{equation}
@@ -154,14 +155,17 @@ In the simulation of the Ising model with the Metropolis Algorithm,
 \omega_{XX'} = 0 \qquad  \text{otherwise} 
 \end{align}
 
-A spin, or more then one, are then selected at random and flipped. The difference in energy between the two configurations is then calculated. if the results is bigger than zero, the new configuration is accepted with probability $e^{-\beta\Delta E}$, while if $\Delta E < 0$, the new state is always adopted.
+A spin, or more than one, are then selected at random and flipped. The difference in energy between the two configurations is then calculated. if the results is bigger than zero, the new configuration is accepted with probability $e^{-\beta\Delta E}$, while if $\Delta E < 0$, the new state is always adopted.
 
 \subsection{Hoshen-Kopelman Algorithm} \label{hk_al}
-Before applying the Hoshen-Kopelman algorithm it is necessary to consider the links between lattice sites. For each links, we consider two possible cases; in the first one, the spins are opposite and the interaction is deleted; if the spins are equal the interaction is deleted with probability $e^{2\beta J}$ and frozen with probability $1-e^{-2\beta J}$.
-In the simulation, determining whether a link is frozen or not implies the generation of a "random" number: this means that the overall simulation still belong to the Monte Carlo family of algorithms. 
+Before applying the Hoshen-Kopelman algorithm it is necessary to find the links between lattice sites. For each link, we consider two possible cases; in the first one, the spins are opposite and the interaction is deleted; if the spins are equal the interaction is deleted with probability $e^{2\beta J}$ and frozen with probability $1-e^{-2\beta J}$.
+In the simulation, determining whether a link is frozen or not implies generating a "random" number, which means that the overall \textbf{hmm, simulation doesnt really seem like the right word here...} simulation still belongs to the Monte Carlo family of algorithms. 
 
-The Hoshen-Kopelman cluster finding algorithm is can be divided in two steps.
-The first one consists in checking the links to the left and upwards for each site of the lattice. If there is a link between two sites, they are assigned to the same cluster. The second step consists in going over all the sites once more and checking all their links to make sure that the clusters are correctly identified. \\ To generate random configurations, a new random spin value is then assigned to each cluster and the properties of the specific configuration are calculated.
+Once the links are found, one can apply the Hoshen-Kopelman cluster finding algorithm, which can be divided in two steps.
+The first one consists in checking the links to the left and upwards for each site of the lattice. If there is a link between two sites, they are assigned to the same cluster. \textbf{This second step is not very clear to me. do you mean the boundary check?} The second step consists in going over all the sites once more and checking all their links to make sure that the clusters are correctly identified. \\ To generate random configurations, a new random spin value is then assigned to each cluster and the properties of the specific configuration are calculated.
+
+\subsubsection{Applying the HK algorithm to XY model}
+(to be written)
 %------------------------------------------------
 
 \section{Results}
@@ -180,7 +184,7 @@ The first one consists in checking the links to the left and upwards for each si
   \caption{Behaviour of the specific heat and Binder cumulan calculated with the Hoshen-Kopelman algorithm}
 \end{figure*}
 
-The results obtained with the Hoshen-Kopelman algorithm for magnetization, susceptibility specific heat and Binder cumulant are presented in the first four parts of this section.
+The results obtained with the Hoshen-Kopelman algorithm for magnetization, susceptibility specific heat and Binder cumulant are presented in the first four parts of this section \textbf{WE should specify we're simulating the regular ising model with j>0 here}.
 In section V we present the results obtained with finite-size scaling when also considering second neighbours with both ferromagnetic and anti-ferromagnetic behaviour. In order to consider higher interaction order, the Metropolis algorithm as been used.
 In section VI we reported the results obtained for the XY model through the Hoshen-Kopelman algorithm.
 
@@ -343,10 +347,6 @@ By checking the intersection of the line with the results $L=100$ we can obtain 
 In this paper, we presented the results obtained through the Monte Carlo simulation of the Ising model and the XY Model.
 The behaviour of the magnetization, susceptibility, binder cumulant and specific heat was found thanks to the Hoshen-Kopelman algorithm and resembles closely the theoretical prediction. Using finite-size scaling, we were able to calculate some of the critical exponent, obtaining accurate values for all the interaction orders we considered and consequently proving their universality.
 In the simulation of the XY model, we found an estimate for the helicity modulus, showing how the Monte Carlo algorithms can be used to predict the behaviour of a variety of physical systems in a reasonably accurate manner.
-\begin{appendices}
-\section{Appendix - Data blocking}
-
-\end{appendices}
 
 %----------------------------------------------------------------------------------------
 %	REFERENCE LIST
