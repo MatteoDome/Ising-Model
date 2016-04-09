@@ -200,7 +200,7 @@ The spin flipping operations taking place in the Hoshen-Kopelman algorithm cause
 m = \frac{1}{L^2} \mean{\left|\sum_i s_i\right|}
 \end{equation}
 
-In Figure~\ref{magnetization} it is possible to see the behaviour of the magnetization as a function of temperature. We can clearly see a phase transition around $\betaJ = 0.44$, as predicted by the theory. The exact value found for the critical point is reported in section III.V.
+In Figure~\ref{magnetization} it is possible to see the behaviour of the magnetization as a function of temperature. We can clearly see a phase transition around $\beta J = 0.44$, as predicted by the theory. The exact value found for the critical point is reported in section III.V.
 
 \subsection{Susceptibility}
 The susceptibility is defined as 
@@ -233,7 +233,7 @@ The Binder cumulant $Q$ is defined as:
 Q = 1 - \frac{\mean{\left( \sum_i s_i \right)^4}}{3 \mean{\left( \sum_i s_i \right)^2}^2}
 \end{equation}
 
-The behaviour of the Binder cumulant is shown in Figure~\ref{bc}. In (REFENCE) it is shown that $Q$ has a universal value at the critical point o. Therefore one can estimate $\beta J_c$ by determining the intersection point of $Q$ for different lattice sizes.
+The behaviour of the Binder cumulant is shown in Figure~\ref{bc}. It can be shown that $Q$ has a universal value at the critical point \cite{lecture_notes}. Therefore one can estimate $\beta J_c$ by determining the intersection point of $Q$ for different lattice sizes. STILL MISSING THIS
 
 \subsection{Finite size scaling}
 \begin{figure*}[!tpb]
@@ -265,7 +265,7 @@ As a system approaches a critical phase transition, the behaviour of its physica
 & m \sim |T-T_c|^{\beta}
 \end{align}
 
-The exact values for the critical exponents have been calculated by Lars Onsager in 1994 and are:
+The exact values for the critical exponents are given by:
 \begin{align}
 &\gamma = \frac{7}{4} \\
 &\alpha = 0 \\
@@ -275,9 +275,9 @@ The exact values for the critical exponents have been calculated by Lars Onsager
 
 \noindent These exponents are said to be \emph{universal} due to the fact that they remain invariant changes in the Hamiltonian that do not affect the system size or its order. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same \emph{universality class}. 
 
-It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. The thermodynamic quantities will be a smooth function of temperature for a finite system, which means that we will not see a divergence at the critical point, but a smooth peak. As we increase the system size we observe that height, width and position of this peak change according to a set of equations, called \emph{scaling laws}. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$): it can be shown that the peak height of $A$ as a function of $T$ (or $\beta J$, in our case) scales as $L^{\sigma/\nu}$, while its position and width scale as $L^{-\nu}$.
+It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. The thermodynamic quantities will be smooth functions of temperature for a finite system, which means that we will not see a divergence at the critical point, but a smooth peak. As we increase the system size we observe that height, width and position of this peak change according to a set of equations, called \emph{scaling laws}. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$): it can be shown that the peak height of $A$ as a function of $T$ (or $\beta J$, in our case) scales as $L^{\sigma/\nu}$, while its position and width scale as $L^{-\nu}$.
 
-These quantities were tracked for the magnetic susceptibility $\chi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. Besides equation \eqref{ising_hamiltonian}, we considered two other hamiltonians:
+These three quantities were tracked for the magnetic susceptibility $\chi$ for different values of $L$ by fitting the peaks to a Gaussian function. Besides the system described by \eqref{ising_hamiltonian}, we considered two other Hamiltonians:
 
 \begin{align}
 \label{second_neigh_hamil}
@@ -292,14 +292,14 @@ The results obtained for the critical exponents through finite-size scaling are 
 
 \noindent \addvbuffer[12pt 8pt]{\resizebox{\columnwidth}{!}{
 \begin{tabular}{ccccc}
-Interaction order & $\beta J_c$ & $\nu \left(\chi_{height}$) & $\nu \left(\chi_{position})$ & $\gamma/\nu$ \\
+Interaction order & $\beta J_c$ & $\nu \left(\chi_{height}\right)$ & $\nu \left(\chi_{position}\right)$ & $\gamma/\nu$ \\
 \hline
 $1^{st}$ & 0.4385(1) & 1.07(1) & 1.07(1) & 1.62(2)  \\
 $2^{nd} (ferromagnetic)$ & 0.1885(2) & 1.13(1) & 1.13(1) & 1.64(1)   \\
 $2^{nd} (antiferromagnetic)$& 0.7382(8) & 1.15(1) & 1.12(1) & 1.699(8) 
 \end{tabular}}}
 
-Moreover, the value of the magnetization at $T_c$ is expected to satisfy the following scaling relation (ADD REFERENCE):
+Moreover, the value of the magnetization at $T_c$ is expected to satisfy the following scaling relation \cite{tang}:
 \begin{equation}
 m(T_c) \propto L^{\beta/\nu}
 \end{equation}
@@ -355,11 +355,17 @@ In the simulation of the XY model, we found an estimate for the helicity modulus
 J.M.Thijssen,
 \newblock {\em Computational Physics}, Cambridge University Press, 2nd Edition, 2007.
 
+\bibitem{lecture_notes}
+K. Rummukainen,
+\newblock {\em Simulation methods in physics}, Online Lecture notes (\verb+http://www.helsinki.fi/~rummukai/simu/+)
+
+\bibitem{tang}
+S. Tang and D. P. Landau
+{\em Monte Carlo study of dynamic universality in two-dimensional Potts models}, Phys. Rev. B, 36, 567–73, 1985
+
 \bibitem{dukovski}
 I. Dukovski, J. Machta, and L. V. Chayes, 
-\newblock {\em Invaded cluster simulations of the XY model in two and three dimensions}, Phys. Rev. E 65, 026702, 2002.
-
-
+\newblock {\em Invaded cluster simulations of the XY model in two and three dimensions}, Phys. Rev. E, 65, 026702, 2002.
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------

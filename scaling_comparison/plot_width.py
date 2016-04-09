@@ -28,7 +28,7 @@ suscept_width_third_expr = -0.604359 - 0.863273*x
 with PdfPages('plot_width.pdf') as pdf:
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.set_xlabel('$\\log(N)$', fontsize=20)
+    ax.set_xlabel('$\\log(L)$', fontsize=20)
     ax.set_ylabel('$\\log(\\chi_{width})$', fontsize=20)
 
     axes = plt.gca()
