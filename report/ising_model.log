@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.20)  9 APR 2016 17:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.20)  9 APR 2016 17:57
 entering extended mode
 **./ising_model.tex
 (ising_model.tex
@@ -57,6 +57,242 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count89
 )
+("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.sty
+"
+Package: inputenc 2015/03/17 v1.2c Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+ ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\utf8.def"
+File: utf8.def 2015/09/07 v1.1p UTF-8 support for inputenc
+Now handling font encoding OML ...
+... no UTF-8 mapping file for font encoding OML
+Now handling font encoding T1 ...
+... processing UTF-8 mapping file for font encoding T1
+
+("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1enc.dfu"
+File: t1enc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
+   defining Unicode char U+00A0 (decimal 160)
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00AB (decimal 171)
+   defining Unicode char U+00AD (decimal 173)
+   defining Unicode char U+00BB (decimal 187)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C0 (decimal 192)
+   defining Unicode char U+00C1 (decimal 193)
+   defining Unicode char U+00C2 (decimal 194)
+   defining Unicode char U+00C3 (decimal 195)
+   defining Unicode char U+00C4 (decimal 196)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00C7 (decimal 199)
+   defining Unicode char U+00C8 (decimal 200)
+   defining Unicode char U+00C9 (decimal 201)
+   defining Unicode char U+00CA (decimal 202)
+   defining Unicode char U+00CB (decimal 203)
+   defining Unicode char U+00CC (decimal 204)
+   defining Unicode char U+00CD (decimal 205)
+   defining Unicode char U+00CE (decimal 206)
+   defining Unicode char U+00CF (decimal 207)
+   defining Unicode char U+00D0 (decimal 208)
+   defining Unicode char U+00D1 (decimal 209)
+   defining Unicode char U+00D2 (decimal 210)
+   defining Unicode char U+00D3 (decimal 211)
+   defining Unicode char U+00D4 (decimal 212)
+   defining Unicode char U+00D5 (decimal 213)
+   defining Unicode char U+00D6 (decimal 214)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00D9 (decimal 217)
+   defining Unicode char U+00DA (decimal 218)
+   defining Unicode char U+00DB (decimal 219)
+   defining Unicode char U+00DC (decimal 220)
+   defining Unicode char U+00DD (decimal 221)
+   defining Unicode char U+00DE (decimal 222)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E0 (decimal 224)
+   defining Unicode char U+00E1 (decimal 225)
+   defining Unicode char U+00E2 (decimal 226)
+   defining Unicode char U+00E3 (decimal 227)
+   defining Unicode char U+00E4 (decimal 228)
+   defining Unicode char U+00E5 (decimal 229)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00E7 (decimal 231)
+   defining Unicode char U+00E8 (decimal 232)
+   defining Unicode char U+00E9 (decimal 233)
+   defining Unicode char U+00EA (decimal 234)
+   defining Unicode char U+00EB (decimal 235)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F0 (decimal 240)
+   defining Unicode char U+00F1 (decimal 241)
+   defining Unicode char U+00F2 (decimal 242)
+   defining Unicode char U+00F3 (decimal 243)
+   defining Unicode char U+00F4 (decimal 244)
+   defining Unicode char U+00F5 (decimal 245)
+   defining Unicode char U+00F6 (decimal 246)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+00F9 (decimal 249)
+   defining Unicode char U+00FA (decimal 250)
+   defining Unicode char U+00FB (decimal 251)
+   defining Unicode char U+00FC (decimal 252)
+   defining Unicode char U+00FD (decimal 253)
+   defining Unicode char U+00FE (decimal 254)
+   defining Unicode char U+00FF (decimal 255)
+   defining Unicode char U+0102 (decimal 258)
+   defining Unicode char U+0103 (decimal 259)
+   defining Unicode char U+0104 (decimal 260)
+   defining Unicode char U+0105 (decimal 261)
+   defining Unicode char U+0106 (decimal 262)
+   defining Unicode char U+0107 (decimal 263)
+   defining Unicode char U+010C (decimal 268)
+   defining Unicode char U+010D (decimal 269)
+   defining Unicode char U+010E (decimal 270)
+   defining Unicode char U+010F (decimal 271)
+   defining Unicode char U+0110 (decimal 272)
+   defining Unicode char U+0111 (decimal 273)
+   defining Unicode char U+0118 (decimal 280)
+   defining Unicode char U+0119 (decimal 281)
+   defining Unicode char U+011A (decimal 282)
+   defining Unicode char U+011B (decimal 283)
+   defining Unicode char U+011E (decimal 286)
+   defining Unicode char U+011F (decimal 287)
+   defining Unicode char U+0130 (decimal 304)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0132 (decimal 306)
+   defining Unicode char U+0133 (decimal 307)
+   defining Unicode char U+0139 (decimal 313)
+   defining Unicode char U+013A (decimal 314)
+   defining Unicode char U+013D (decimal 317)
+   defining Unicode char U+013E (decimal 318)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0143 (decimal 323)
+   defining Unicode char U+0144 (decimal 324)
+   defining Unicode char U+0147 (decimal 327)
+   defining Unicode char U+0148 (decimal 328)
+   defining Unicode char U+014A (decimal 330)
+   defining Unicode char U+014B (decimal 331)
+   defining Unicode char U+0150 (decimal 336)
+   defining Unicode char U+0151 (decimal 337)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0154 (decimal 340)
+   defining Unicode char U+0155 (decimal 341)
+   defining Unicode char U+0158 (decimal 344)
+   defining Unicode char U+0159 (decimal 345)
+   defining Unicode char U+015A (decimal 346)
+   defining Unicode char U+015B (decimal 347)
+   defining Unicode char U+015E (decimal 350)
+   defining Unicode char U+015F (decimal 351)
+   defining Unicode char U+0160 (decimal 352)
+   defining Unicode char U+0161 (decimal 353)
+   defining Unicode char U+0162 (decimal 354)
+   defining Unicode char U+0163 (decimal 355)
+   defining Unicode char U+0164 (decimal 356)
+   defining Unicode char U+0165 (decimal 357)
+   defining Unicode char U+016E (decimal 366)
+   defining Unicode char U+016F (decimal 367)
+   defining Unicode char U+0170 (decimal 368)
+   defining Unicode char U+0171 (decimal 369)
+   defining Unicode char U+0174 (decimal 372)
+   defining Unicode char U+0175 (decimal 373)
+   defining Unicode char U+0176 (decimal 374)
+   defining Unicode char U+0177 (decimal 375)
+   defining Unicode char U+0178 (decimal 376)
+   defining Unicode char U+0179 (decimal 377)
+   defining Unicode char U+017A (decimal 378)
+   defining Unicode char U+017B (decimal 379)
+   defining Unicode char U+017C (decimal 380)
+   defining Unicode char U+017D (decimal 381)
+   defining Unicode char U+017E (decimal 382)
+   defining Unicode char U+0218 (decimal 536)
+   defining Unicode char U+0219 (decimal 537)
+   defining Unicode char U+021A (decimal 538)
+   defining Unicode char U+021B (decimal 539)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201A (decimal 8218)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+   defining Unicode char U+201E (decimal 8222)
+   defining Unicode char U+2030 (decimal 8240)
+   defining Unicode char U+2031 (decimal 8241)
+   defining Unicode char U+2039 (decimal 8249)
+   defining Unicode char U+203A (decimal 8250)
+   defining Unicode char U+2423 (decimal 9251)
+)
+Now handling font encoding OT1 ...
+... processing UTF-8 mapping file for font encoding OT1
+
+("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ot1enc.dfu"
+File: ot1enc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
+   defining Unicode char U+00A0 (decimal 160)
+   defining Unicode char U+00A1 (decimal 161)
+   defining Unicode char U+00A3 (decimal 163)
+   defining Unicode char U+00AD (decimal 173)
+   defining Unicode char U+00B8 (decimal 184)
+   defining Unicode char U+00BF (decimal 191)
+   defining Unicode char U+00C5 (decimal 197)
+   defining Unicode char U+00C6 (decimal 198)
+   defining Unicode char U+00D8 (decimal 216)
+   defining Unicode char U+00DF (decimal 223)
+   defining Unicode char U+00E6 (decimal 230)
+   defining Unicode char U+00EC (decimal 236)
+   defining Unicode char U+00ED (decimal 237)
+   defining Unicode char U+00EE (decimal 238)
+   defining Unicode char U+00EF (decimal 239)
+   defining Unicode char U+00F8 (decimal 248)
+   defining Unicode char U+0131 (decimal 305)
+   defining Unicode char U+0141 (decimal 321)
+   defining Unicode char U+0142 (decimal 322)
+   defining Unicode char U+0152 (decimal 338)
+   defining Unicode char U+0153 (decimal 339)
+   defining Unicode char U+0174 (decimal 372)
+   defining Unicode char U+0175 (decimal 373)
+   defining Unicode char U+0176 (decimal 374)
+   defining Unicode char U+0177 (decimal 375)
+   defining Unicode char U+0218 (decimal 536)
+   defining Unicode char U+0219 (decimal 537)
+   defining Unicode char U+021A (decimal 538)
+   defining Unicode char U+021B (decimal 539)
+   defining Unicode char U+2013 (decimal 8211)
+   defining Unicode char U+2014 (decimal 8212)
+   defining Unicode char U+2018 (decimal 8216)
+   defining Unicode char U+2019 (decimal 8217)
+   defining Unicode char U+201C (decimal 8220)
+   defining Unicode char U+201D (decimal 8221)
+)
+Now handling font encoding OMS ...
+... processing UTF-8 mapping file for font encoding OMS
+("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\omsenc.dfu"
+File: omsenc.dfu 2015/09/07 v1.1p UTF-8 support for inputenc
+   defining Unicode char U+00A7 (decimal 167)
+   defining Unicode char U+00B6 (decimal 182)
+   defining Unicode char U+00B7 (decimal 183)
+   defining Unicode char U+2020 (decimal 8224)
+   defining Unicode char U+2021 (decimal 8225)
+   defining Unicode char U+2022 (decimal 8226)
+)
+Now handling font encoding OMX ...
+... no UTF-8 mapping file for font encoding OMX
+Now handling font encoding U ...
+... no UTF-8 mapping file for font encoding U
+   defining Unicode char U+00A9 (decimal 169)
+   defining Unicode char U+00AA (decimal 170)
+   defining Unicode char U+00AE (decimal 174)
+   defining Unicode char U+00BA (decimal 186)
+   defining Unicode char U+02C6 (decimal 710)
+   defining Unicode char U+02DC (decimal 732)
+   defining Unicode char U+200C (decimal 8204)
+   defining Unicode char U+2026 (decimal 8230)
+   defining Unicode char U+2122 (decimal 8482)
+   defining Unicode char U+2423 (decimal 9251)
+))
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\mathpazo.s
 ty"
 Package: mathpazo 2005/04/12 PSNFSS-v9.2a Palatino w/ Pazo Math (D.Puga, WaS) 
@@ -75,9 +311,9 @@ Package: microtype 2013/05/23 v2.5a Micro-typographical refinements (RS)
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.s
 ty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks16
+\KV@toks@=\toks18
 )
-\MT@toks=\toks17
+\MT@toks=\toks19
 \MT@count=\count90
 LaTeX Info: Redefining \textls on input line 766.
 \MT@outer@kern=\dimen110
@@ -115,13 +351,13 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 \caption@hangindent=\dimen117
 )
 \c@float@type=\count92
-\float@exts=\toks18
+\float@exts=\toks20
 \float@box=\box26
 \@floatcapt=\box27
 Package floatrow Info: Modified float package code loaded on input line 455.
 Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 
-\FR@everyfloat=\toks19
+\FR@everyfloat=\toks21
 \flrow@foot=\insert199
 \FB@wd=\dimen118
 \FBo@wd=\dimen119
@@ -148,7 +384,7 @@ Package floatrow Info: Modified rotfloat package code loaded on input line 473.
 \LTright=\skip57
 \LTleft=\skip58
 \LTright=\skip59
-\flrow@types=\toks20
+\flrow@types=\toks22
 )
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\verbatimbox\verba
 timbox.sty"
@@ -159,8 +395,8 @@ ily, for adding vertical buffer around an object.
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\tools\verbatim.st
 y"
 Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks21
-\verbatim@line=\toks22
+\every@verbatim=\toks23
+\verbatim@line=\toks24
 \verbatim@in@stream=\read1
 )
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\readarray\readarr
@@ -222,7 +458,7 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layoutheight=\dimen130
 \Gm@layouthoffset=\dimen131
 \Gm@layoutvoffset=\dimen132
-\Gm@dimlist=\toks23
+\Gm@dimlist=\toks25
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry
 .cfg"))
@@ -367,6 +603,8 @@ Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.d
 ef"
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
 )
 \Hy@SavedSpaceFactor=\count127
 
@@ -436,7 +674,7 @@ Package: amstext 2000/06/29 v2.01
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.st
 y"
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks24
+\@emptytoks=\toks26
 \ex@=\dimen159
 ))
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.st
@@ -469,21 +707,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 \dotsspace@=\muskip11
 \c@parentequation=\count142
 \dspbrk@lvl=\count143
-\tag@help=\toks25
+\tag@help=\toks27
 \row@=\count144
 \column@=\count145
 \maxfields@=\count146
-\andhelp@=\toks26
+\andhelp@=\toks28
 \eqnshift@=\dimen162
 \alignsep@=\dimen163
 \tagshift@=\dimen164
 \tagwidth@=\dimen165
 \totwidth@=\dimen166
 \lineht@=\dimen167
-\@envbody=\toks27
+\@envbody=\toks29
 \multlinegap=\skip66
 \multlinetaggap=\skip67
-\mathdisplay@stack=\toks28
+\mathdisplay@stack=\toks30
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
@@ -562,7 +800,7 @@ Package: paralist 2015/12/30 v2.5 Extended list environments
 \plpartopsep=\skip69
 \plitemsep=\skip70
 \plparsep=\skip71
-\pl@lab=\toks29
+\pl@lab=\toks31
 )
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\caption\subcaptio
 n.sty"
@@ -594,7 +832,7 @@ Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \aftertitleunit=\skip78
 \ttl@plus=\dimen186
 \ttl@minus=\dimen187
-\ttl@toksa=\toks30
+\ttl@toksa=\toks32
 \titlewidth=\dimen188
 \titlewidthlast=\dimen189
 \titlewidthfirst=\dimen190
@@ -605,26 +843,26 @@ File: block.tss 2011/12/15
 ) (ising_model.aux)
 \openout1 = `ising_model.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 63.
-LaTeX Font Info:    ... okay on input line 63.
-LaTeX Font Info:    Try loading font information for T1+pplx on input line 63.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 64.
+LaTeX Font Info:    ... okay on input line 64.
+LaTeX Font Info:    Try loading font information for T1+pplx on input line 64.
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\t1pplx.fd"
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
-LaTeX Info: Redefining \microtypecontext on input line 63.
+LaTeX Info: Redefining \microtypecontext on input line 64.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -690,7 +928,7 @@ Package color Info: Driver file: pdftex.def on input line 142.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box62
-Package hyperref Info: Link coloring OFF on input line 63.
+Package hyperref Info: Link coloring OFF on input line 64.
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.
 sty"
@@ -702,9 +940,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count157
 )
-LaTeX Info: Redefining \ref on input line 63.
-LaTeX Info: Redefining \pageref on input line 63.
-LaTeX Info: Redefining \nameref on input line 63.
+LaTeX Info: Redefining \ref on input line 64.
+LaTeX Info: Redefining \pageref on input line 64.
+LaTeX Info: Redefining \nameref on input line 64.
  (ising_model.out) (ising_model.out)
 \@outlinefile=\write3
 \openout3 = `ising_model.out'.
@@ -718,37 +956,37 @@ kii"
 \scratchbox=\box63
 \nofMPsegments=\count159
 \nofMParguments=\count160
-\everyMPshowfont=\toks31
+\everyMPshowfont=\toks33
 \MPscratchCnt=\count161
 \MPscratchDim=\dimen192
 \MPnumerator=\count162
 \makeMPintoPDFobject=\count163
-\everyMPtoPDFconversion=\toks32
+\everyMPtoPDFconversion=\toks34
 )
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <24> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 66.
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 66.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 67.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 67.
 
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\ot1pplx.fd
 "
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 66.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 67.
 
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\omlzplm.fd
 "
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 66.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 67.
 
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\omszplm.fd
 "
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 66.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 67.
 
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\omxzplm.fd
@@ -760,7 +998,7 @@ cfg"
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 66.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 67.
 
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\ot1zplm.fd
@@ -772,73 +1010,73 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 12.50409pt on input line 66.
+(Font)              scaled to size 12.50409pt on input line 67.
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\microtype\mt-msa.
 cfg"
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 66.
+(Font)              scaled to size 9.37807pt on input line 67.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 66.
+(Font)              scaled to size 7.29405pt on input line 67.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 12.50409pt on input line 66.
+(Font)              scaled to size 12.50409pt on input line 67.
 
 ("D:\Users\Matteo\AppData\Local\Programs\MiKTeX 2.9\tex\latex\microtype\mt-msb.
 cfg"
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 66.
+(Font)              scaled to size 9.37807pt on input line 67.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 66.
+(Font)              scaled to size 7.29405pt on input line 67.
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 71.
- <images/magnetization.pdf, id=64, 578.16pt x 433.62pt>
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 72.
+ <images/magnetization.pdf, id=68, 578.16pt x 433.62pt>
 File: images/magnetization.pdf Graphic file (type pdf)
 
 <use images/magnetization.pdf>
-Package pdftex.def Info: images/magnetization.pdf used on input line 93.
+Package pdftex.def Info: images/magnetization.pdf used on input line 94.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 94.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 95.
 
-<images/susceptibility.pdf, id=65, 578.16pt x 433.62pt>
+<images/susceptibility.pdf, id=69, 578.16pt x 433.62pt>
 File: images/susceptibility.pdf Graphic file (type pdf)
 
 <use images/susceptibility.pdf>
-Package pdftex.def Info: images/susceptibility.pdf used on input line 98.
+Package pdftex.def Info: images/susceptibility.pdf used on input line 99.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 107.
+(Font)              scaled to size 10.42007pt on input line 108.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 107.
+(Font)              scaled to size 7.91925pt on input line 108.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 107.
+(Font)              scaled to size 6.25204pt on input line 108.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 107.
+(Font)              scaled to size 10.42007pt on input line 108.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 107.
+(Font)              scaled to size 7.91925pt on input line 108.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 107.
+(Font)              scaled to size 6.25204pt on input line 108.
  [1
 
 {C:/Users/Matteo/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] <images/cv
-.pdf, id=85, 578.16pt x 433.62pt>
+.pdf, id=89, 578.16pt x 433.62pt>
 File: images/cv.pdf Graphic file (type pdf)
 
 <use images/cv.pdf>
-Package pdftex.def Info: images/cv.pdf used on input line 169.
+Package pdftex.def Info: images/cv.pdf used on input line 170.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
- <images/binder_cumulant.pdf, id=86, 578.16pt x 433.62pt>
+ <images/binder_cumulant.pdf, id=90, 578.16pt x 433.62pt>
 File: images/binder_cumulant.pdf Graphic file (type pdf)
 
 <use images/binder_cumulant.pdf>
-Package pdftex.def Info: images/binder_cumulant.pdf used on input line 174.
+Package pdftex.def Info: images/binder_cumulant.pdf used on input line 175.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
  [2 <./images/magnetization.pdf> <./images/susceptibility.pdf
 
@@ -848,7 +1086,7 @@ tiple pdfs with page group included in a single page
 ! Undefined control sequence.
 <recently read> \betaJ 
                        
-l.200 ...rly see a phase transition around $\betaJ
+l.201 ...rly see a phase transition around $\betaJ
                                                    = 0.44$, as predicted by ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -860,38 +1098,38 @@ and I'll forget about whatever was undefined.
 
 pdfTeX warning: pdflatex (file ./images/binder_cumulant.pdf): PDF inclusion: mu
 ltiple pdfs with page group included in a single page
->] <images/plot_height.pdf, id=233, 578.16pt x 433.62pt>
+>] <images/plot_height.pdf, id=237, 578.16pt x 433.62pt>
 File: images/plot_height.pdf Graphic file (type pdf)
 
 <use images/plot_height.pdf>
-Package pdftex.def Info: images/plot_height.pdf used on input line 238.
+Package pdftex.def Info: images/plot_height.pdf used on input line 239.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
 
-<images/plot_width.pdf, id=234, 578.16pt x 433.62pt>
+<images/plot_width.pdf, id=238, 578.16pt x 433.62pt>
 File: images/plot_width.pdf Graphic file (type pdf)
 
 <use images/plot_width.pdf>
-Package pdftex.def Info: images/plot_width.pdf used on input line 243.
+Package pdftex.def Info: images/plot_width.pdf used on input line 244.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
- <images/plot_pos.pdf, id=235, 578.16pt x 433.62pt>
+ <images/plot_pos.pdf, id=239, 578.16pt x 433.62pt>
 File: images/plot_pos.pdf Graphic file (type pdf)
 
 <use images/plot_pos.pdf>
-Package pdftex.def Info: images/plot_pos.pdf used on input line 248.
+Package pdftex.def Info: images/plot_pos.pdf used on input line 249.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
-LaTeX Font Info:    Try loading font information for OMS+pplx on input line 278
+LaTeX Font Info:    Try loading font information for OMS+pplx on input line 279
 .
-LaTeX Font Info:    No file OMSpplx.fd. on input line 278.
+LaTeX Font Info:    No file OMSpplx.fd. on input line 279.
 
 
 LaTeX Font Warning: Font shape `OMS/pplx/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 278.
+(Font)              for symbol `textbullet' on input line 279.
 
 ! Missing \right. inserted.
 <inserted text> 
                 \right .
-l.302 \end{tabular}}}
+l.303 \end{tabular}}}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -902,7 +1140,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing \right. inserted.
 <inserted text> 
                 \right .
-l.302 \end{tabular}}}
+l.303 \end{tabular}}}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -910,24 +1148,28 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-<images/plot_magnetization.pdf, id=239, 578.16pt x 433.62pt>
+<images/plot_magnetization.pdf, id=243, 578.16pt x 433.62pt>
 File: images/plot_magnetization.pdf Graphic file (type pdf)
 
 <use images/plot_magnetization.pdf>
-Package pdftex.def Info: images/plot_magnetization.pdf used on input line 313.
+Package pdftex.def Info: images/plot_magnetization.pdf used on input line 314.
 (pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
+ [4]
+Overfull \hbox (16.03944pt too wide) in paragraph at lines 326--326
+[] 
+ []
 
-<images/helicity_modulus.pdf, id=240, 578.16pt x 433.62pt>
+<images/helicity_modulus.pdf, id=262, 578.16pt x 433.62pt>
 File: images/helicity_modulus.pdf Graphic file (type pdf)
 
 <use images/helicity_modulus.pdf>
-Package pdftex.def Info: images/helicity_modulus.pdf used on input line 321.
+Package pdftex.def Info: images/helicity_modulus.pdf used on input line 334.
 (pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
- [4]
-Overfull \vbox (21.7256pt too high) has occurred while \output is active []
-
-
-[5 <./images/plot_height.pdf> <./images/plot_width.pdf
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 335.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 5.21004pt on input line 335.
+ [5 <./images/plot_height.pdf> <./images/plot_width.pdf
 
 pdfTeX warning: pdflatex (file ./images/plot_width.pdf): PDF inclusion: multipl
 e pdfs with page group included in a single page
@@ -944,43 +1186,55 @@ pdfTeX warning: pdflatex (file ./images/plot_magnetization.pdf): PDF inclusion:
 pdfTeX warning: pdflatex (file ./images/helicity_modulus.pdf): PDF inclusion: m
 ultiple pdfs with page group included in a single page
 >]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 348.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 372.
  [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 348.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 372.
  (ising_model.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 348.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 348.
-Package rerunfilecheck Info: File `ising_model.out' has not changed.
-(rerunfilecheck)             Checksum: 3F2EFA9178E56059CAFF5677E6F06B72;893.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 372.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 372.
 
+
+Package rerunfilecheck Warning: File `ising_model.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `ising_model.out':
+(rerunfilecheck)             Before: 0F666C227DC672EF38DA4C738AD18266;952
+(rerunfilecheck)             After:  0EAA85C10484420705347773AA97A60B;907.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 11912 strings out of 493634
- 180645 string characters out of 3134830
- 408715 words of memory out of 3000000
- 14787 multiletter control sequences out of 15000+200000
- 75653 words of font info for 282 fonts, out of 3000000 for 9000
+ 12178 strings out of 493634
+ 183405 string characters out of 3134830
+ 410845 words of memory out of 3000000
+ 15009 multiletter control sequences out of 15000+200000
+ 82818 words of font info for 311 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 37i,11n,41p,800b,691s stack positions out of 5000i,500n,10000p,200000b,50000s
-{D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/fontname/8
-r.enc}<D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
-fonts/cm/cmex10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
-pe1/public/amsfonts/cm/cmmi10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Users/Matteo/AppData/Local/P
-rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Users/Matteo/A
-ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmr.pfb><D:/User
-s/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmri.p
-fb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/fpl/fp
-lrc8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/pa
-latino/uplb8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/urw/palatino/uplr8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fo
-nts/type1/urw/palatino/uplri8a.pfb>
-Output written on ising_model.pdf (6 pages, 338098 bytes).
+ 40i,13n,43p,800b,691s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{section.5} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.4.1} has been referenced but does not ex
+ist, replaced by a fixed one
+
+{D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.
+enc}<D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmex10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Users/Matteo/AppData/Local/Pro
+grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Users/Matteo/App
+Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmr.pfb><D:/Users/
+Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmri.pfb
+><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/fpl/fplr
+c8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/pala
+tino/uplb8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
+urw/palatino/uplr8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/urw/palatino/uplri8a.pfb>
+Output written on ising_model.pdf (6 pages, 346339 bytes).
 PDF statistics:
- 612 PDF objects out of 1000 (max. 8388607)
- 51 named destinations out of 1000 (max. 500000)
- 51366 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 629 PDF objects out of 1000 (max. 8388607)
+ 55 named destinations out of 1000 (max. 500000)
+ 52910 words of extra memory for PDF output out of 61914 (max. 10000000)
 
