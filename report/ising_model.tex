@@ -16,7 +16,7 @@
 \linespread{1.05} % Line spacing - Palatino needs more space between lines
 \usepackage{microtype} % Slightly tweak font spacing for aesthetics
 \usepackage{floatrow}
-
+\usepackage{verbatimbox}
 \usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt, outer=1.5cm]{geometry} % Document margins
 \usepackage{multicol} % Used for the two-column layout of the document
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
@@ -70,7 +70,7 @@
 
 \begin{abstract}
 
-\noindent The aim of this report is to present the results obtained using Monte Carlo simulation for the Ising model. Two different algorithms have been implemented to simulate the behaviour of the system: the Metropolis Monte Carlo algorithm and the Hoshen-Kopelman cluster finding algorithm. Both algorithms have been used to extrapolate relevant physical quantities, such as the magnetization, the magnetic susceptibility and the specific heat. Finite-size scaling has also been used in order to calculate the critical exponents. For the Metropolis algorithm, we tried to find a proof of the critical exponent universality by considering second neighbour interaction. The algorithms have been compared: the Hoshen Kopelman revealed itself to be better suited for (...)% Dummy abstract text
+\noindent The aim of this report is to present the results obtained using Monte Carlo simulation for the Ising model and XY model. Two main algorithms have been implemented to simulate the behaviour of the system: the Metropolis Monte Carlo algorithm and the Hoshen-Kopelman cluster finding algorithm. Both algorithms have been used to extrapolate relevant physical quantities, such as the magnetization, the magnetic susceptibility and the specific heat. Finite-size scaling has also been used in order to calculate the critical exponents. Using the Metropolis algorithm we were able to prove the universality of the critical exponents of the Ising model..% Dummy abstract text
 
 \end{abstract}
 
@@ -81,12 +81,27 @@
 \begin{multicols}{2} % Two-column layout throughout the main article text
 
 \section{Introduction}
+In this report, we aim to investigate the physics of the Ising and XY models through the implementation of Monte Carlo algorithms.
 The Monte Carlo algorithms are a type of algorithms in which "random" numbers play an essential role ~\cite{thijssen}. This method has been widely and successfully implemented in the past decades to simulate the behaviour of physical systems in order to extrapolate information regarding their static properties. \\
 The Hoshen Kopelman algorithm is a cluster finding algorithm that has been implemented as a non-recursive alternative to the Swendsen-Wang algorithm. It is based on the more famous Union-Find algorithm.
 
-In section II the interaction model and the working principles of the two algorithms are outlined. In section III the numerical results obtained for specific heat, magnetization, magnetic susceptibility, Binder cumulant and finite-size scaling. The results deriving from the application of the Metropolis algorithm while considering second neighbours are also reported in section III.
+In section II the interaction model and the working principles of the two algorithms are outlined. In section III the numerical results obtained for specific heat, magnetization, magnetic susceptibility, Binder cumulant, finite-size scaling and XY Model.
 
 %------------------------------------------------
+\begin{figure*}[b]
+  \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{images/magnetization.pdf}
+    \caption{Magnetization}
+    \label{magnetization}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{images/susceptibility.pdf}
+    \caption{Susceptibility}
+    \label{susceptibility}
+  \end{subfigure}
+  \caption{Behaviour of the magnetization and susceptibility calculated with the Hoshen-Kopelman algorithm}
+\end{figure*}
+
 
 \section{Methods}
 While implementing the models and algorithm outlined in this section, we have considered $k_B = 1$, $J = 1$ and a unitary distance between the lattice sites.
@@ -110,6 +125,14 @@ The partition function for the system is given by
 which is dependent on the temperature of the system, contained in $\beta$.
 
 \subsection{XY Model}
+The XY Model is a generalization of the Ising model in which the spins can take on any direction in the 2D plane. The Hamiltonian for this model is the absence of a magnetic field can be written as:
+
+\begin{equation}
+H = -J \sum_{\mean{ij}} \cos(\theta_i - \theta_j)
+\end{equation}
+
+where $\theta_i$ is the angle between the direction of the spin of the \emph{i}-th site and an arbitrarily chosen axis. \\
+The XY model behaviour has been simulated through a Monte Carlo simulation using the Hoshen-Kopelman algorithm, which is described in part ~\ref{hk_al} of this section.
 
 \subsection{Metropolis Monte Carlo Algorithm}
 The Metropolis Monte Carlo algorithm is an algorithm in which the information regarding different distributions of a system is stored in a Markov chain. 
@@ -131,17 +154,37 @@ In the simulation of the Ising model with the Metropolis Algorithm,
 
 A spin, or more then one, are then selected at random and flipped. The difference in energy between the two configurations is then calculated. if the results is bigger than zero, the new configuration is accepted with probability $e^{-\beta\Delta E}$, while if $\Delta E < 0$, the new state is always adopted.
 
-\subsection{Hoshen-Kopelman Algorithm}
+\subsection{Hoshen-Kopelman Algorithm} \label{hk_al}
 Before applying the Hoshen-Kopelman algorithm it is necessary to consider the links between lattice sites. For each links, we consider two possible cases; in the first one, the spins are opposite and the interaction is deleted; if the spins are equal the interaction is deleted with probability $e^{2\beta J}$ and frozen with probability $1-e^{-2\beta J}$.
-In the simulation, determining whether a link is frozen or not implies the generation of a "random" number: this means that the overall simulation still belong to the Monte Carlo family of algorithms. \\
+In the simulation, determining whether a link is frozen or not implies the generation of a "random" number: this means that the overall simulation still belong to the Monte Carlo family of algorithms. 
+
 The Hoshen-Kopelman cluster finding algorithm is can be divided in two steps.
 The first one consists in checking the links to the left and upwards for each site of the lattice. If there is a link between two sites, they are assigned to the same cluster. The second step consists in going over all the sites once more and checking all their links to make sure that the clusters are correctly identified. \\ To generate random configurations, a new random spin value is then assigned to each cluster and the properties of the specific configuration are calculated.
 %------------------------------------------------
 
 \section{Results}
 
+\begin{figure*}[!tpb] 
+ \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{images/cv.pdf}
+    \caption{Specific Heat}
+    \label{cv}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{images/binder_cumulant.pdf}
+    \caption{Binder cumulant}
+    \label{bc}
+  \end{subfigure}
+  \caption{Behaviour of the specific heat and Binder cumulan calculated with the Hoshen-Kopelman algorithm}
+\end{figure*}
+
+The results obtained with the Hoshen-Kopelman algorithm for magnetization, susceptibility specific heat and Binder cumulant are presented in the first four parts of this section.
+In section V we present the results obtained with finite-size scaling when also considering second neighbours with both ferromagnetic and anti-ferromagnetic behaviour. In order to consider higher interaction order, the Metropolis algorithm as been used.
+In section VI we reported the results obtained for the XY model through the Hoshen-Kopelman algorithm.
+It should be noted that we followed the convention found in ~\cite{thijssen}, where $k_B = 1$ and the distance between sites is taken to be unitary.
+
 \subsection{Magnetization}
-In the Ising model one defines the magnetization of the system as:
+In the Ising model the magnetization is defined as:
 
 \begin{equation}
 m = \frac{1}{L^2} \mean{\sum_i s_i}
@@ -154,12 +197,31 @@ However the cluster flipping operations of the HK algorithm make the sum in \ref
 m = \frac{1}{L^2} \mean{\left|\sum_i s_i\right|}
 \end{equation}
 
+In Figure~\ref{magnetization} it is possible to see the behaviour of the magnetization as a function of temperature. We can clearly see a phase transition around $\betaJ = 0.44$, as predicted by the theory. The exact value found for the critical point is reported in section III.V.
+
+\subsection{Susceptibility}
+The susceptibility is defined as 
+
+\begin{equation}
+\chi = \frac{dm}{dh}
+\end{equation}
+
+This definition is modified in order to account for the cluster spin flips taking place in the Hoshen-Kopelman algorithm. The resulting equation is:
+
+\begin{equation}
+\chi = \frac{1}{L^2}\left[\mean{\left(\sum_i s_i\right)^2} - \mean{\left|\sum_i s_i \right|}^2\right]
+\end{equation}
+
+The results obtained for the susceptibility are shown in Figure~\ref{susceptibility}. As expected, the susceptibility presents a peak close to the phase transition and is equal to zero everywhere else.
+
 \subsection{Heat capacity}
-The heat capacity can be directly related to the system's energy fluctuations:
+The heat capacity can be directly related to the system's energy fluctuations. From \cite{thijssen}:
 
 \begin{equation}
 C_v = \frac{\mean{E^2} - \mean{E}^2}{L^2 T}
 \end{equation}
+
+The obtained results are show in Figure~\ref{cv}.
 
 \subsection{Binder cumulant}
 The Binder cumulant $Q$ is defined as:
@@ -168,7 +230,7 @@ The Binder cumulant $Q$ is defined as:
 Q = 1 - \frac{\mean{\left( \sum_i s_i \right)^4}}{3 \mean{\left( \sum_i s_i \right)^2}^2}
 \end{equation}
 
-In (REFENCE) it is shown that $Q$ has a universal value at the critical point o. Therefore one can estimate $\beta J_c$ by determining the intersection point of $Q$ for different lattice sizes.
+The behaviour of the Binder cumulant is shown in Figure~\ref{bc}. In (REFENCE) it is shown that $Q$ has a universal value at the critical point o. Therefore one can estimate $\beta J_c$ by determining the intersection point of $Q$ for different lattice sizes.
 
 \subsection{Finite size scaling}
 \begin{figure*}[!tpb]
@@ -208,7 +270,7 @@ In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition fu
 &\beta = \frac{1}{2} 
 \end{align}
 
-These exponents are said to be \emph{universal} due to the fact that they remain invariant under certain changes in the Hamiltonian. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same \emph{universality class}. 
+\noindent These exponents are said to be \emph{universal} due to the fact that they remain invariant under certain changes in the Hamiltonian. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same \emph{universality class}. 
 
 It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. For a finite system then all the thermodynamic quantities will be a smooth function of temperature -- we will not see a divergence at the critical point but a smooth peak. However as we increase the system size we observe that the size, width and position of this peak change according to a set of equations called the scaling laws. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$). Then we have that:
 
@@ -218,7 +280,7 @@ It is important to note that analytical exponents are actually obtained by takin
 \item The peak width also scales as $L^{-\nu}$.
 \end{itemize}
 
-These three quantities (NUMBER OR WORD?) were tracked for the magnetic susceptibility $\xi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. Besides the Hamiltonian in equation \eqref{ising_hamiltonian}
+These quantities were tracked for the magnetic susceptibility $\chi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. Besides the Hamiltonian in equation \eqref{ising_hamiltonian}
 
 \begin{align}
 \label{second_neigh_hamil}
@@ -229,7 +291,15 @@ H_3 = -J\sum_{\mean{ij}} s_i s_j + 0.3 J \sum_{\mean{\mean{ij}}} s_i s_j
 
 Where $\sum_{\mean{ij}}$ and $\sum_{\mean{\mean{ij}}}$ denote sums over first and second neighbours respectively and $J$ is taken to be positive. When comparing to the original Ising Hamiltonian in equation \eqref{ising_hamiltonian} we then conclude that the second Hamiltonian adds a second neighbour ferromagnetic interaction, whereas the third adds a weak second neighbour antiferromagnetic interaction.
 
-PUT THE RESULTS IN TABLE? NOT VERY VISIBLE IN FIGURE...
+ 
+\noindent \addvbuffer[12pt 8pt]{\resizebox{\columnwidth}{!}{
+\begin{tabular}{ccccc}
+Interaction order & $\beta J_c$ & $\nu \left(\chi_{height}$) & $\nu \left(\chi_{position})$ & $\gamma/\nu$ \\
+\hline
+$1^{st}$ & 0.4385(1) & 1.07(1) & 1.07(1) & 1.62(2)  \\
+$2^{nd} (ferromagnetic)$ & 0.1885(2) & 1.13(1) & 1.13(1) & 1.64(1)   \\
+$2^{nd} (antiferromagnetic)$& 0.7382(8) & 1.15(1) & 1.12(1) & 1.699(8) 
+\end{tabular}}}
 
 The results are shown in Figure \ref{scaling}. The critical exponents were found to be very close to the exact results for the 2D Ising model ($\frac{\gamma}{\nu} = 1.75$, $\nu = 1$). Furthermore one also sees that although both systems exhibit different critical temperatures the critical exponents are very similar, indicating that both systems belong to the same universality class.
 
@@ -244,7 +314,7 @@ m(T_c) \propto L^{\beta/\nu}
 \caption{asdasdasd}
 \end{figure}
 
-\subsection{XY Model}
+\section{XY Model}
 
 \begin{figure}[H]
 \centering
@@ -254,8 +324,8 @@ m(T_c) \propto L^{\beta/\nu}
 
 %------------------------------------------------
 \section{Conclusion}
-lalila
-
+In this paper, we presented the results obtained through the Monte Carlo simulation of the Ising model and the XY Model.
+The behaviour of the magnetization, susceptibility, binder cumulant and specific heat was found thanks to the Hoshen-Kopelman algorithm and resembles closely the theoretical prediction. Using finite-size scaling, we were able to calculate some of the critical exponent, obtaining accurate values for all the interaction orders we considered and consequently proving their universality.
 \begin{appendices}
 \section{Appendix - Data blocking}
 

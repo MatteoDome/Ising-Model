@@ -41,7 +41,7 @@ with PdfPages('batch_results/binder_cumulant.pdf') as pdf:
     plt.xlabel('$\\beta J$',fontsize=15)
     plt.xlim([0.2,0.7])
     plt.ylabel("$binder_cumulant$", fontsize = 15)
-    plt.legend()
+    plt.legend( loc = 4)
     pdf.savefig()
     plt.show()
 
