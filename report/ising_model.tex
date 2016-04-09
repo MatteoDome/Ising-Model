@@ -71,7 +71,8 @@
 
 \begin{abstract}
 
-\noindent The aim of this report is to present the results obtained using Monte Carlo simulation for the Ising model and XY model. Two main algorithms have been implemented to simulate the behaviour of the system: the Metropolis Monte Carlo algorithm and the Hoshen-Kopelman cluster finding algorithm. Both algorithms have been used to extrapolate relevant physical quantities, such as the magnetization, the magnetic susceptibility and the specific heat. Finite-size scaling has also been used in order to calculate the critical exponents. Using the Metropolis algorithm we were able to prove the universality of the critical exponents of the Ising model..% Dummy abstract text
+\noindent The aim of this report is to present the results obtained using Monte Carlo simulation for the Ising model and XY model. Two main algorithms have been implemented to simulate the behaviour of the system: the Metropolis Monte Carlo algorithm and the Hoshen-Kopelman cluster finding algorithm. Both algorithms have been used to extrapolate relevant physical quantities, such as the magnetization, the magnetic susceptibility and the specific heat. Finite-size scaling has also been used in order to calculate the critical exponents. Using the Metropolis algorithm we were able to prove the universality of the critical exponents of the Ising model. 
+The Hoshen-Kopelman algorithm is also successfully implemented for the calculation of the helicity modulus.
 
 \end{abstract}
 
@@ -182,7 +183,8 @@ The first one consists in checking the links to the left and upwards for each si
 The results obtained with the Hoshen-Kopelman algorithm for magnetization, susceptibility specific heat and Binder cumulant are presented in the first four parts of this section.
 In section V we present the results obtained with finite-size scaling when also considering second neighbours with both ferromagnetic and anti-ferromagnetic behaviour. In order to consider higher interaction order, the Metropolis algorithm as been used.
 In section VI we reported the results obtained for the XY model through the Hoshen-Kopelman algorithm.
-It should be noted that we followed the convention found in ~\cite{thijssen}, where $k_B = 1$ and the distance between sites is taken to be unitary.
+
+It should be noted that we follow the convention found in ~\cite{thijssen}, where $k_B = 1$ and the distance between sites is taken to be unitary.
 
 \subsection{Magnetization}
 In the Ising model the magnetization is defined as:
@@ -192,7 +194,7 @@ m = \frac{1}{L^2} \mean{\sum_i s_i}
 \label{magnetization_conventional}
 \end{equation}
 
-However the cluster flipping operations of the HK algorithm make the sum in \ref{magnetization_conventional} oscillate considerably, so the magnetization is approximated as:
+The spin flipping operations taking place in the Hoshen-Kopelman algorithm cause this quantity to oscillate considerably; for this reason, the magnetization can be better described as:
 
 \begin{equation}
 m = \frac{1}{L^2} \mean{\left|\sum_i s_i\right|}
@@ -254,7 +256,7 @@ The behaviour of the Binder cumulant is shown in Figure~\ref{bc}. In (REFENCE) i
   \label{scaling}
 \end{figure*}
 
-As a system approaches a critical phase transition the behaviour of its physical quantities are described by power laws. The exponents corresponding to these power laws are called the \emph{critical exponents}. For the Ising model we have:
+As a system approaches a critical phase transition, the behaviour of its physical quantities is described by power laws. The exponents corresponding to these power laws are called the \emph{critical exponents}. For the Ising model we can write:
 
 \begin{align}
 &\chi \sim |T-T_c|^{-\gamma} \\
@@ -263,7 +265,7 @@ As a system approaches a critical phase transition the behaviour of its physical
 & m \sim |T-T_c|^{\beta}
 \end{align}
 
-In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition function from where the exact critical exponents can be found:
+The exact values for the critical exponents have been calculated by Lars Onsager in 1994 and are:
 \begin{align}
 &\gamma = \frac{7}{4} \\
 &\alpha = 0 \\
@@ -271,17 +273,11 @@ In 1994  Lars Onsager calculated (ADD REFERENCE) the 2D Ising Model partition fu
 &\beta = \frac{1}{2} 
 \end{align}
 
-\noindent These exponents are said to be \emph{universal} due to the fact that they remain invariant under certain changes in the Hamiltonian. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same \emph{universality class}. 
+\noindent These exponents are said to be \emph{universal} due to the fact that they remain invariant changes in the Hamiltonian that do not affect the system size or its order. Systems governed by different Hamiltonians but with the same critical exponents are said to belong to the same \emph{universality class}. 
 
-It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. For a finite system then all the thermodynamic quantities will be a smooth function of temperature -- we will not see a divergence at the critical point but a smooth peak. However as we increase the system size we observe that the size, width and position of this peak change according to a set of equations called the scaling laws. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$). Then we have that:
+It is important to note that analytical exponents are actually obtained by taking the system size $LxL$ to be infinite. The thermodynamic quantities will be a smooth function of temperature for a finite system, which means that we will not see a divergence at the critical point, but a smooth peak. As we increase the system size we observe that height, width and position of this peak change according to a set of equations, called \emph{scaling laws}. Suppose we have a thermodynamic quantity $A$ with critical exponent $\sigma$ (i.e. $A \sim |T-T_c|^{-\sigma}$ close to $T_c$): it can be shown that the peak height of $A$ as a function of $T$ (or $\beta J$, in our case) scales as $L^{\sigma/\nu}$, while its position and width scale as $L^{-\nu}$.
 
-\begin{itemize}
-\item The peak height scales as $L^{\sigma/\nu}$
-\item The peak position scales as $L^{-\nu}$
-\item The peak width also scales as $L^{-\nu}$.
-\end{itemize}
-
-These quantities were tracked for the magnetic susceptibility $\chi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. Besides the Hamiltonian in equation \eqref{ising_hamiltonian}
+These quantities were tracked for the magnetic susceptibility $\chi$ for different values of $L$ (PLOT SAYS N) by fitting the peaks to a Gaussian function. Besides equation \eqref{ising_hamiltonian}, we considered two other hamiltonians:
 
 \begin{align}
 \label{second_neigh_hamil}
@@ -290,9 +286,10 @@ H_2 = -J\sum_{\mean{ij}} s_i s_j  -J\sum_{\mean{\mean{ij}}} s_i s_j \\
 H_3 = -J\sum_{\mean{ij}} s_i s_j + 0.3 J \sum_{\mean{\mean{ij}}} s_i s_j 
 \end{align}
 
-Where $\sum_{\mean{ij}}$ and $\sum_{\mean{\mean{ij}}}$ denote sums over first and second neighbours respectively and $J$ is taken to be positive. When comparing to the original Ising Hamiltonian in equation \eqref{ising_hamiltonian} we then conclude that the second Hamiltonian adds a second neighbour ferromagnetic interaction, whereas the third adds a weak second neighbour antiferromagnetic interaction.
+\noindent where $\sum_{\mean{ij}}$ and $\sum_{\mean{\mean{ij}}}$ denote sums over first and second neighbours respectively and $J$ is taken to be positive. These two equation take into account the interaction with second neighbours: in equation~\ref{second_neigh_hamil}, the added contribution is ferromagnetic, while the second neighbour interaction in equation~\ref{anti_hamil} is weakly anti-ferromagnetic.
 
- 
+The results obtained for the critical exponents through finite-size scaling are shown in Figure \ref{scaling} and reported in Table 1. The critical exponents were found to be very close to the exact results for the 2D Ising model ($\frac{\gamma}{\nu} = 1.75$, $\nu = 1$). Furthermore one also sees that although both systems exhibit different critical temperatures the critical exponents are very similar, indicating that both systems belong to the same universality class.
+
 \noindent \addvbuffer[12pt 8pt]{\resizebox{\columnwidth}{!}{
 \begin{tabular}{ccccc}
 Interaction order & $\beta J_c$ & $\nu \left(\chi_{height}$) & $\nu \left(\chi_{position})$ & $\gamma/\nu$ \\
@@ -302,9 +299,7 @@ $2^{nd} (ferromagnetic)$ & 0.1885(2) & 1.13(1) & 1.13(1) & 1.64(1)   \\
 $2^{nd} (antiferromagnetic)$& 0.7382(8) & 1.15(1) & 1.12(1) & 1.699(8) 
 \end{tabular}}}
 
-The results are shown in Figure \ref{scaling}. The critical exponents were found to be very close to the exact results for the 2D Ising model ($\frac{\gamma}{\nu} = 1.75$, $\nu = 1$). Furthermore one also sees that although both systems exhibit different critical temperatures the critical exponents are very similar, indicating that both systems belong to the same universality class.
-
-Besides the scaling relations outlined the value of the magnetization at $T_c$ is expected to satisfy the following scaling relation (ADD REFERENCE):
+Moreover, the value of the magnetization at $T_c$ is expected to satisfy the following scaling relation (ADD REFERENCE):
 \begin{equation}
 m(T_c) \propto L^{\beta/\nu}
 \end{equation}
@@ -316,9 +311,9 @@ m(T_c) \propto L^{\beta/\nu}
 \end{figure}
 
 \subsection{XY Model}
-The XY model also undergoes a phase transition (known as the Kosterlitz-Thouless transition) between bound vortex-antivortex pairs at low temperatures to unpaired vortices and anti-vortices. 
+The XY model undergoes a phase transition (known as the Kosterlitz-Thouless transition) from bound vortex-antivortex pairs at low temperatures to unpaired vortices and anti-vortices. 
 
-One can define a quantity $\Gamma$ (helicity modulus) which quantifies the free energy needed to 'twist' the spins. It is given by:
+The helicity modulus $\Gamma$ (helicity modulus) quantifies the free energy needed to 'twist' the spins and can be expressed as:
 
 \begin{align}
 \Gamma &= \frac{J}{2L^2}\left\{ \mean{\sum_{\mean{ij}} \cos(\theta_i - \theta_j)} - \frac{J}{k_B T} \mean{\left[ \sum_i \sin( \theta_i - \theta_{i+ \vec{e_x}}) \right]^2}\right.\nonumber \\
@@ -327,7 +322,7 @@ One can define a quantity $\Gamma$ (helicity modulus) which quantifies the free 
 
 For infinite systems $\Gamma$ drops to zero at the KT critical temperature $T_{KT}$. It can be shown \cite{thijssen} that  $\Gamma$ has a universal value of $2k_B T_{KT}/\pi$ at the KT transition.
 
-In figure \ref{helicity_modulus_fig} we plot $\Gamma/J$ as a function of temperature. The line $ \Gamma/J = 2k_B T/(J \pi)$ is also shown in order to determine $T_{KT}$.
+$\Gamma/J$ is plotted in figure \ref{helicity_modulus_fig} as a function of temperature. The line $ \Gamma/J = 2k_B T/(J \pi)$ is also shown in order to determine $T_{KT}$.
 
 \begin{figure}[H]
 \centering
@@ -336,7 +331,7 @@ In figure \ref{helicity_modulus_fig} we plot $\Gamma/J$ as a function of tempera
 \label{helicity_modulus_fig}
 \end{figure}
 
-The results are quite close to those obtained by Thijssen \cite{thijssen}. We also see that slope of the curves close to the critical temperature becomes steeper as we increase the system size and we get closer to the non-analytic behaviour expected for an infinite system.
+The results are similar to those obtained by Thijssen \cite{thijssen}. We can note that, as the system size increases, the slope of the curves becomes steeper and its behaviour becomes non-analytic close to the critical temperature.
 
 By checking the intersection of the line with the results $L=100$ we can obtain a rough estimate for critical temperature. We find $\beta_{KT} \approx 1.121$ which is very close to the value of $\beta_{KT} \approx 1.120(1)$ reported in \cite{dukovski}.
 
@@ -344,6 +339,7 @@ By checking the intersection of the line with the results $L=100$ we can obtain 
 \section{Conclusion}
 In this paper, we presented the results obtained through the Monte Carlo simulation of the Ising model and the XY Model.
 The behaviour of the magnetization, susceptibility, binder cumulant and specific heat was found thanks to the Hoshen-Kopelman algorithm and resembles closely the theoretical prediction. Using finite-size scaling, we were able to calculate some of the critical exponent, obtaining accurate values for all the interaction orders we considered and consequently proving their universality.
+In the simulation of the XY model, we found an estimate for the helicity modulus, showing how the Monte Carlo algorithms can be used to predict the behaviour of a variety of physical systems in a reasonably accurate manner.
 \begin{appendices}
 \section{Appendix - Data blocking}
 

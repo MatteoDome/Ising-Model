@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.20)  9 APR 2016 17:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.20)  9 APR 2016 18:39
 entering extended mode
 **./ising_model.tex
 (ising_model.tex
@@ -1036,47 +1036,47 @@ Package microtype Info: Character `029' is missing
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
 (Font)              Font shape `T1/pplx/b/n' tried instead on input line 72.
- <images/magnetization.pdf, id=68, 578.16pt x 433.62pt>
+ <images/magnetization.pdf, id=64, 578.16pt x 433.62pt>
 File: images/magnetization.pdf Graphic file (type pdf)
 
 <use images/magnetization.pdf>
-Package pdftex.def Info: images/magnetization.pdf used on input line 94.
+Package pdftex.def Info: images/magnetization.pdf used on input line 95.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 95.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 96.
 
-<images/susceptibility.pdf, id=69, 578.16pt x 433.62pt>
+<images/susceptibility.pdf, id=65, 578.16pt x 433.62pt>
 File: images/susceptibility.pdf Graphic file (type pdf)
 
 <use images/susceptibility.pdf>
-Package pdftex.def Info: images/susceptibility.pdf used on input line 99.
+Package pdftex.def Info: images/susceptibility.pdf used on input line 100.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 108.
+(Font)              scaled to size 10.42007pt on input line 109.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 108.
+(Font)              scaled to size 7.91925pt on input line 109.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 108.
+(Font)              scaled to size 6.25204pt on input line 109.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 108.
+(Font)              scaled to size 10.42007pt on input line 109.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 108.
+(Font)              scaled to size 7.91925pt on input line 109.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 108.
+(Font)              scaled to size 6.25204pt on input line 109.
  [1
 
 {C:/Users/Matteo/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] <images/cv
-.pdf, id=89, 578.16pt x 433.62pt>
+.pdf, id=85, 578.16pt x 433.62pt>
 File: images/cv.pdf Graphic file (type pdf)
 
 <use images/cv.pdf>
-Package pdftex.def Info: images/cv.pdf used on input line 170.
+Package pdftex.def Info: images/cv.pdf used on input line 171.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
- <images/binder_cumulant.pdf, id=90, 578.16pt x 433.62pt>
+ <images/binder_cumulant.pdf, id=86, 578.16pt x 433.62pt>
 File: images/binder_cumulant.pdf Graphic file (type pdf)
 
 <use images/binder_cumulant.pdf>
-Package pdftex.def Info: images/binder_cumulant.pdf used on input line 175.
+Package pdftex.def Info: images/binder_cumulant.pdf used on input line 176.
 (pdftex.def)             Requested size: 185.13109pt x 138.84724pt.
  [2 <./images/magnetization.pdf> <./images/susceptibility.pdf
 
@@ -1086,7 +1086,7 @@ tiple pdfs with page group included in a single page
 ! Undefined control sequence.
 <recently read> \betaJ 
                        
-l.201 ...rly see a phase transition around $\betaJ
+l.202 ...rly see a phase transition around $\betaJ
                                                    = 0.44$, as predicted by ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1098,38 +1098,30 @@ and I'll forget about whatever was undefined.
 
 pdfTeX warning: pdflatex (file ./images/binder_cumulant.pdf): PDF inclusion: mu
 ltiple pdfs with page group included in a single page
->] <images/plot_height.pdf, id=237, 578.16pt x 433.62pt>
+>] <images/plot_height.pdf, id=231, 578.16pt x 433.62pt>
 File: images/plot_height.pdf Graphic file (type pdf)
 
 <use images/plot_height.pdf>
-Package pdftex.def Info: images/plot_height.pdf used on input line 239.
+Package pdftex.def Info: images/plot_height.pdf used on input line 240.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
 
-<images/plot_width.pdf, id=238, 578.16pt x 433.62pt>
+<images/plot_width.pdf, id=232, 578.16pt x 433.62pt>
 File: images/plot_width.pdf Graphic file (type pdf)
 
 <use images/plot_width.pdf>
-Package pdftex.def Info: images/plot_width.pdf used on input line 244.
+Package pdftex.def Info: images/plot_width.pdf used on input line 245.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
- <images/plot_pos.pdf, id=239, 578.16pt x 433.62pt>
+ <images/plot_pos.pdf, id=233, 578.16pt x 433.62pt>
 File: images/plot_pos.pdf Graphic file (type pdf)
 
 <use images/plot_pos.pdf>
-Package pdftex.def Info: images/plot_pos.pdf used on input line 249.
+Package pdftex.def Info: images/plot_pos.pdf used on input line 250.
 (pdftex.def)             Requested size: 169.26363pt x 126.94417pt.
-LaTeX Font Info:    Try loading font information for OMS+pplx on input line 279
-.
-LaTeX Font Info:    No file OMSpplx.fd. on input line 279.
-
-
-LaTeX Font Warning: Font shape `OMS/pplx/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 279.
 
 ! Missing \right. inserted.
 <inserted text> 
                 \right .
-l.303 \end{tabular}}}
+l.299 \end{tabular}}}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1140,7 +1132,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing \right. inserted.
 <inserted text> 
                 \right .
-l.303 \end{tabular}}}
+l.299 \end{tabular}}}
                      
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1148,27 +1140,27 @@ With luck, this will get me unwedged. But if you
 really didn't forget anything, try typing `2' now; then
 my insertion and my current dilemma will both disappear.
 
-<images/plot_magnetization.pdf, id=243, 578.16pt x 433.62pt>
+<images/plot_magnetization.pdf, id=238, 578.16pt x 433.62pt>
 File: images/plot_magnetization.pdf Graphic file (type pdf)
 
 <use images/plot_magnetization.pdf>
-Package pdftex.def Info: images/plot_magnetization.pdf used on input line 314.
+Package pdftex.def Info: images/plot_magnetization.pdf used on input line 308.
 (pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
  [4]
-Overfull \hbox (16.03944pt too wide) in paragraph at lines 326--326
+Overfull \hbox (16.03944pt too wide) in paragraph at lines 320--320
 [] 
  []
 
-<images/helicity_modulus.pdf, id=262, 578.16pt x 433.62pt>
+<images/helicity_modulus.pdf, id=258, 578.16pt x 433.62pt>
 File: images/helicity_modulus.pdf Graphic file (type pdf)
 
 <use images/helicity_modulus.pdf>
-Package pdftex.def Info: images/helicity_modulus.pdf used on input line 334.
+Package pdftex.def Info: images/helicity_modulus.pdf used on input line 328.
 (pdftex.def)             Requested size: 231.2599pt x 173.44492pt.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 335.
+(Font)              scaled to size 5.21004pt on input line 329.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 335.
+(Font)              scaled to size 5.21004pt on input line 329.
  [5 <./images/plot_height.pdf> <./images/plot_width.pdf
 
 pdfTeX warning: pdflatex (file ./images/plot_width.pdf): PDF inclusion: multipl
@@ -1186,55 +1178,39 @@ pdfTeX warning: pdflatex (file ./images/plot_magnetization.pdf): PDF inclusion:
 pdfTeX warning: pdflatex (file ./images/helicity_modulus.pdf): PDF inclusion: m
 ultiple pdfs with page group included in a single page
 >]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 372.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 367.
  [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 372.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 367.
  (ising_model.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 372.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 372.
-
-
-Package rerunfilecheck Warning: File `ising_model.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `ising_model.out':
-(rerunfilecheck)             Before: 0F666C227DC672EF38DA4C738AD18266;952
-(rerunfilecheck)             After:  0EAA85C10484420705347773AA97A60B;907.
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 367.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 367.
+Package rerunfilecheck Info: File `ising_model.out' has not changed.
+(rerunfilecheck)             Checksum: 0EAA85C10484420705347773AA97A60B;907.
  ) 
 Here is how much of TeX's memory you used:
- 12178 strings out of 493634
- 183405 string characters out of 3134830
+ 12181 strings out of 493634
+ 183384 string characters out of 3134830
  410845 words of memory out of 3000000
- 15009 multiletter control sequences out of 15000+200000
- 82818 words of font info for 311 fonts, out of 3000000 for 9000
+ 15002 multiletter control sequences out of 15000+200000
+ 83540 words of font info for 321 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  40i,13n,43p,800b,691s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{section.5} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.4.1} has been referenced but does not ex
-ist, replaced by a fixed one
-
-{D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.
-enc}<D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmex10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Users/Matteo/AppData/Local/Pro
-grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Users/Matteo/App
-Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmr.pfb><D:/Users/
-Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmri.pfb
-><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/fpl/fplr
-c8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/pala
-tino/uplb8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
-urw/palatino/uplr8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/font
-s/type1/urw/palatino/uplri8a.pfb>
-Output written on ising_model.pdf (6 pages, 346339 bytes).
+{D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/fontname/8
+r.enc}<D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/ams
+fonts/cm/cmex10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Users/Matteo/AppData/Local/P
+rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Users/Matteo/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmr.pfb><D:/User
+s/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/mathpazo/fplmri.p
+fb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/fpl/fp
+lrc8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/pa
+latino/uplb8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/urw/palatino/uplr8a.pfb><D:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fo
+nts/type1/urw/palatino/uplri8a.pfb>
+Output written on ising_model.pdf (6 pages, 345848 bytes).
 PDF statistics:
- 629 PDF objects out of 1000 (max. 8388607)
- 55 named destinations out of 1000 (max. 500000)
- 52910 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 623 PDF objects out of 1000 (max. 8388607)
+ 53 named destinations out of 1000 (max. 500000)
+ 52902 words of extra memory for PDF output out of 61914 (max. 10000000)
 
