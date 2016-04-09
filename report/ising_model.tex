@@ -71,7 +71,7 @@
 
 \begin{abstract}
 
-\noindent The aim of this report is to present the results obtained using Monte Carlo simulation for the Ising model and XY model. Two main algorithms have been implemented to simulate the behaviour of the system: the Metropolis Monte Carlo algorithm and the Hoshen-Kopelman cluster finding algorithm. Both algorithms have been used to extrapolate relevant physical quantities, such as the magnetization, the magnetic susceptibility and the specific heat. Finite-size scaling has also been used in order to calculate the critical exponents. Using the Metropolis algorithm we were able to prove the universality of the critical exponents of the Ising model. 
+\noindent The aim of this report is to present the results obtained using Monte Carlo simulations for the Ising model and XY model. Two main algorithms have been implemented to simulate the behaviour of the system: the Metropolis Monte Carlo algorithm and the Hoshen-Kopelman cluster finding algorithm. Both algorithms have been used to extrapolate relevant physical quantities, such as the magnetization, the magnetic susceptibility and the specific heat. Finite-size scaling has also been used in order to calculate the critical exponents. Using the Metropolis algorithm we were able to prove the universality of the critical exponents of the Ising model. 
 The Hoshen-Kopelman algorithm is also successfully implemented for the calculation of the helicity modulus.
 
 \end{abstract}
@@ -165,7 +165,26 @@ Once the links are found, one can apply the Hoshen-Kopelman cluster finding algo
 The first one consists in checking the links to the left and upwards for each site of the lattice. If there is a link between two sites, they are assigned to the same cluster. \textbf{This second step is not very clear to me. do you mean the boundary check?} The second step consists in going over all the sites once more and checking all their links to make sure that the clusters are correctly identified. \\ To generate random configurations, a new random spin value is then assigned to each cluster and the properties of the specific configuration are calculated.
 
 \subsubsection{Applying the HK algorithm to XY model}
-(to be written)
+The HK algorithm can easily be extended in order to simulate the XY Model. First, a random vector $\mathbf{u}$ is generated and every spin $\mathbf{s_i}$ is decomposed into two components: the one along $\mathbf{u}$ and the one perpendicular to $\mathbf{u}$:
+
+\begin{align}
+\mathbf{s_i^{\parallel}} = (\mathbf{s_i} \cdot \mathbf{u}) \mathbf{u} \\
+\mathbf{s_i^{\bot}} = \mathbf{s_i} - \mathbf{s_i^{\parallel}}
+\end{align}
+
+We keep $\mathbf{s_i^{\bot}}$ and $|\mathbf{s_i^{\parallel}}|$ fixed, allowing the spins to flip their parallel component:
+
+\begin{equation}
+\mathbf{s_i} = \mathbf{s_i^{\bot}} + \varepsilon_i |\mathbf{s_i^{\parallel}}| \mathbf{u}, \quad \varepsilon = \pm 1
+\end{equation}
+
+By rewriting the XY model Hamiltonian in terms of $\varepsilon_i$ 
+\begin{align}
+H[\varepsilon_i] = \sum_{\mean{ij}} J_{ij} \varepsilon_i \varepsilon_j \\
+J_{ij} = J |\mathbf{s_i^{\parallel}}||\mathbf{s_i^{\bot}}|
+\end{align}
+
+We have essentially reduced the problem to a Hamiltonian analogous to the Ising model with a lattice of spins $\{\varepsilon_i\}$, but where the $J$ is now a tensor instead of a scalar. We can then readily apply the HK algorithm as described previously provided that we are careful to consider the appropriate coupling constant $J_{ij}$ when creating links
 %------------------------------------------------
 
 \section{Results}
