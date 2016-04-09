@@ -90,19 +90,6 @@ The Hoshen Kopelman algorithm is a cluster finding algorithm that has been imple
 In section II the interaction model and the working principles of the two algorithms are outlined. In section III we reported the numerical results obtained for specific heat, magnetization, magnetic susceptibility, Binder cumulant, finite-size scaling and XY Model.
 
 %------------------------------------------------
-\begin{figure*}[b]
-  \begin{subfigure}[b]{0.35\textwidth}
-    \includegraphics[width=\textwidth]{images/magnetization.pdf}
-    \caption{Magnetization}
-    \label{magnetization}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.35\textwidth}
-    \includegraphics[width=\textwidth]{images/susceptibility.pdf}
-    \caption{Susceptibility}
-    \label{susceptibility}
-  \end{subfigure}
-  \caption{Behaviour of the magnetization and susceptibility calculated with the Hoshen-Kopelman algorithm}
-\end{figure*}
 
 
 \section{Methods}
@@ -185,11 +172,26 @@ J_{ij} = J |\mathbf{s_i^{\parallel}}||\mathbf{s_i^{\bot}}|
 \end{align}
 
 We have essentially reduced the problem to a Hamiltonian analogous to the Ising model with a lattice of spins $\{\varepsilon_i\}$, but where the $J$ is now a tensor instead of a scalar. We can then readily apply the HK algorithm as described previously provided that we are careful to consider the appropriate coupling constant $J_{ij}$ when creating links
+
+\begin{figure*}[b]
+  \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{images/magnetization.pdf}
+    \caption{Magnetization}
+    \label{magnetization}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{images/susceptibility.pdf}
+    \caption{Susceptibility}
+    \label{susceptibility}
+  \end{subfigure}
+  \caption{Behaviour of the magnetization and susceptibility calculated with the Hoshen-Kopelman algorithm}
+\end{figure*}
+
 %------------------------------------------------
 
 \section{Results}
 
-\begin{figure*}[!tpb] 
+\begin{figure*}[t] 
  \begin{subfigure}[b]{0.35\textwidth}
     \includegraphics[width=\textwidth]{images/cv.pdf}
     \caption{Specific Heat}
